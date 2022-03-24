@@ -71,10 +71,20 @@ const LoginRegister = () => {
 
     return (
       <div style={{backgroundColor:"#191f3c"}}>
+          <div className="decore">
+              <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
+              <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
+              <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
+              <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
+              <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
+              <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
+              <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
+              <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
+          </div>
         <div className="d-flex align-items-center auth px-0">
           <div className="row w-100 mx-0">
-            <div className="col-lg-4 mx-auto">
-              <div className="card text-left py-5 px-4 px-sm-5">
+            <div style={{marginLeft:"25%"}}className="col-lg-4">
+              <div style={{minWidth:"50vw"}}className="card text-left py-5 px-4 px-sm-5">
                 <div className='gradient-text'>
                   ShaadiOnChain
                 </div>
@@ -93,7 +103,7 @@ const LoginRegister = () => {
                   </Form.Group>
                   
                   <div className="mt-3">
-                    <button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" to="/dashboard" onClick={register}>Register</button>
+                    <button  className="btn btn-block btn-primary btn-lg  btn-gradient" to="/dashboard" onClick={register}>Register</button>
                   </div>
                   <div className="my-2 d-flex justify-content-between align-items-center">
                     <div className="form-check">
@@ -104,14 +114,14 @@ const LoginRegister = () => {
                     <a href="!#" onClick={event => event.preventDefault()} className="auth-link text-muted">Already Registered? then <i className='mdi mdi-arrow-down'/></a>
                   </div>
                   <div className="mb-2">
-                    <button type="button" className="btn btn-block btn-facebook auth-form-btn" onClick={connect}>
+                    <button type="button" className="btn btn-block btn-primary " onClick={connect}>
                       <img src="/assets/images/metamask.svg" alt="MetaMask" width="30" height="30" /> Login with MetaMask
                     </button>
                   </div>
                 </Form>
               </div>
             </div>
-            <img alt="" style={{position:"absolute",bottom:"15%",right:"5%",width:"25vw"}} src="../assets/images/wedding-img/icon/couple1.png" />
+            {/* <img alt="" style={{position:"absolute",bottom:"15%",right:"5%",width:"10vw"}} src="../assets/images/wedding-img/icon/bride.png" /> */}
 
           </div>
         </div>  

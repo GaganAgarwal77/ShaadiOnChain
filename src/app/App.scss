@@ -75,4 +75,116 @@
     -webkit-text-fill-color: transparent;
     font-weight: 600;
     font-size: calc(20px + (35 - 20) * ((100vw - 300px) / (1920 - 300)));
+}
+
+.animated-bg i {
+    position: absolute;
+    top: 50px;
+    background: #191f3c;
+    bottom: 0;
+    box-shadow: 0 15px 30px 0 rgba(255, 255, 255, 0.08);
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    opacity: 0.3;
+    transform: scale(1.3);
+    animation: ripple1 3s linear infinite;
+    &:nth-child(2) {
+      animation: ripple2 3s linear infinite;
+    }
+    &:nth-child(3) {
+      animation: ripple3 3s linear infinite;
+    }
+}
+
+.decore {
+    img {
+      position: absolute;
+      &:nth-child(1) {
+        top: 6vw;
+        left:-6vw;
+        width: 15vw;
+        transform: rotate(-90deg);
+      }
+      &:nth-child(2) {
+        top: 0;
+        left:0;
+        width: 15vw;
+      }
+      &:nth-child(3) {
+        top: 0;
+        right:0;
+        width: 15vw;
+      }
+      &:nth-child(4) {
+        top: 6vw;
+        right:-6vw;
+        width: 15vw;
+        transform: rotate(90deg);
+      }
+      &:nth-child(5) {
+        bottom: 0;
+        right:0;
+        width: 15vw;
+        transform: rotate(180deg);
+      }
+      &:nth-child(6) {
+        bottom: 6vw;
+        right:-6vw;
+        width: 15vw;
+        transform: rotate(90deg);
+      }
+      &:nth-child(7) {
+        bottom: 0;
+        left:0;
+        width: 15vw;
+        transform: rotate(180deg);
+      }
+      &:nth-child(8) {
+        bottom: 6vw;
+        left:-6vw;
+        width: 15vw;
+        transform: rotate(-90deg);
+      }      
+      &:nth-child(9) {
+        bottom: 7vh;
+        left: 42%;
+        width: 15vw;
+        cursor:pointer;
+      } 
+    }
+}
+
+.gradient-button{
+    background-color: #bf862d;
+}
+.gradient-button:hover{
+    background-color: #ecc878;
+}
+
+.btn-gradient {
+    border: transparent;
+    position: relative;
+    background-color: #bf862d;
+    background-image: linear-gradient(#ecc878, #bf862d);
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(#ecc878),
+      color-stop(#bf862d),
+      color-stop(#bf862d),
+      to(#ecc878)
+    );
+    background-image: linear-gradient(to right, #ecc878, #bf862d, #bf862d, #ecc878);
+    transition: all 0.4s ease-in-out;
+    background-size: 300% 100%;
+    &:hover,
+    &:focus,
+    &:active {
+      transition: all 0.4s ease-in-out;
+      color: $white !important;
+      background-position: 100% 0;
+    }
   }
