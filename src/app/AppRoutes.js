@@ -30,8 +30,8 @@ class AppRoutes extends Component {
     return (
       <Suspense fallback={<Spinner/>}>
         <Switch>
+          <Route exact path="/" component={ Wedding } />
           <Route exact path="/dashboard" component={ Dashboard } />
-          <Route exact path="/wedding" component={ Wedding } />
           <Route path="/login-register" component={ LoginRegister } />
 
           <Route path="/basic-ui/buttons" component={ Buttons } />
@@ -50,7 +50,7 @@ class AppRoutes extends Component {
           <Route path="/error-pages/error-500" component={ Error500 } />
 
 
-          <Redirect to="/dashboard" />
+          <Redirect to="/" />
         </Switch>
       </Suspense>
     );
