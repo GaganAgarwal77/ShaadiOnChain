@@ -60,7 +60,8 @@
     "slick-carousel": "^1.8.1",
     "sweetalert2-react": "^0.8.3",
     "ti-icons": "^0.1.2",
-    "typicons.font": "^2.0.9"
+    "typicons.font": "^2.0.9",
+    "web3": "^1.7.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -82,5 +83,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "hardhat": "^2.9.1"
   }
 }
