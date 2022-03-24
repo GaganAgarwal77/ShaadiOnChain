@@ -68,3 +68,11 @@
 @import "../assets/styles/sidebar";
 @import "../assets/styles/footer";
 @import "../assets/styles/layout";
+
+.gradient-text {
+    background: -webkit-linear-gradient(#bf862d, #ecc878);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    font-size: calc(20px + (35 - 20) * ((100vw - 300px) / (1920 - 300)));
+  }

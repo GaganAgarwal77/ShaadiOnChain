@@ -5,6 +5,7 @@ import Spinner from '../app/shared/Spinner';
 
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 const Wedding = lazy(() => import('./wedding'));
+const LoginRegister = lazy(() => import('./LoginRegister'));
 
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
 const Dropdowns = lazy(() => import('./basic-ui/Dropdowns'));
@@ -21,8 +22,7 @@ const ChartJs = lazy(() => import('./charts/ChartJs'));
 const Error404 = lazy(() => import('./error-pages/Error404'));
 const Error500 = lazy(() => import('./error-pages/Error500'));
 
-const Login = lazy(() => import('./user-pages/Login'));
-const Register1 = lazy(() => import('./user-pages/Register'));
+
 
 
 class AppRoutes extends Component {
@@ -32,6 +32,7 @@ class AppRoutes extends Component {
         <Switch>
           <Route exact path="/dashboard" component={ Dashboard } />
           <Route exact path="/wedding" component={ Wedding } />
+          <Route path="/login-register" component={ LoginRegister } />
 
           <Route path="/basic-ui/buttons" component={ Buttons } />
           <Route path="/basic-ui/dropdowns" component={ Dropdowns } />
@@ -44,10 +45,6 @@ class AppRoutes extends Component {
           <Route path="/icons/mdi" component={ Mdi } />
 
           <Route path="/charts/chart-js" component={ ChartJs } />
-
-
-          <Route path="/user-pages/login-1" component={ Login } />
-          <Route path="/user-pages/register-1" component={ Register1 } />
 
           <Route path="/error-pages/error-404" component={ Error404 } />
           <Route path="/error-pages/error-500" component={ Error500 } />
