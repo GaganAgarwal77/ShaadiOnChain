@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Spinner from '../app/shared/Spinner';
 
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
+const Wedding = lazy(() => import('./wedding'));
 
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
 const Dropdowns = lazy(() => import('./basic-ui/Dropdowns'));
@@ -30,6 +31,7 @@ class AppRoutes extends Component {
       <Suspense fallback={<Spinner/>}>
         <Switch>
           <Route exact path="/dashboard" component={ Dashboard } />
+          <Route exact path="/wedding" component={ Wedding } />
 
           <Route path="/basic-ui/buttons" component={ Buttons } />
           <Route path="/basic-ui/dropdowns" component={ Dropdowns } />
