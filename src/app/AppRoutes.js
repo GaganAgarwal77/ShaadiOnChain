@@ -6,6 +6,8 @@ import Spinner from '../app/shared/Spinner';
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 const Wedding = lazy(() => import('./wedding'));
 const LoginRegister = lazy(() => import('./LoginRegister'));
+const RingsMarketplace = lazy(() => import('./RingsMarketplace'));
+const Purchase = lazy(() => import('./Purchase'));
 
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
 const Dropdowns = lazy(() => import('./basic-ui/Dropdowns'));
@@ -33,6 +35,8 @@ class AppRoutes extends Component {
           <Route exact path="/" component={ Wedding } />
           <Route exact path="/dashboard" component={ Dashboard } />
           <Route path="/login-register" component={ LoginRegister } />
+          <Route path="/rings-marketplace" component={ RingsMarketplace } />
+          <Route path="/purchase" component={ Purchase } />
 
           <Route path="/basic-ui/buttons" component={ Buttons } />
           <Route path="/basic-ui/dropdowns" component={ Dropdowns } />
