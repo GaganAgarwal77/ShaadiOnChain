@@ -98,7 +98,7 @@
     }
 }
 
-.decore {
+.side-decore {
     img {
       position: absolute;
       &:nth-child(1) {
@@ -156,14 +156,9 @@
     }
 }
 
-.gradient-button{
-    background-color: #bf862d;
-}
-.gradient-button:hover{
-    background-color: #ecc878;
-}
 
-.btn-gradient {
+
+.gradient-button {
     border: transparent;
     position: relative;
     background-color: #bf862d;

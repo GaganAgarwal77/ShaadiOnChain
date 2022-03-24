@@ -71,7 +71,7 @@ const LoginRegister = () => {
 
     return (
       <div style={{backgroundColor:"#191f3c"}}>
-          <div className="decore">
+          <div className="side-decore">
               <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
               <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
               <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
@@ -103,7 +103,7 @@ const LoginRegister = () => {
                   </Form.Group>
                   
                   <div className="mt-3">
-                    <button  className="btn btn-block btn-primary btn-lg  btn-gradient" to="/dashboard" onClick={register}>Register</button>
+                    <button  className="btn btn-block btn-primary btn-lg  gradient-button" to="/dashboard" onClick={register}>Register</button>
                   </div>
                   <div className="my-2 d-flex justify-content-between align-items-center">
                     <div className="form-check">
