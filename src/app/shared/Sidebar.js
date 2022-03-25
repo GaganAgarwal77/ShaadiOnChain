@@ -116,10 +116,16 @@ class Sidebar extends Component {
             <span className="nav-link"><Trans>Navigation</Trans></span>
           </li>
           <li className={ this.isPathActive('/dashboard') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
-            <Link className="nav-link" to="/dashboard">
+            <a className="nav-link" href="/dashboard" >
               <span className="menu-icon"><i className="mdi mdi-speedometer"></i></span>
               <span className="menu-title"><Trans>Dashboard</Trans></span>
-            </Link>
+            </a>
+          </li>
+          <li className={ this.isPathActive('/rings-marketplace') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
+            <a  className="nav-link" href="/rings-marketplace"  >
+              <span className="menu-icon"><img src="/assets/images/wedding-img/icon/rings.png" alt="Rings" width="20" height="20" className='symbol' /></span>
+              <span className="menu-title"><Trans>Rings Marketplace </Trans></span>
+            </a>
           </li>
           <li className={ this.isPathActive('/basic-ui') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
             <div className={ this.state.basicUiMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('basicUiMenuOpen') } data-toggle="collapse">
