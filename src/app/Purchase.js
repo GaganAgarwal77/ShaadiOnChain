@@ -10,6 +10,7 @@ function Purchase(props) {
         description: "Description of ring",
         src:"Source1",
         price:"1",
+        type: "Male"
     }
     return (
 
@@ -27,6 +28,7 @@ function Purchase(props) {
                 <div className="purchase__details">
                     <h1>#{data.tokenID} {data.name}</h1>
                     <h3>{data.description}</h3>
+                    <h3>{data.type} Ring</h3>
                     <div className="purchase__detailsBuy">
                         <div className="value">
                             <h2>{data.price}</h2> 
