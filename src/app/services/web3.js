@@ -72,3 +72,28 @@ export const registerUser = async (name, gender) => {
 };
 
 
+export const mintRingNFT = async (url) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await RingNFT_contract.methods
+    .createToken(url)
+    .send({
+      from: account,
+    });
+
+  const tokenId = result.events.Transfer.returnValues.tokenId;
+  return tokenId;
+}
+
+export const sellRingOnMarketplace = async (tokenId, price, ringType) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await RingMarketplace_contract.methods
+    .createRingItem(tokenId, price, ringType)
+    .send({
+      from: account,
+    });
+    console.log(result);
+}
