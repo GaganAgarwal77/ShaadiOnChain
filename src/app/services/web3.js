@@ -97,3 +97,23 @@ export const sellRingOnMarketplace = async (tokenId, price, ringType) => {
     });
     console.log(result);
 }
+
+
+export const saleRingNFTs = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await RingMarketplace_contract.methods
+    .fetchAllOnSaleRingItems()
+    .call();
+
+  return result;
+}
+
+export const tokenURI = async (tokenId) => {
+  const result = await RingNFT_contract.methods
+    .tokenURI(tokenId)
+    .call();
+
+  return result;
+}
