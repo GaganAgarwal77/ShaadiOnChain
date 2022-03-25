@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 
 
 
-function Card({tokenID, name, description, src, price}) {
+function Card({tokenID, name, description, company, price, type}) {
     const { push } = useHistory()
 
     // var uri = src.slice(7); 
@@ -20,7 +20,8 @@ function Card({tokenID, name, description, src, price}) {
             <div className="card__info">
                 <h2>{name}</h2>
                 <h4>{description.length >= 100 ? description.substring(0, 100) + '...' : description}</h4>
-                <h4>{src}</h4>
+                <h4>{company}</h4>
+                <h4>{type} Ring</h4>
             </div>
             <div className='card__infoValueParent'>
                 <div className="card__infoValue">

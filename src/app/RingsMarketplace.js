@@ -7,36 +7,41 @@ const RingData = [
       tokenID:"1",
       name: "Ring 1",
       description: "Description of ring",
-      src:"Source1",
+      company:"Company1",
       price:"1",
+      type:"Male"
   },
   {
       tokenID:"2",
       name: "Ring 2",
       description: "Description of ring",
-      src:"Source1",
+      company:"Company2",
       price:"1",
+      type:"Female"
   },
   {
       tokenID:"3",
       name: "Ring 3",
       description: "Description of ring",
-      src:"Source1",
+      company:"Company3",
       price:"1",
+      type:"Male"
   },
   {
       tokenID:"4",
       name: "Ring 4",
       description: "Description of ring",
-      src:"Source1",
+      company:"Company4",
       price:"1",
+      type:"Female"
   },
   {
       tokenID:"5",
       name: "Ring 5",
       description: "Description of ring",
-      src:"Source1",
+      company:"Company5",
       price:"1",
+      type:"Male"
   },
 
 ]
@@ -50,8 +55,9 @@ function Market() {
                     tokenID={ring.tokenID}
                     name={ring.name}
                     description={ring.description}
-                    src={ring.image}
+                    company={ring.company}
                     price={ring.price}
+                    type={ring.type}
                     />
                 ))
                 }
