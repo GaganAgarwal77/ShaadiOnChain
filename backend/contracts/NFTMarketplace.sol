@@ -22,6 +22,7 @@ contract NFTMarketplace is ReentrancyGuard, Owner {
     struct RingItem {
         uint256 itemId;
         uint256 tokenId;
+        address creator;
         address payable owner;
         uint256 price;
         RingType ringtype;
@@ -43,6 +44,7 @@ contract NFTMarketplace is ReentrancyGuard, Owner {
         idToRingItem[itemId] = RingItem(
             itemId,
             _tokenId,
+            msg.sender,
             payable(msg.sender),
             _price,
             _ringtype,
