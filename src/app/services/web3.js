@@ -2,7 +2,8 @@ import Web3 from "web3";
 import { ShaadiOnChain_ABI } from "./abi/ShaadiOnChainABI";
 import { RingMarketplace_ABI } from "./abi/RingMarketplaceABI";
 import { RingNFT_ABI } from "./abi/RingNFTABI";
-import { ShaadiOnChain_contract_addr, RingMarketplace_contract_addr, RingNFT_contract_addr } from "./constants";
+
+require('dotenv').config()
 
 export const loadWeb3 = async () => {
   if (window.ethereum) {
@@ -31,17 +32,17 @@ export const loadAccount = async () => {
 
 const ShaadiOnChain_contract = new web3.eth.Contract(
   ShaadiOnChain_ABI,
-  ShaadiOnChain_contract_addr
+  process.env.REACT_APP_SHAADIONCHAIN
 );
 
 const RingMarketplace_contract = new web3.eth.Contract(
   RingMarketplace_ABI,
-  RingMarketplace_contract_addr
+  process.env.REACT_APP_RINGMARKETPLACE
 );
 
 const RingNFT_contract = new web3.eth.Contract(
   RingNFT_ABI,
-  RingNFT_contract_addr
+  process.env.REACT_APP_RINGNFT
 );
 
 //#################################################################
