@@ -1,66 +1,86 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from './card'
 import  '../assets/Market.css'
 
+import axios from 'axios';
+import { web3, saleRingNFTs, tokenURI } from "./services/web3";
+
 const RingData = [
   {
-      tokenID:"1",
-      name: "Ring 1",
-      description: "Description of ring",
-      company:"Company1",
-      price:"1",
-      type:"Male"
+    itemId: "1",
+    tokenId: "4",
+    name: "Best",
+    description: "best",
+    image: "ipfs://bafybeihm6xznu3ehmq57kfglefxx7kjmk4eh2cya257jqkqm65qre5epjq/blob",
+    creator: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
+    owner: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
+    price: "50000000000000000",
+    ringType: "Male",
   },
   {
-      tokenID:"2",
-      name: "Ring 2",
-      description: "Description of ring",
-      company:"Company2",
-      price:"1",
-      type:"Female"
+    itemId: "2",
+    tokenId: "5",
+    name: "Best",
+    description: "best",
+    image: "ipfs://bafybeihm6xznu3ehmq57kfglefxx7kjmk4eh2cya257jqkqm65qre5epjq/blob",
+    creator: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
+    owner: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
+    price: "50000000000000000",
+    ringType: "Male",
   },
-  {
-      tokenID:"3",
-      name: "Ring 3",
-      description: "Description of ring",
-      company:"Company3",
-      price:"1",
-      type:"Male"
-  },
-  {
-      tokenID:"4",
-      name: "Ring 4",
-      description: "Description of ring",
-      company:"Company4",
-      price:"1",
-      type:"Female"
-  },
-  {
-      tokenID:"5",
-      name: "Ring 5",
-      description: "Description of ring",
-      company:"Company5",
-      price:"1",
-      type:"Male"
-  },
-
 ]
 
 function Market() {
+
+    const getURI = async (i) => {
+        var uri = await tokenURI(i);
+        uri = uri.slice(7); 
+        uri = uri.substring(0, uri.length - 14);
+        uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
+        return uri
+      }  
+
+    const [rings, setRings] = useState([]);
+
+    useEffect(() => {
+        const fetchNFTs = async () => {
+            const ringNFTArray = await saleRingNFTs();
+            ringNFTArray.forEach(async nft => {
+                var uri = await getURI(nft.tokenId);
+
+                await axios.get(uri).then(result => {
+                  var finalNFT = result.data;
+                  finalNFT.tokenId = nft.tokenId;
+                  finalNFT.owner = nft.owner;
+                  finalNFT.creator = nft.creator;
+                  finalNFT.itemId = nft.itemId;
+                  finalNFT.price = nft.price;
+                  setRings((arr) => [...arr, finalNFT]);
+                }).catch(error => { console.log(error); })
+              }
+            );
+        };
+        fetchNFTs();
+    }, []);
+
+
     return (
         <div className='market'> 
-                {RingData.map((ring) => (
-                    <Card
-                    key={ring.tokenID}
-                    tokenID={ring.tokenID}
-                    name={ring.name}
-                    description={ring.description}
-                    company={ring.company}
-                    price={ring.price}
-                    type={ring.type}
-                    />
-                ))
-                }
+            {rings.map((ring) => (
+                <Card
+                key={ring.itemId}
+                itemId={ring.itemId}
+                tokenId={ring.tokenId}
+                name={ring.name}
+                description={ring.description}
+                image={ring.image}
+                creator={ring.creator}
+                owner={ring.owner}
+                price={web3.utils.fromWei(ring.price)}
+                type={ring.ringType}
+                />
+            ))
+            }
         </div>
     )
 }

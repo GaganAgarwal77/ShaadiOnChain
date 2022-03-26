@@ -1,6 +1,9 @@
 import Web3 from "web3";
 import { ShaadiOnChain_ABI } from "./abi/ShaadiOnChainABI";
-import { ShaadiOnChain_contract_addr } from "./constants";
+import { RingMarketplace_ABI } from "./abi/RingMarketplaceABI";
+import { RingNFT_ABI } from "./abi/RingNFTABI";
+
+require('dotenv').config()
 
 export const loadWeb3 = async () => {
   if (window.ethereum) {
@@ -23,9 +26,23 @@ export const loadAccount = async () => {
   return account;
 };
 
+//#################################################################
+//# Contracts
+//#################################################################
+
 const ShaadiOnChain_contract = new web3.eth.Contract(
   ShaadiOnChain_ABI,
-  ShaadiOnChain_contract_addr
+  process.env.REACT_APP_SHAADIONCHAIN
+);
+
+const RingMarketplace_contract = new web3.eth.Contract(
+  RingMarketplace_ABI,
+  process.env.REACT_APP_RINGMARKETPLACE
+);
+
+const RingNFT_contract = new web3.eth.Contract(
+  RingNFT_ABI,
+  process.env.REACT_APP_RINGNFT
 );
 
 //#################################################################
@@ -55,3 +72,48 @@ export const registerUser = async (name, gender) => {
 };
 
 
+export const mintRingNFT = async (url) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await RingNFT_contract.methods
+    .createToken(url)
+    .send({
+      from: account,
+    });
+
+  const tokenId = result.events.Transfer.returnValues.tokenId;
+  return tokenId;
+}
+
+export const sellRingOnMarketplace = async (tokenId, price, ringType) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await RingMarketplace_contract.methods
+    .createRingItem(tokenId, price, ringType)
+    .send({
+      from: account,
+    });
+    console.log(result);
+}
+
+
+export const saleRingNFTs = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await RingMarketplace_contract.methods
+    .fetchAllOnSaleRingItems()
+    .call();
+
+  return result;
+}
+
+export const tokenURI = async (tokenId) => {
+  const result = await RingNFT_contract.methods
+    .tokenURI(tokenId)
+    .call();
+
+  return result;
+}
