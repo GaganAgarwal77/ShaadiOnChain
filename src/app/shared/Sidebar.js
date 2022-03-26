@@ -127,6 +127,37 @@ class Sidebar extends Component {
               <span className="menu-title"><Trans>Rings Marketplace </Trans></span>
             </a>
           </li>
+          <li className={ this.isPathActive('/send-engagement-proposal') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
+            <a  className="nav-link" href="/send-engagement-proposal"  >
+              <span className="menu-icon"><img src="/assets/images/wedding-img/icon/engagement.png" alt="Rings" width="20" height="20" className='symbol' /></span>
+              <span className="menu-title"><Trans>Send Engagement Proposal</Trans></span>
+            </a>
+          </li>
+          <li className={ this.isPathActive('/send-marriage-proposal') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
+            <a  className="nav-link" href="/send-marriage-proposal"  >
+              <span className="menu-icon"><img src="/assets/images/wedding-img/icon/marriage.png" alt="Rings" width="20" height="20" className='symbol' /></span>
+              <span className="menu-title"><Trans>Send Marriage Proposal</Trans></span>
+            </a>
+          </li> 
+
+          <li className={ this.isPathActive('/recieved-proposals') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
+            <a  className="nav-link" href="/recieved-proposals"  >
+              <span className="menu-icon"><img src="/assets/images/wedding-img/icon/love-letter.png" alt="Rings" width="20" height="20" className='symbol' /></span>
+              <span className="menu-title"><Trans>Recieved Proposals</Trans></span>
+            </a>
+          </li> 
+
+          
+         
+          <li className="nav-item nav-category">
+            <span className="nav-link"><Trans>More</Trans></span>
+          </li>
+          <li className={ this.isPathActive('/create-ring') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
+            <a  className="nav-link" href="/create-ring"  >
+              <span className="menu-icon"><img src="/assets/images/wedding-img/wedding-ring.png" alt="Rings" width="25" height="25" className='symbol' /></span>
+              <span className="menu-title"><Trans>Mint a Ring NFT</Trans></span>
+            </a>
+          </li> 
           <li className={ this.isPathActive('/basic-ui') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
             <div className={ this.state.basicUiMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('basicUiMenuOpen') } data-toggle="collapse">
               <span className="menu-icon">
@@ -225,9 +256,6 @@ class Sidebar extends Component {
                 </ul>
               </div>
             </Collapse>
-          </li>
-          <li className="nav-item nav-category">
-            <span className="nav-link"><Trans>More</Trans></span>
           </li>
           <li className={ this.isPathActive('/error-pages') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
             <div className={ this.state.errorPagesMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('errorPagesMenuOpen') } data-toggle="collapse">

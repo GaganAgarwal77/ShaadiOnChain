@@ -1,0 +1,1 @@
+export const ShaadiOnChain_contract_addr = "0xbc2535aaecC61E1db9ffCB327e216e39190B59F4";

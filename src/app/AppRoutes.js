@@ -8,6 +8,13 @@ const Wedding = lazy(() => import('./wedding'));
 const LoginRegister = lazy(() => import('./LoginRegister'));
 const RingsMarketplace = lazy(() => import('./RingsMarketplace'));
 const Purchase = lazy(() => import('./Purchase'));
+const SendEngagementProposal = lazy(() => import('./SendEngagementProposal'));
+const AcceptEngagementProposal = lazy(() => import('./AcceptEngagementProposal'));
+const SendMarriageProposal = lazy(() => import('./SendMarriageProposal'));
+const AcceptMarriageProposal = lazy(() => import('./AcceptMarriageProposal'));
+
+const RecievedProposals = lazy(() => import('./RecievedProposals'));
+
 const CreateRing = lazy(() => import('./CreateRing'));
 
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
@@ -38,6 +45,12 @@ class AppRoutes extends Component {
           <Route path="/login-register" component={ LoginRegister } />
           <Route path="/rings-marketplace" component={ RingsMarketplace } />
           <Route path="/purchase" component={ Purchase } />
+          <Route path="/send-engagement-proposal" component={ SendEngagementProposal } />
+          <Route path="/accept-engagement-proposal" component={ AcceptEngagementProposal } />
+          <Route path="/send-marriage-proposal" component={ SendMarriageProposal } />
+          <Route path="/accept-marriage-proposal" component={ AcceptMarriageProposal } />
+          <Route path="/recieved-proposals" component={ RecievedProposals } />
+
           <Route path="/create-ring" component={ CreateRing } />
 
           <Route path="/basic-ui/buttons" component={ Buttons } />
