@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
+import {Certificate, download} from './certificate.js';
 
 function SendMarriageProposal
 (props) {
@@ -12,18 +13,21 @@ function SendMarriageProposal
         walletAddress: "0x1231231241",
         type: "Female"
     }
-    return (
+    const[vows, setVows] = useState(""); 
 
+    const handleVowsChange = (e) => {
+        setVows(e.target.value);
+    };
+
+    return(
             <div className='purchase'>
                 <div className="goback">    
                    <img src="/assets/images/wedding-img/icon/next.png" onClick={goBack} alt="Go back" className='gobackButton'/>
                 </div> 
-                <div> 
-                
-                </div> 
+                <br/><br/><br/>
                 <div className="purchase__artwork">
-                    <img style={{width:"30vw"}}src={data.imageURL} alt="couple photo" />
-                    <h4>Marriage Certificate</h4>
+                    {/* <img style={{width:"30vw"}}src={data.imageURL} alt="couple photo" /> */}
+                    <Certificate width='700' height='500' groom_name='G Sri Harsha' bride_name='Sri Harsha G' groom_vows='Sometext will be fetched here!' bride_vows={vows} is_proposal='false'/>
                 </div>
 
                 <div className="purchase__details">
@@ -32,7 +36,7 @@ function SendMarriageProposal
                     <h4>Wallet Address: {data.walletAddress}</h4>
                     <h4>Gender: {data.type}</h4>
                     <label htmlFor="exampleTextarea1">Your Vows:</label>
-                    <textarea style={{color:"white"}}className="form-control" id="exampleTextarea1" rows="4" placeholder="Write Your Vows"></textarea>
+                    <textarea style={{color:"white"}} className="form-control" id="vows" rows="4" placeholder="Write Your Vows" onChange={handleVowsChange} value={vows}></textarea>
                     <br/>   
                     <div style={{marginTop:"10px"}}className="purchase__detailsBuy">
                         {/* <div className="value">
@@ -41,6 +45,7 @@ function SendMarriageProposal
                             
                         </div> */}
                         <button onClick={() => {alert("Accepted Proposal"); goBack()} }>Accept Proposal!</button>
+                        <button onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button>
                     </div>
                     
                 </div>
