@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import '../assets/Card.css'
 import { useHistory } from 'react-router-dom'
 import { getUser } from './services/web3';
-
+import { uriToImageConverter } from "./services/utility";
 
 
 function Card({itemId, tokenId, name, description, image, creator, owner, price, type}) {
@@ -19,10 +19,7 @@ function Card({itemId, tokenId, name, description, image, creator, owner, price,
         }
 
         fetchCreator();
-
-        var uri = image.slice(7); 
-        uri = uri.substring(0, uri.length - 5);
-        uri = 'https://' + uri + '.ipfs.dweb.link/blob';
+        const uri = uriToImageConverter(image);
         setImageUri(uri);
     }, []);
 

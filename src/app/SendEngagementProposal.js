@@ -2,27 +2,12 @@ import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
 import {InputGroup, FormControl, Button} from 'react-bootstrap'
-import { getUser, isRingNFTOwner, tokenURI, createEngagementProposal } from './services/web3';
+import { getUser, isRingNFTOwner, createEngagementProposal } from './services/web3';
+import { getImageFromTokenId } from "./services/utility";
 import { GENDER } from './services/constants';
-import axios from 'axios';
 
 function SendEngagementProposal(props) {
     const { push, goBack } = useHistory()
-
-    const getURI = async (i) => {
-        var uri = await tokenURI(i);
-        uri = uri.slice(7); 
-        uri = uri.substring(0, uri.length - 14);
-        uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
-        return uri
-    }  
-
-    const imageConverter = (uri) => {
-        var uri = uri.slice(7); 
-        uri = uri.substring(0, uri.length - 5);
-        uri = 'https://' + uri + '.ipfs.dweb.link/blob';
-        return uri;
-    }
 
     const [loverDetails, setLoverDetails] = useState({})
     const [loverAddr, setLoverAddr] = useState(""); 
@@ -42,10 +27,8 @@ function SendEngagementProposal(props) {
             alert('Given Ring Token Id is not owned by this wallet address');
             return;
         }
-        const uri = await getURI(ringID);
-        var result = await axios(uri);
-        result = result.data;
-        const image = imageConverter(result.image);
+
+        const image = getImageFromTokenId(ringID);
         setRingImageUri(image);
     }
 

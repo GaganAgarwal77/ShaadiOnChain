@@ -1,7 +1,9 @@
-import React , {useEffect} from 'react'
+import React , { useState, useEffect} from 'react'
 import Card from './card'
 import  '../assets/Market.css'
 import { useHistory } from 'react-router-dom'
+import { web3, loadAccount, getUser, getAllEngagementProposals } from "./services/web3";
+import { getImageFromTokenId } from "./services/utility";
 
 const RingData = [
     {
@@ -78,31 +80,53 @@ const RingData = [
 
 
 function Market() {
-    useEffect(() => {
-        console.log(RingData,MarriageData)
-    },[RingData,MarriageData])
-    
 
     const { push } = useHistory()
+
+
+    const [engageProposals, setEngageProposals] = useState([]);
+
+    useEffect(() => {
+        const fetchEngageProposals = async () => {
+            const myAddress = await loadAccount();
+            const engagementProposals = await getAllEngagementProposals();
+            engagementProposals.forEach(async function(proposal, index, object) {
+                if (proposal.proposer === myAddress) {
+                    // return;
+                }
+                const user = await getUser(proposal.proposer);
+                const image = await getImageFromTokenId(proposal.proposerRingTokenId);
+    
+                const engageProposal = {
+                    name: user.name,
+                    tokenId: proposal.proposerRingTokenId,
+                    image: image,
+                    note: proposal.proposerNote
+                }
+                setEngageProposals((arr) => [...arr, engageProposal]);
+              });
+        };
+        fetchEngageProposals();
+    },[])
+    
+
     return (
         <div>
+
         <h2>Engagement Proposals</h2>
         <div className='market'> 
-                {RingData.map((ring) => (
-                            <div className='card' onClick={() => push('/accept-engagement-proposal/' + ring.tokenID)} >
-                            {/* <img src={"https://ipfs.io/ipfs/" + src.slice(7)} alt="nft artwork" /> */}
-                            <img src='/assets/images/wedding-img/ring-image.jpg' alt="nft artwork" />
-                            <div className="card__info">
-                                <h2>{ring.name}</h2>
-                                <h4>{ring.note.length >= 100 ? ring.note.substring(0, 100) + '...' : ring.note}</h4>
-                                <h4>{ring.ringDescription}</h4>
-                                <h4>{ring.type}</h4>
-                            </div>
-
+                {engageProposals.map((proposal) => (
+                    <div className='card' onClick={() => push('/accept-engagement-proposal/' + proposal.tokenID)} >
+                        <img src='/assets/images/wedding-img/ring-image.jpg' alt="nft artwork" />
+                        <div className="card__info">
+                            <h2>{proposal.name}</h2>
+                            <h4>{proposal.note.length >= 100 ? proposal.note.substring(0, 100) + '...' : proposal.note}</h4>
                         </div>
+                    </div>
                 ))
                 }
         </div>
+
         <h2>Marriage Proposals</h2>
 
         <div className='market'> 
