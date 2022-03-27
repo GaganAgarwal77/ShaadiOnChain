@@ -52,9 +52,9 @@ class AppRoutes extends Component {
           <Route path="/rings-marketplace" component={ RingsMarketplace } />
           <Route path="/purchase/:itemId" component={ Purchase } />
           <Route path="/send-engagement-proposal" component={ SendEngagementProposal } />
-          <Route path="/accept-engagement-proposal" component={ AcceptEngagementProposal } />
+          <Route path="/accept-engagement-proposal/:engagementProposalId" component={ AcceptEngagementProposal } />
           <Route path="/send-marriage-proposal" component={ SendMarriageProposal } />
-          <Route path="/accept-marriage-proposal" component={ AcceptMarriageProposal } />
+          <Route path="/accept-marriage-proposal/:marriageProposalId" component={ AcceptMarriageProposal } />
           <Route path="/recieved-proposals" component={ RecievedProposals } />
 
           <Route path="/sent-proposals" component={ SentProposals } />

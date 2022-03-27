@@ -28,7 +28,7 @@ function SendEngagementProposal(props) {
             return;
         }
 
-        const image = getImageFromTokenId(ringID);
+        const image = await getImageFromTokenId(ringID);
         setRingImageUri(image);
     }
 

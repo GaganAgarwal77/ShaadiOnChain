@@ -22,3 +22,9 @@ export const getImageFromTokenId = async (tokenId) => {
     const image = uriToImageConverter(result.data.image);
     return image;
 }
+
+export const getMetadataFromTokenId = async (tokenId) => {
+    const uri = await getURI(tokenId);
+    const result = await axios(uri);
+    return result.data;
+}

@@ -160,7 +160,9 @@ export const purchaseRing = async (itemId, price) => {
     })
     .on("error", function (error, receipt) {
       window.alert("An error has occured!");
+      return false;
     });
+    return true;
 };
 
 export const createEngagementProposal = async (loverAddr, ringTokenId, note) => {
@@ -169,6 +171,22 @@ export const createEngagementProposal = async (loverAddr, ringTokenId, note) => 
 
   await ShaadiOnChain_contract.methods
     .createProposal(loverAddr, ringTokenId, note)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}
+
+export const respondToEngagementProposal = async (proposalId, response, ringTokenId, note) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await ShaadiOnChain_contract.methods
+    .respondToProposal(proposalId, response, ringTokenId, note)
     .send({
       from: account,
     })
@@ -193,11 +211,16 @@ export const getAllEngagementProposals = async () => {
     .userAddrToProposalIds(account, i)
     .call();
 
-    const proposal = await ShaadiOnChain_contract.methods
-    .idToProposal(proposalId)
-    .call();
-
+    const proposal = await getEngagementProposalById(proposalId)
     proposals.push(proposal);
   }
   return proposals;
+}
+
+export const getEngagementProposalById = async (proposalId) => {
+  const proposal = await ShaadiOnChain_contract.methods
+  .idToProposal(proposalId)
+  .call();
+
+  return proposal;
 }

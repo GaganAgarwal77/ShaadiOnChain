@@ -5,45 +5,6 @@ import { useHistory } from 'react-router-dom'
 import { web3, loadAccount, getUser, getAllEngagementProposals } from "./services/web3";
 import { getImageFromTokenId } from "./services/utility";
 
-const RingData = [
-    {
-        tokenID:"1",
-        name: "Kriti",
-        note: "Note of love",
-        ringDescription:"Gold Ring",
-        type:"Female"
-    },
-    {
-        tokenID:"2",
-        name: "Shraddha",
-        note: "Note of love",
-        ringDescription:"Gold Ring",
-        type:"Female"
-    },
-    {
-        tokenID:"3",
-        name: "Alia",
-        note: "Note of love",
-        ringDescription:"Gold Ring",
-        type:"Female"
-    },
-    {
-        tokenID:"4",
-        name: "Katrina",
-        note: "Note of love",
-        ringDescription:"Gold Ring",
-        type:"Female"
-    },
-    {
-        tokenID:"5",
-        name: "Disha",
-        note: "Note of love",
-        ringDescription:"Gold Ring",
-        type:"Female"
-    },
-  
-  ]
-
   const MarriageData = [
     {
         tokenID:"1",
@@ -92,16 +53,17 @@ function Market() {
             const engagementProposals = await getAllEngagementProposals();
             engagementProposals.forEach(async function(proposal, index, object) {
                 if (proposal.proposer === myAddress) {
-                    // return;
+                    return;
                 }
                 const user = await getUser(proposal.proposer);
                 const image = await getImageFromTokenId(proposal.proposerRingTokenId);
     
                 const engageProposal = {
                     name: user.name,
-                    tokenId: proposal.proposerRingTokenId,
+                    proposalId: proposal.id,
                     image: image,
-                    note: proposal.proposerNote
+                    note: proposal.proposerNote,
+                    status: proposal.status,
                 }
                 setEngageProposals((arr) => [...arr, engageProposal]);
               });
@@ -116,11 +78,18 @@ function Market() {
         <h2>Engagement Proposals</h2>
         <div className='market'> 
                 {engageProposals.map((proposal) => (
-                    <div className='card' onClick={() => push('/accept-engagement-proposal/' + proposal.tokenID)} >
-                        <img src='/assets/images/wedding-img/ring-image.jpg' alt="nft artwork" />
+                    <div className='card' onClick={() => push('/accept-engagement-proposal/' + proposal.proposalId)} >
+                        <img src={proposal.image} alt="Ring NFT" />
                         <div className="card__info">
                             <h2>{proposal.name}</h2>
                             <h4>{proposal.note.length >= 100 ? proposal.note.substring(0, 100) + '...' : proposal.note}</h4>
+                        </div>
+                        <div className='card__infoValueParent'>
+                            <div className="card__infoValue">
+                                {proposal.status === "0" && <button type="button" className="btn btn-warning">Waiting</button>}
+                                {proposal.status === "1" && <button type="button" className="btn btn-success">Accepted</button>}
+                                {proposal.status === "2" && <button type="button" className="btn btn-danger">Rejected</button>}
+                            </div>
                         </div>
                     </div>
                 ))
