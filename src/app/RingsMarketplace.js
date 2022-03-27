@@ -3,43 +3,35 @@ import Card from './card'
 import  '../assets/Market.css'
 
 import axios from 'axios';
-import { web3, saleRingNFTs, tokenURI } from "./services/web3";
+import { web3, saleRingNFTs } from "./services/web3";
+import { getURI } from "./services/utility";
 
-const RingData = [
-  {
-    itemId: "1",
-    tokenId: "4",
-    name: "Best",
-    description: "best",
-    image: "ipfs://bafybeihm6xznu3ehmq57kfglefxx7kjmk4eh2cya257jqkqm65qre5epjq/blob",
-    creator: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
-    owner: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
-    price: "50000000000000000",
-    ringType: "Male",
-  },
-  {
-    itemId: "2",
-    tokenId: "5",
-    name: "Best",
-    description: "best",
-    image: "ipfs://bafybeihm6xznu3ehmq57kfglefxx7kjmk4eh2cya257jqkqm65qre5epjq/blob",
-    creator: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
-    owner: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
-    price: "50000000000000000",
-    ringType: "Male",
-  },
-]
+// const RingData = [
+//   {
+//     itemId: "1",
+//     tokenId: "4",
+//     name: "Best",
+//     description: "best",
+//     image: "ipfs://bafybeihm6xznu3ehmq57kfglefxx7kjmk4eh2cya257jqkqm65qre5epjq/blob",
+//     creator: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
+//     owner: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
+//     price: "50000000000000000",
+//     ringType: "Male",
+//   },
+//   {
+//     itemId: "2",
+//     tokenId: "5",
+//     name: "Best",
+//     description: "best",
+//     image: "ipfs://bafybeihm6xznu3ehmq57kfglefxx7kjmk4eh2cya257jqkqm65qre5epjq/blob",
+//     creator: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
+//     owner: "0x4CD5Ce92849A4cfcB9D1791C0d8EC7ea10Fe9769",
+//     price: "50000000000000000",
+//     ringType: "Male",
+//   },
+// ]
 
 function Market() {
-
-    const getURI = async (i) => {
-      var uri = await tokenURI(i);
-      uri = uri.slice(7); 
-      uri = uri.substring(0, uri.length - 14);
-      uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
-      return uri
-    }  
-
     const [rings, setRings] = useState([]);
 
     useEffect(() => {

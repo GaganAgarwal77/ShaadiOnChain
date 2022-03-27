@@ -109,7 +109,14 @@ export const saleRingNFTs = async () => {
   const result = await RingMarketplace_contract.methods
     .fetchAllOnSaleRingItems()
     .call();
-  return result;
+
+  let ringOnSale = []
+  result.forEach(async nft => {
+    if (nft.tokenId !== "0") {
+      ringOnSale.push(nft)
+    }
+  })
+  return ringOnSale;
 }
 
 export const tokenURI = async (tokenId) => {
@@ -170,4 +177,27 @@ export const createEngagementProposal = async (loverAddr, ringTokenId, note) => 
       return false;
     });
     return true;
+}
+
+export const getAllEngagementProposals = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  const proposalCount = await ShaadiOnChain_contract.methods
+    .getUserProposalsCount(account)
+    .call();
+
+  let proposals = []
+
+  for (var i = 0; i < proposalCount; i++) {
+    const proposalId = await ShaadiOnChain_contract.methods
+    .userAddrToProposalIds(account, i)
+    .call();
+
+    const proposal = await ShaadiOnChain_contract.methods
+    .idToProposal(proposalId)
+    .call();
+
+    proposals.push(proposal);
+  }
+  return proposals;
 }
