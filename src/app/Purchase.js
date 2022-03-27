@@ -3,7 +3,7 @@ import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios';
 
-import { web3, tokenURI, getUser, getRingItem } from "./services/web3";
+import { web3, tokenURI, getUser, getRingItem, purchaseRing } from "./services/web3";
 
 function Purchase(props) {
     const { goBack } = useHistory()
@@ -42,9 +42,8 @@ function Purchase(props) {
             result = result.data;    
 
             var image = result.image.slice(7); 
-            image = image.substring(0, uri.length - 5);
+            image = image.substring(0, image.length - 5);
             image = 'https://' + image + '.ipfs.dweb.link/blob';
-    
 
             const user = await getUser(RingDetails.creator);
 
@@ -78,13 +77,14 @@ function Purchase(props) {
                 </div> 
                 <div className="purchase__artwork">
                     {/* <img src='/assets/images/wedding-img/ring-image.jpg' alt="nft artwork" /> */}
-                    <img src={data.image} alt="nft artwork" />
+                    <img src={data.image} alt="Ring NFT" />
                 </div>
 
                 <div className="purchase__details">
                     <h1>#{data.tokenId} {data.name}</h1>
                     <h3>{data.description}</h3>
                     <h4>Creator: {data.creatorName}</h4>
+                    <h4>Current Owner: {data.owner.slice(0,10)}...</h4>
                     <h4>{data.ringType} Ring</h4>
                     <div className="purchase__detailsBuy">
                         <div className="value">
@@ -92,7 +92,7 @@ function Purchase(props) {
                             <img src="/assets/images/ethereum3.svg" alt="ETH" width="30" height="30" className='symbol' />
                             
                         </div>
-                        <button onClick={() => {console.log("Buy")} }> Buy now</button>
+                        <button onClick={() => {purchaseRing(data.itemId, data.price)}}> Buy now</button>
                     </div>
                     
                 </div>
