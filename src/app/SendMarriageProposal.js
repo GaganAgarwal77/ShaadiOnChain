@@ -33,7 +33,7 @@ function SendEngagementProposal(props) {
                 <br/><br/><br/>
                 <div className="purchase__artwork">
                     {/* <img src='/assets/images/wedding-img/marriage-certificate-image.png' alt="Marriage Certificate" /> */}
-                    <Certificate width='700' height='500' groom_name='G Sri Harsha' bride_name='Sri Harsha G' groom_vows={vows} bride_vows='' is_proposal='true'/>
+                    <Certificate style={{width:"35vw"}} width='700' height='500' groom_name='G Sri Harsha' bride_name='Sri Harsha G' groom_vows={vows} bride_vows='' is_proposal='true'/>
                 </div>
 
                 <div className="purchase__details">
