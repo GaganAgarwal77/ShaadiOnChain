@@ -100,9 +100,6 @@ export const sellRingOnMarketplace = async (tokenId, price, ringType) => {
 
 
 export const saleRingNFTs = async () => {
-  const accounts = await web3.eth.getAccounts();
-  const account = accounts[0];
-
   const result = await RingMarketplace_contract.methods
     .fetchAllOnSaleRingItems()
     .call();
@@ -114,6 +111,17 @@ export const tokenURI = async (tokenId) => {
   const result = await RingNFT_contract.methods
     .tokenURI(tokenId)
     .call();
+
+  return result;
+}
+
+
+export const getRingItem = async (itemId) => {
+  const result = await RingMarketplace_contract.methods
+    .fetchRingItem(itemId)
+    .call();
+
+  console.log(result)
 
   return result;
 }

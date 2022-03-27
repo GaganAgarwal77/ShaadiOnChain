@@ -33,12 +33,12 @@ const RingData = [
 function Market() {
 
     const getURI = async (i) => {
-        var uri = await tokenURI(i);
-        uri = uri.slice(7); 
-        uri = uri.substring(0, uri.length - 14);
-        uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
-        return uri
-      }  
+      var uri = await tokenURI(i);
+      uri = uri.slice(7); 
+      uri = uri.substring(0, uri.length - 14);
+      uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
+      return uri
+    }  
 
     const [rings, setRings] = useState([]);
 
@@ -49,13 +49,13 @@ function Market() {
                 var uri = await getURI(nft.tokenId);
 
                 await axios.get(uri).then(result => {
-                  var finalNFT = result.data;
-                  finalNFT.tokenId = nft.tokenId;
-                  finalNFT.owner = nft.owner;
-                  finalNFT.creator = nft.creator;
-                  finalNFT.itemId = nft.itemId;
-                  finalNFT.price = nft.price;
-                  setRings((arr) => [...arr, finalNFT]);
+                  var newNFT = result.data;
+                  newNFT.itemId = nft.itemId;
+                  newNFT.tokenId = nft.tokenId;
+                  newNFT.creator = nft.creator;
+                  newNFT.owner = nft.owner;
+                  newNFT.price = nft.price;
+                  setRings((arr) => [...arr, newNFT]);
                 }).catch(error => { console.log(error); })
               }
             );

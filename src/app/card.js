@@ -27,7 +27,7 @@ function Card({itemId, tokenId, name, description, image, creator, owner, price,
     }, []);
 
     return (
-        <div className='card' onClick={() => push('/purchase/' + tokenId)}>
+        <div className='card' onClick={() => push('/purchase/' + itemId)}>
             <img src={imageUri} alt="nft artwork" />
             {/* <img src='/assets/images/wedding-img/ring-image.jpg' alt="nft artwork" /> */}
             <div className="card__info">
