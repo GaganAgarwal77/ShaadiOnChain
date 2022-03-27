@@ -147,6 +147,12 @@ class Sidebar extends Component {
             </a>
           </li> 
 
+          <li className={ this.isPathActive('/love-letters') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
+            <a  className="nav-link" href="/love-letters"  >
+              <span className="menu-icon"><img src="/assets/images/wedding-img/icon/love-letter2.png" alt="Rings" width="20" height="20" className='symbol' /></span>
+              <span className="menu-title"><Trans>Love Letters</Trans></span>
+            </a>
+          </li>
           
          
           <li className="nav-item nav-category">
