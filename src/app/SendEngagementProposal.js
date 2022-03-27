@@ -2,74 +2,114 @@ import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
 import {InputGroup, FormControl, Button} from 'react-bootstrap'
-function SendEngagementProposal(props) {
-    const { goBack } = useHistory()
-    const data =   {
-        id:"1",
-        walletAddress: "0x1231231241",
-        name: "Kriti Sanon",
-        gender: "Female"
-    }
-    const [loverDetails, setLoverDetails] = useState(data)
-    const[walletAddress, setWalletAddress] = useState("0X121331241241"); 
-    const[ringID, setRingID] = useState("0X5675464563545"); 
-    function fetchDetails() {
-        alert(walletAddress)
-        //fetch loved one's details
-    }
-    function fetchRing(){
-        alert(ringID)
-        //fetch ring
-    }
-    return (
+import { getUser, isRingNFTOwner, tokenURI, createEngagementProposal } from './services/web3';
+import { GENDER } from './services/constants';
+import axios from 'axios';
 
+function SendEngagementProposal(props) {
+    const { push, goBack } = useHistory()
+
+    const getURI = async (i) => {
+        var uri = await tokenURI(i);
+        uri = uri.slice(7); 
+        uri = uri.substring(0, uri.length - 14);
+        uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
+        return uri
+    }  
+
+    const imageConverter = (uri) => {
+        var uri = uri.slice(7); 
+        uri = uri.substring(0, uri.length - 5);
+        uri = 'https://' + uri + '.ipfs.dweb.link/blob';
+        return uri;
+    }
+
+    const [loverDetails, setLoverDetails] = useState({})
+    const [loverAddr, setLoverAddr] = useState(""); 
+    const [ringID, setRingID] = useState(""); 
+    const [ringImageUri, setRingImageUri] = useState("");
+    const [note, setNote] = useState("");
+    
+    const fetchUser = async () => {
+        const user = await getUser(loverAddr);
+        setLoverDetails(user);
+    }
+
+    const fetchRing = async () => {
+        const isOwner = await isRingNFTOwner(ringID);
+
+        if(!isOwner) {
+            alert('Given Ring Token Id is not owned by this wallet address');
+            return;
+        }
+        const uri = await getURI(ringID);
+        var result = await axios(uri);
+        result = result.data;
+        const image = imageConverter(result.image);
+        setRingImageUri(image);
+    }
+
+    const sendProposal = async () => {
+        const status = await createEngagementProposal(loverAddr, ringID, note);
+        if(status) {
+            window.alert("Engagement Proposal created successfully");
+            push('/dashboard');
+        }
+    }
+
+    return (
             <div className='purchase'>
                 <div className="goback">    
-                   <img src="/assets/images/wedding-img/icon/next.png" onClick={goBack} alt="Go back" className='gobackButton'/>
-                   
+                   <img src="/assets/images/wedding-img/icon/next.png" onClick={goBack} alt="Go back" className='gobackButton'/>   
                 </div> 
                 <div> 
                 
                 </div> 
                 <div className="purchase__artwork">
-                    <img src='/assets/images/wedding-img/ring-image.jpg' alt="nft artwork" />
+                    <img src={ringImageUri===''? 'https://thumbs.gfycat.com/EqualPowerfulKoodoo-size_restricted.gif': ringImageUri} alt="Ring NFT"/>
                 </div>
 
                 <div className="purchase__details">
                     <label htmlFor="exampleTextarea1">Your Loved One's Wallet Address:</label>
                     <InputGroup className="mb-3">
                         <FormControl
-                        aria-label="Recipient's username"
-                        aria-describedby="basic-addon2"
-                        value={walletAddress}
-                        onChange={(e) => {setWalletAddress(e.target.value)}}
+                            aria-label="Recipient's username"
+                            aria-describedby="basic-addon2"
+                            value={loverAddr}
+                            onChange={(e) => {setLoverAddr(e.target.value)}}
                         />
-                        <Button variant="primary" id="button-addon2" onClick={fetchDetails}>
-                        Fetch Details
+                        <Button variant="primary" id="button-addon2" onClick={fetchUser}>
+                            Fetch User
                         </Button>
                     </InputGroup>
-                    <h3 style={{height:"25px"}}>Name: {data.name}</h3>
-                    <h4>Gender: {data.gender}</h4>
-                    <label htmlFor="exampleTextarea1">A Note of Love:</label>
-                    <textarea style={{color:"white"}}className="form-control" id="exampleTextarea1" rows="4" placeholder="Write a note of love"></textarea>
-                    <br/>  
-                    <label htmlFor="exampleTextarea1">Your Ring NFT's Token ID:</label>
-                    
-                    <InputGroup className="mb-3">
-                        <FormControl
-                        aria-label="Recipient's username"
-                        aria-describedby="basic-addon2"
-                        value={ringID}
-                        onChange={(e) => {setRingID(e.target.value)}}
-                        />
-                        <Button variant="primary" id="button-addon2" onClick={fetchRing}>
-                        Fetch Ring
-                        </Button>
-                    </InputGroup>
-                    <div style={{marginTop:"10px"}}className="purchase__detailsBuy">
-                        <button onClick={() => {alert("Sent Proposal"); goBack()} }>Send Proposal!</button>
-                    </div>
-                    
+                    {
+                        Object.keys(loverDetails).length === 0 ? 
+                        <div></div> :
+                        <React.Fragment>
+                        <h4>Name: {loverDetails.name}</h4>
+                        <h4>Gender: {GENDER[loverDetails.gender]}</h4>
+                        <br/>  
+                        <label htmlFor="exampleTextarea1">Your Ring NFT's Token ID:</label>
+                        <InputGroup className="mb-3">
+                            <FormControl
+                            aria-label="Recipient's username"
+                            aria-describedby="basic-addon2"
+                            value={ringID}
+                            onChange={(e) => {setRingID(e.target.value)}}
+                            />
+                            <Button variant="primary" id="button-addon2" onClick={fetchRing}>
+                                Fetch Ring
+                            </Button>
+                        </InputGroup>
+                        <label htmlFor="note">A Note of Love:</label>
+                        <textarea style={{color:"white"}} value={note} onChange={(e) => {setNote(e.target.value)}}
+                        className="form-control" id="note" rows="4" placeholder="Write a note of love"/>
+
+                        <div style={{marginTop:"10px"}}className="purchase__detailsBuy">
+                            <button onClick={() => {sendProposal()} }>Send Proposal</button>
+                        </div>
+                        </React.Fragment>
+                    }                    
                 </div>
             </div> 
     )

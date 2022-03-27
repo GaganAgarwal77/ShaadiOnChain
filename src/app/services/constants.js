@@ -1,1 +1,5 @@
-export const ShaadiOnChain_contract_addr = "0xbc2535aaecC61E1db9ffCB327e216e39190B59F4";
+export const GENDER = {
+    0: "Male",
+    1: "Female",
+    2: "Others"
+}

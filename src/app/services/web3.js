@@ -55,8 +55,15 @@ export const getUser = async (address) => {
     const accounts = await web3.eth.getAccounts();
     address = accounts[0];
   }
-  const user = await ShaadiOnChain_contract.methods.addrToUser(address).call();
-  return user;
+
+  try {
+    const user = await ShaadiOnChain_contract.methods.addrToUser(address).call();
+    return user;
+  }
+  catch (err) {
+    window.alert("User does not exist");
+    window.location.reload();
+  };
 };
 
 export const registerUser = async (name, gender) => {
@@ -112,6 +119,15 @@ export const tokenURI = async (tokenId) => {
   return result;
 }
 
+export const isRingNFTOwner = async (tokenId) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  const result = await RingNFT_contract.methods
+    .ownerOf(tokenId)
+    .call();
+  return result === account ? true : false
+}
+
 
 export const getRingItem = async (itemId) => {
   const result = await RingMarketplace_contract.methods
@@ -124,7 +140,7 @@ export const getRingItem = async (itemId) => {
 export const purchaseRing = async (itemId, price) => {
   const accounts = await web3.eth.getAccounts();
   const account = accounts[0];
-  const result = await RingMarketplace_contract.methods
+  await RingMarketplace_contract.methods
     .createRingSale(itemId)
     .send({
       from: account,
@@ -138,7 +154,20 @@ export const purchaseRing = async (itemId, price) => {
     .on("error", function (error, receipt) {
       window.alert("An error has occured!");
     });
-
-  // window.location.reload();
-  console.log(result);
 };
+
+export const createEngagementProposal = async (loverAddr, ringTokenId, note) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await ShaadiOnChain_contract.methods
+    .createProposal(loverAddr, ringTokenId, note)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import Canvas from 'react-responsive-canvas';
 
 var canvasRef;
 
