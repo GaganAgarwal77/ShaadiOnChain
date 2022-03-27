@@ -12,6 +12,9 @@ const SendEngagementProposal = lazy(() => import('./SendEngagementProposal'));
 const AcceptEngagementProposal = lazy(() => import('./AcceptEngagementProposal'));
 const SendMarriageProposal = lazy(() => import('./SendMarriageProposal'));
 const AcceptMarriageProposal = lazy(() => import('./AcceptMarriageProposal'));
+const LoveLetters = lazy(() => import('./LoveLetters'));
+const LoveLetter = lazy(() => import('./love-letter'));
+const ReadLoveLetter = lazy(() => import('./read-love-letter'));
 
 const RecievedProposals = lazy(() => import('./RecievedProposals'));
 
@@ -50,6 +53,9 @@ class AppRoutes extends Component {
           <Route path="/send-marriage-proposal" component={ SendMarriageProposal } />
           <Route path="/accept-marriage-proposal" component={ AcceptMarriageProposal } />
           <Route path="/recieved-proposals" component={ RecievedProposals } />
+          <Route path="/love-letters" component={ LoveLetters } />
+          <Route path="/love-letter" component={ LoveLetter } />
+          <Route path="/read-love-letter" component={ ReadLoveLetter } />
 
           <Route path="/create-ring" component={ CreateRing } />
 
