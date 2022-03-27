@@ -90,12 +90,11 @@ export const sellRingOnMarketplace = async (tokenId, price, ringType) => {
   const accounts = await web3.eth.getAccounts();
   const account = accounts[0];
 
-  const result = await RingMarketplace_contract.methods
+  await RingMarketplace_contract.methods
     .createRingItem(tokenId, price, ringType)
     .send({
       from: account,
     });
-    console.log(result);
 }
 
 
@@ -103,7 +102,6 @@ export const saleRingNFTs = async () => {
   const result = await RingMarketplace_contract.methods
     .fetchAllOnSaleRingItems()
     .call();
-
   return result;
 }
 
@@ -111,7 +109,6 @@ export const tokenURI = async (tokenId) => {
   const result = await RingNFT_contract.methods
     .tokenURI(tokenId)
     .call();
-
   return result;
 }
 
@@ -120,8 +117,28 @@ export const getRingItem = async (itemId) => {
   const result = await RingMarketplace_contract.methods
     .fetchRingItem(itemId)
     .call();
-
-  console.log(result)
-
   return result;
 }
+
+
+export const purchaseRing = async (itemId, price) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  const result = await RingMarketplace_contract.methods
+    .createRingSale(itemId)
+    .send({
+      from: account,
+      value: price,
+    })
+    .on("transactionHash", function (hash) {})
+    .on("receipt", function (receipt) {})
+    .on("confirmation", function (confirmationNumber, receipt) {
+      window.alert("Purchase is successfully completed!");
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+    });
+
+  // window.location.reload();
+  console.log(result);
+};
