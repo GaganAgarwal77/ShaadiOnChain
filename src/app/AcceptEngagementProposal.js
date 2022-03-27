@@ -42,7 +42,11 @@ function SendEngagementProposal(props) {
                     </InputGroup>
                     <h3 style={{height:"25px"}}>Name: {data.name}</h3>
                     <h4>Gender: {data.gender}</h4>
-                    <label htmlFor="exampleTextarea1">A Note of Love:</label>
+                    <label htmlFor="exampleTextarea1">Recieved Note of Love:</label>
+                    <textarea style={{color:"white",background:"#2A3038"}}className="form-control" id="exampleTextarea1" rows="4" value="Recieved note of love" disabled></textarea>
+                    <br/>  
+
+                    <label className="mt-4" htmlFor="exampleTextarea1">A Note of Love:</label>
                     <textarea style={{color:"white"}}className="form-control" id="exampleTextarea1" rows="4" placeholder="Write a note of love"></textarea>
                     <br/>  
                     <label htmlFor="exampleTextarea1">Your Ring NFT's Token ID:</label>

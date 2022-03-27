@@ -29,6 +29,7 @@ function SendMarriageProposal
                 <div className="purchase__artwork">
                     {/* <img style={{width:"30vw"}}src={data.imageURL} alt="couple photo" /> */}
                     <Certificate style={{width:"35vw"}} width='700' height='500' groom_name='G Sri Harsha' bride_name='Sri Harsha G' groom_vows={groom_vows} bride_vows={vows} is_proposal='false'/>
+                    <br/>
                     <button className="btn btn-primary" onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button>
                 </div>
 
