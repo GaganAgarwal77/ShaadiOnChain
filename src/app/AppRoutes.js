@@ -44,7 +44,7 @@ class AppRoutes extends Component {
           <Route exact path="/dashboard" component={ Dashboard } />
           <Route path="/login-register" component={ LoginRegister } />
           <Route path="/rings-marketplace" component={ RingsMarketplace } />
-          <Route path="/purchase" component={ Purchase } />
+          <Route path="/purchase/:itemId" component={ Purchase } />
           <Route path="/send-engagement-proposal" component={ SendEngagementProposal } />
           <Route path="/accept-engagement-proposal" component={ AcceptEngagementProposal } />
           <Route path="/send-marriage-proposal" component={ SendMarriageProposal } />
