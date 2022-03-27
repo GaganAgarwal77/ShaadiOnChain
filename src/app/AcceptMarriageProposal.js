@@ -28,7 +28,8 @@ function SendMarriageProposal
                 <br/><br/><br/>
                 <div className="purchase__artwork">
                     {/* <img style={{width:"30vw"}}src={data.imageURL} alt="couple photo" /> */}
-                    <Certificate width='700' height='500' groom_name='G Sri Harsha' bride_name='Sri Harsha G' groom_vows={groom_vows} bride_vows={vows} is_proposal='false'/>
+                    <Certificate style={{width:"35vw"}} width='700' height='500' groom_name='G Sri Harsha' bride_name='Sri Harsha G' groom_vows={groom_vows} bride_vows={vows} is_proposal='false'/>
+                    <button className="btn btn-primary" onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button>
                 </div>
 
                 <div className="purchase__details">
@@ -46,7 +47,7 @@ function SendMarriageProposal
                             
                         </div> */}
                         <button onClick={() => {alert("Accepted Proposal"); goBack()} }>Accept Proposal!</button>
-                        <button onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button>
+                        <button style={{background:"linear-gradient(to right, #ee0979, #ff6a00)"}} onClick={ () => {alert("Rejected Proposal")}}>Reject Proposal</button>
                     </div>
                     
                 </div>

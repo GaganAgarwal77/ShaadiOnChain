@@ -60,6 +60,7 @@ function SendEngagementProposal(props) {
                     </InputGroup>
                     <div style={{marginTop:"10px"}}className="purchase__detailsBuy">
                         <button onClick={() => {alert("Accept Proposal"); goBack()} }>Accept Proposal!</button>
+                        <button style={{background:"linear-gradient(to right, #ee0979, #ff6a00)"}} onClick={() => {alert("Reject Proposal"); goBack()} }>Reject Proposal!</button>
                     </div>
                     
                 </div>
