@@ -14,6 +14,7 @@ function SendMarriageProposal
         type: "Female"
     }
     const[vows, setVows] = useState(""); 
+    const groom_vows = 'Sometext will be fetched here!';
 
     const handleVowsChange = (e) => {
         setVows(e.target.value);
@@ -27,7 +28,7 @@ function SendMarriageProposal
                 <br/><br/><br/>
                 <div className="purchase__artwork">
                     {/* <img style={{width:"30vw"}}src={data.imageURL} alt="couple photo" /> */}
-                    <Certificate width='700' height='500' groom_name='G Sri Harsha' bride_name='Sri Harsha G' groom_vows='Sometext will be fetched here!' bride_vows={vows} is_proposal='false'/>
+                    <Certificate width='700' height='500' groom_name='G Sri Harsha' bride_name='Sri Harsha G' groom_vows={groom_vows} bride_vows={vows} is_proposal='false'/>
                 </div>
 
                 <div className="purchase__details">
