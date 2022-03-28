@@ -155,9 +155,7 @@ export const purchaseRing = async (itemId, price) => {
     })
     .on("transactionHash", function (hash) {})
     .on("receipt", function (receipt) {})
-    .on("confirmation", function (confirmationNumber, receipt) {
-      window.alert("Purchase is successfully completed!");
-    })
+    .on("confirmation", function (confirmationNumber, receipt) {})
     .on("error", function (error, receipt) {
       window.alert("An error has occured!");
       return false;

@@ -48,9 +48,10 @@ function Purchase(props) {
         fetchData();
     },[itemID]);
 
-    const purchase = async () => {
-        const status = purchaseRing(data.itemId, data.price);
+    const purchase = async (event) => {
+        const status = await purchaseRing(data.itemId, data.price);
         if(status) {
+            window.alert("Purchase is successfully completed!");
             push('/dashboard');
         }
     }
