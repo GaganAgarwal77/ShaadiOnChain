@@ -58,7 +58,7 @@ class AppRoutes extends Component {
           <Route path="/recieved-proposals" component={ RecievedProposals } />
 
           <Route path="/sent-proposals" component={ SentProposals } />
-          <Route path="/sent-engagement-proposal" component={ SentEngagementProposal } />
+          <Route path="/sent-engagement-proposal/:engagementProposalId" component={ SentEngagementProposal } />
           <Route path="/sent-marriage-proposal" component={ SentMarriageProposal } />
 
           <Route path="/love-letters" component={ LoveLetters } />
