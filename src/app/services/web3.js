@@ -222,3 +222,20 @@ export const getEngagementProposalById = async (proposalId) => {
 
   return proposal;
 }
+
+
+export const createMarriageProposal = async (vows) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await ShaadiOnChain_contract.methods
+    .createMarriageProposal(vows)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}

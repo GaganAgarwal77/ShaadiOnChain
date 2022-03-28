@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
-import {InputGroup, FormControl, Button} from 'react-bootstrap'
-import { getEngagementProposalById, getUser, isRingNFTOwner, respondToEngagementProposal } from "./services/web3";
+import { InputGroup, FormControl } from 'react-bootstrap'
+import { getEngagementProposalById, getUser } from "./services/web3";
 import { getImageFromTokenId, getMetadataFromTokenId } from "./services/utility";
 import { GENDER } from './services/constants';
 
