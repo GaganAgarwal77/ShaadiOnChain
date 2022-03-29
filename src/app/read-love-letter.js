@@ -2,33 +2,38 @@ import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
 import {InputGroup, FormControl, Button} from 'react-bootstrap'
+import { getUser, getLoveLetterById, writeMessage, sendLoveLetter } from "./services/web3";
+import { getLoveLetterImageFromTokenId } from "./services/utility";
+import { GENDER } from './services/constants';
+
 function ReadLoveLetter(props) {
     const { goBack } = useHistory()
-    const data =   {
-        id:"1",
-        walletAddress: "0x1231231241",
-        name: "Kriti Sanon",
-        gender: "Female"
-    }
-    const [loveNote, setloveNote] = useState("A note of love")
-    const[walletAddress, setWalletAddress] = useState("0X121331241241"); 
-    const [readLetter, setReadLetter] = useState(false);
-    
-    function fetchDetails() {
-        alert(walletAddress)
-        //fetch loved one's details
-    }
 
-    function fetchLetter(){
-        var elem = document.getElementById("read-letter-button");
-        if (elem.innerHTML== "Fetch Letter Details") 
-        {
-            console.log("Fetch Letter Details")
-            elem.innerHTML = "Hide Letter Details";
-    }
-        else elem.innerHTML = "Fetch Letter Details";
-        setReadLetter(!readLetter)
-    }
+    const tokenId = props.match.params.tokenId;
+
+    const [loveLetter, setLoveLetter] = useState({});
+    const [message, setMessage] = useState("")
+    const [loverDetails, setLoverDetails] = useState({})
+    const [loverAddr, setLoverAddr] = useState(""); 
+
+    useEffect(() => {
+        const fetchMyLetter = async () => {
+            var letter = await getLoveLetterById(tokenId);
+            letter.tokenId = tokenId;
+            const image = await getLoveLetterImageFromTokenId(tokenId);
+            letter.image = image;
+
+            const user = await getUser(letter.creator);
+
+            setLoverAddr(letter.creator);
+            setLoverDetails(user);
+            setLoveLetter(letter);
+            setMessage(letter.message);
+        };
+
+        fetchMyLetter();
+    },[tokenId]);
+    
 
     return (
 
@@ -41,29 +46,24 @@ function ReadLoveLetter(props) {
                 
                 </div> 
                 <div className="purchase__artwork">
-                    <img src='/assets/images/wedding-img/marriage-certificate-image.png' alt="nft artwork" />
+                    <img src={loveLetter.image} alt="Love Letter" />
                 </div>
 
                 <div className="purchase__details">
-                    <label htmlFor="exampleTextarea1">Your Loved One's Wallet Address:</label>
+                <label>Your Loved One's Wallet Address:</label>
                     <InputGroup className="mb-3">
                         <FormControl
-                        aria-label="Recipient's username"
-                        aria-describedby="basic-addon2"
-                        value={walletAddress}
+                            aria-label="Recipient's username"
+                            aria-describedby="basic-addon2"
+                            defaultValue={loverAddr}
                         />
                     </InputGroup>
-
-                    <h3 style={{height:"25px"}}>Name: {data.name}</h3>
-                    <h4>Gender: {data.gender}</h4>
-
-                    <Button className="mt-5" variant="primary" id="read-letter-button" onClick={fetchLetter}>Fetch Letter Details</Button>
-                    { readLetter && (
-                        <div>
-                            <textarea style={{color:"white"}} className="form-control" id="exampleTextarea1" rows="4" value="A note of love"></textarea>
-                        </div>
-                    )
-                    }
+                    <h4>Name: {loverDetails.name}</h4>
+                    <h4>Gender: {GENDER[loverDetails.gender]}</h4>
+                    <div>
+                        <label>Love letter message:</label>
+                        <textarea style={{color:"white"}} className="form-control" id="exampleTextarea1" rows="4" value={message}></textarea>
+                    </div>
 
                 </div>
             </div> 

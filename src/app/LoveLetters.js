@@ -6,41 +6,6 @@ import { web3, loadAccount, getLoveLetterPrice, purchaseLoveLetter,
     getLoveLettersForUser, getLoveLetterById } from "./services/web3";
 import { getLoveLetterImageFromTokenId } from "./services/utility";
 
-const LetterData = [
-    {
-        tokenID:"1",
-        name: "Kriti",
-        note: "Note of love",
-        type:"Female"
-    },
-    {
-        tokenID:"2",
-        name: "Shraddha",
-        note: "Note of love",
-        type:"Female"
-    },
-    {
-        tokenID:"3",
-        name: "Alia",
-        note: "Note of love",
-        type:"Female"
-    },
-    {
-        tokenID:"4",
-        name: "Katrina",
-        note: "Note of love",
-        type:"Female"
-    },
-    {
-        tokenID:"5",
-        name: "Disha",
-        note: "Note of love",
-        type:"Female"
-    },
-  
-  ]
-
-
 function LoveLetters() {
     const { push } = useHistory()
 

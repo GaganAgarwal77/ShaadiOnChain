@@ -68,7 +68,7 @@ function LoveLetter(props) {
                 </div>
 
                 <div className="purchase__details">
-                    <label htmlFor="exampleTextarea1">Love letter message:</label>
+                    <label>Love letter message:</label>
                     { 
                         isEmpty ?
                         <div>
@@ -85,7 +85,7 @@ function LoveLetter(props) {
                     }
                     <br/>
 
-                    <label htmlFor="exampleTextarea1">Your Loved One's Wallet Address:</label>
+                    <label>Your Loved One's Wallet Address:</label>
                     <InputGroup className="mb-3">
                         <FormControl
                             aria-label="Recipient's username"
