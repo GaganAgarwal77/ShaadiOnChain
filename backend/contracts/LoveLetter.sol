@@ -11,23 +11,24 @@ contract LoveLetter is ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    string baseURI;
-    string notRevealedUri;
+    string public baseLoveLetterCID;
+    string public writtenLoveLetterCID;
     uint256 public maxCharLimit = 200;
-    uint256 public claimPrice = 1 ether;
+    uint256 public claimPrice = 0.1 ether;
 
     struct Letter {
         string message;
+        address creator;
     }
 
     mapping(uint256 => Letter) public idToletter;
 
     constructor(
-        string memory initBaseURI,
-        string memory initNotRevealedUri
+        string memory initBaseLoveLetterCID,
+        string memory initWrittenLoveLetterCID
     ) ERC721("Love Letter", "LL") {
-        setBaseURI(initBaseURI);
-        setNotRevealedURI(initNotRevealedUri);
+        setBaseLoveLetterCID(initBaseLoveLetterCID);
+        setWrittenLoveLetterCID(initWrittenLoveLetterCID);
     }
 
     function claim() public payable {
@@ -38,7 +39,10 @@ contract LoveLetter is ERC721Enumerable, Ownable {
 
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
-        Letter memory newLetter = Letter("");
+        Letter memory newLetter = Letter(
+            "",
+            msg.sender
+        );
         idToletter[newItemId] = newLetter;
         _safeMint(msg.sender, newItemId);
     }
@@ -69,9 +73,9 @@ contract LoveLetter is ERC721Enumerable, Ownable {
         );
         Letter memory currLetter = idToletter[_tokenId];
         if (bytes(currLetter.message).length > 0) {
-            return baseURI;
+            return writtenLoveLetterCID;
         } else {
-            return notRevealedUri;
+            return baseLoveLetterCID;
         }
     }
 
@@ -97,16 +101,16 @@ contract LoveLetter is ERC721Enumerable, Ownable {
     }
 
     // Only owner
-    function setNotRevealedURI(string memory _notRevealedURI) public onlyOwner {
-        notRevealedUri = _notRevealedURI;
+    function setBaseLoveLetterCID(string memory _newBaseLoveLetterCID) public onlyOwner {
+        baseLoveLetterCID = _newBaseLoveLetterCID;
+    }
+
+    function setWrittenLoveLetterCID(string memory _newWrittenLoveLetterCID) public onlyOwner {
+        writtenLoveLetterCID = _newWrittenLoveLetterCID;
     }
 
     function setMaxCharLimit(uint256 _newValue) public onlyOwner {
         maxCharLimit = _newValue;
-    }
-
-    function setBaseURI(string memory _newBaseURI) public onlyOwner {
-        baseURI = _newBaseURI;
     }
 
     function withdraw() public payable onlyOwner {

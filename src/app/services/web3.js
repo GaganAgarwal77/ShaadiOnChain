@@ -2,6 +2,7 @@ import Web3 from "web3";
 import { ShaadiOnChain_ABI } from "./abi/ShaadiOnChainABI";
 import { RingMarketplace_ABI } from "./abi/RingMarketplaceABI";
 import { RingNFT_ABI } from "./abi/RingNFTABI";
+import { LoveLetter_ABI } from "./abi/LoveLetterABI";
 
 require('dotenv').config()
 
@@ -43,6 +44,11 @@ const RingMarketplace_contract = new web3.eth.Contract(
 const RingNFT_contract = new web3.eth.Contract(
   RingNFT_ABI,
   process.env.REACT_APP_RINGNFT
+);
+
+const LoveLetter_contract = new web3.eth.Contract(
+  LoveLetter_ABI,
+  process.env.REACT_APP_LOVE_LETTER
 );
 
 //#################################################################
@@ -238,4 +244,60 @@ export const createMarriageProposal = async (vows) => {
       return false;
     });
     return true;
+}
+
+//#################################################################
+//# Love Letters
+//#################################################################
+
+export const purchaseLoveLetter = async () => {
+  const price = await getLoveLetterPrice();
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  await LoveLetter_contract.methods
+    .claim()
+    .send({
+      from: account,
+      value: price,
+    })
+    .on("transactionHash", function (hash) {})
+    .on("receipt", function (receipt) {})
+    .on("confirmation", function (confirmationNumber, receipt) {})
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+};
+
+export const getLoveLettersForUser = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  const tokenIds = await LoveLetter_contract.methods
+    .walletOfOwner(account)
+    .call();
+
+  return tokenIds;
+}
+
+export const getLoveLetterById = async (tokenId) => {
+  const result = await LoveLetter_contract.methods
+    .idToletter(tokenId)
+    .call();  
+  return result;
+}
+
+export const getLoveLetterPrice = async () => {
+  const price = await LoveLetter_contract.methods
+    .claimPrice()
+    .call();  
+  return price;
+}
+
+
+export const tokenURILoveLetter = async (tokenId) => {
+  const result = await LoveLetter_contract.methods
+    .tokenURI(tokenId)
+    .call();
+  return result;
 }
