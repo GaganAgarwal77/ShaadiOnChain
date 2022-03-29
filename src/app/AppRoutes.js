@@ -62,7 +62,7 @@ class AppRoutes extends Component {
           <Route path="/sent-marriage-proposal" component={ SentMarriageProposal } />
 
           <Route path="/love-letters" component={ LoveLetters } />
-          <Route path="/love-letter" component={ LoveLetter } />
+          <Route path="/love-letter/:tokenId" component={ LoveLetter } />
           <Route path="/read-love-letter" component={ ReadLoveLetter } />
 
           <Route path="/create-ring" component={ CreateRing } />

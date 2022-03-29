@@ -3,7 +3,8 @@ import  '../assets/Market.css'
 import  '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
 import { web3, loadAccount, getLoveLetterPrice, purchaseLoveLetter, 
-    getLoveLettersForUser, getLoveLetterById, tokenURILoveLetter } from "./services/web3";
+    getLoveLettersForUser, getLoveLetterById } from "./services/web3";
+import { getLoveLetterImageFromTokenId } from "./services/utility";
 
 const LetterData = [
     {
@@ -38,13 +39,6 @@ const LetterData = [
     },
   
   ]
-
-
-const getLoveLetterImageFromTokenId = async (tokenId) => {
-    var cid = await tokenURILoveLetter(tokenId);
-    const image = 'https://' + cid + '.ipfs.dweb.link';
-    return image;
-}
 
 
 function LoveLetters() {
@@ -118,11 +112,11 @@ function LoveLetters() {
         </div>
         <h2 className='mt-3'>Recieved Love Letters</h2>
         <div className='market'> 
-                {LetterData.map((letter) => (
-                     <div className="card" style={{margin:"10px",cursor:"pointer"}} onClick={() => push('/read-love-letter/' + letter.tokenID)}>
+                {rcvdLetters.map((letter) => (
+                     <div className="card" style={{margin:"10px",cursor:"pointer"}} onClick={() => push('/read-love-letter/' + letter.tokenId)}>
                         <div className="card-body">
                             <div className="item">
-                                <img style={{width:"100%"}}src='/assets/images/wedding-img/marriage-certificate-image.png' alt="carousel-item" />
+                                <img style={{width:"100%"}} src={letter.image} alt="letter" />
                             </div>
                         </div>
                     </div>

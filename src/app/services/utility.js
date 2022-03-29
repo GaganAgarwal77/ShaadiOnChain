@@ -1,4 +1,4 @@
-import { tokenURI } from "./web3";
+import { tokenURI, tokenURILoveLetter } from "./web3";
 import axios from 'axios';
 
 export const getURI = async (tokenId) => {
@@ -27,4 +27,10 @@ export const getMetadataFromTokenId = async (tokenId) => {
     const uri = await getURI(tokenId);
     const result = await axios(uri);
     return result.data;
+}
+
+export const getLoveLetterImageFromTokenId = async (tokenId) => {
+    var cid = await tokenURILoveLetter(tokenId);
+    const image = 'https://' + cid + '.ipfs.dweb.link';
+    return image;
 }

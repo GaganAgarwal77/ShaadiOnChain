@@ -301,3 +301,35 @@ export const tokenURILoveLetter = async (tokenId) => {
     .call();
   return result;
 }
+
+export const writeMessage = async (tokenId, message) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await LoveLetter_contract.methods
+    .setMessage(tokenId, message)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}
+
+export const sendLoveLetter = async (tokenId, loverAddr) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await LoveLetter_contract.methods
+    .safeTransferFrom(account, loverAddr, tokenId)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}
