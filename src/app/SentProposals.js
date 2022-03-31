@@ -2,6 +2,8 @@ import React , {useEffect} from 'react'
 import Card from './card'
 import  '../assets/Market.css'
 import { useHistory } from 'react-router-dom'
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 
 const RingData = [
     {
@@ -95,11 +97,16 @@ function Market() {
 
     const { push } = useHistory()
     return (
-        <div>
-        <h2>Engagement Proposals</h2>
-        <div className='market'> 
-                {RingData.map((ring) => (
-                            <div className='card' onClick={() => push('/sent-engagement-proposal/' + ring.tokenID)} >
+        <Tabs defaultActiveKey="Engagement Proposals" id="uncontrolled-tab-example" className="mb-3">
+            <Tab
+                eventKey="Engagement Proposals"
+                title="Engagement Proposals"
+                tabClassName='text-warning'
+                responsive
+            >
+                <div className='market'> 
+                    {RingData.map((ring) => (
+                        <div className='card' onClick={() => push('/sent-engagement-proposal/' + ring.tokenID)} >
                             {/* <img src={"https://ipfs.io/ipfs/" + src.slice(7)} alt="nft artwork" /> */}
                             <img src='/assets/images/wedding-img/ring-image.jpg' alt="nft artwork" />
                             <div className="card__info">
@@ -108,23 +115,30 @@ function Market() {
                                 <h4>{ring.ringDescription}</h4>
                                 <h4>{ring.type}</h4>
                             </div>
-                                 <div className='card__infoValueParent'>
-                                    <div className="card__infoValue">
-                                        {ring.status == "accepted" && <button type="button" className="btn btn-success">Accepted</button>}
-                                        {ring.status == "rejected" && <button type="button" className="btn btn-danger">Rejected</button>}
-                                        {ring.status == "waiting" && <button type="button" className="btn btn-warning">Waiting</button>}
-                                    
-                                    </div>
+                            <div className='card__infoValueParent'>
+                                <div className="card__infoValue">
+                                    {ring.status == "accepted" && <button type="button" className="btn btn-success">Accepted</button>}
+                                    {ring.status == "rejected" && <button type="button" className="btn btn-danger">Rejected</button>}
+                                    {ring.status == "waiting" && <button type="button" className="btn btn-warning">Waiting</button>}
+                                
                                 </div>
+                            </div>
                         </div>
-                ))
-                }
-        </div>
-        <h2>Marriage Proposals</h2>
+                    ))
+                    }
+                </div>
 
-        <div className='market'> 
-                {MarriageData.map((data) => (
-                            <div className='card' onClick={() => push('/sent-marriage-proposal/' + data.tokenID)}>
+            </Tab>
+
+            <Tab
+                eventKey="Marriage Proposals"
+                title="Marriage Proposals"
+                tabClassName='text-warning'
+                responsive
+            >
+                <div className='market'> 
+                    {MarriageData.map((data) => (
+                        <div className='card' onClick={() => push('/sent-marriage-proposal/' + data.tokenID)}>
                             {/* <img src={"https://ipfs.io/ipfs/" + src.slice(7)} alt="nft artwork" /> */}
                             <img src='/assets/images/certificate.jpeg' alt="nft artwork" />
                             <div className="card__info">
@@ -133,18 +147,19 @@ function Market() {
                                 <h4>{data.type}</h4>
                             </div>
                             <div className='card__infoValueParent'>
-                                    <div className="card__infoValue">
-                                        {data.status == "accepted" && <button type="button" className="btn btn-success">Accepted</button>}
-                                        {data.status == "rejected" && <button type="button" className="btn btn-danger">Rejected</button>}
-                                        {data.status == "waiting" && <button type="button" className="btn btn-warning">Waiting</button>}
-                                    
-                                    </div>
+                                <div className="card__infoValue">
+                                    {data.status == "accepted" && <button type="button" className="btn btn-success">Accepted</button>}
+                                    {data.status == "rejected" && <button type="button" className="btn btn-danger">Rejected</button>}
+                                    {data.status == "waiting" && <button type="button" className="btn btn-warning">Waiting</button>}
+                                
+                                </div>
                             </div>
                         </div>
-                ))
-                }
-        </div>
-        </div>
+                        ))
+                    }
+                </div>
+            </Tab>
+        </Tabs>       
     )
 }
 

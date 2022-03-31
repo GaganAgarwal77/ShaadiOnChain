@@ -12,7 +12,7 @@ function SendEngagementProposal(props) {
     const [loverDetails, setLoverDetails] = useState({})
     const [loverAddr, setLoverAddr] = useState(""); 
     const [ringID, setRingID] = useState(""); 
-    const [ringImageUri, setRingImageUri] = useState("");
+    const [ringImageUri, setRingImageUri] = useState("/assets/images/engagement_proposal.gif");
     const [note, setNote] = useState("");
     
     const fetchUser = async () => {
