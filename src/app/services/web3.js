@@ -244,7 +244,32 @@ export const createMarriageProposal = async (vows) => {
       return false;
     });
     return true;
+  }
+  
+export const getMarriageProposalByUser = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  const proposalId = await ShaadiOnChain_contract.methods
+    .userAddrToMarriageProposalId(account)
+    .call();
+
+  if(proposalId === 0) {
+    return false;
+  }
+
+  const proposal = await getMarriageProposalById(proposalId)
+  return proposal;
 }
+
+export const getMarriageProposalById = async (proposalId) => {
+  const proposal = await ShaadiOnChain_contract.methods
+  .idToMarriageProposal(proposalId)
+  .call();
+
+  return proposal;
+}
+
+
 
 //#################################################################
 //# Love Letters
