@@ -2,97 +2,22 @@ import React , { useState, useEffect } from 'react'
 import Card from './card'
 import  '../assets/Market.css'
 import { useHistory } from 'react-router-dom'
-import { loadAccount, getUser, getAllEngagementProposals } from "./services/web3";
+import { loadAccount, getUser, getAllEngagementProposals, getMarriageProposalByUser } from "./services/web3";
 import { getImageFromTokenId } from "./services/utility";
-
-const RingData = [
-    {
-        tokenID:"1",
-        name: "Kriti",
-        note: "Note of love",
-        ringDescription:"Gold Ring",
-        type:"Female",
-        status:"accepted"
-    },
-    {
-        tokenID:"2",
-        name: "Shraddha",
-        note: "Note of love",
-        ringDescription:"Gold Ring",
-        type:"Female",
-        status:"accepted"
-    },
-    {
-        tokenID:"3",
-        name: "Alia",
-        note: "Note of love",
-        ringDescription:"Gold Ring",
-        type:"Female",
-        status:"waiting"
-    },
-    {
-        tokenID:"4",
-        name: "Katrina",
-        note: "Note of love",
-        ringDescription:"Gold Ring",
-        type:"Female",
-        status:"rejected"
-    },
-    {
-        tokenID:"5",
-        name: "Disha",
-        note: "Note of love",
-        ringDescription:"Gold Ring",
-        type:"Female",
-        status:"waiting"
-    },
-  
-  ]
-
-  const MarriageData = [
-    {
-        tokenID:"1",
-        name: "Kriti",
-        vows: "Vows",
-        type:"Female",
-        status:"accepted"
-    },
-    {
-        tokenID:"2",
-        name: "Shraddha",
-        vows: "Vows",
-        type:"Female",
-        status:"waiting"
-    },
-    {
-        tokenID:"3",
-        name: "Alia",
-        vows: "Vows",
-        type:"Female",
-        status:"rejected"
-    },
-    {
-        tokenID:"4",
-        name: "Katrina",
-        vows: "Vows",
-        type:"Female",
-        status:"waiting"
-    },
-    {
-        tokenID:"5",
-        name: "Disha",
-        vows: "Vows",
-        type:"Female",
-        status:"rejected"
-    },
-    
-]
 
 
 function Market() {
     
     const { push } = useHistory()
     const [engageProposals, setEngageProposals] = useState([]);
+    const [hasSentMarriageProposal, setHasSentMarriageProposal] = useState(false);
+    const [marriageProposal, setMarriageProposal] = useState({
+        name: "",
+        proposalId: "",
+        image: "",
+        note: "",
+        status: "",
+    });
 
     useEffect(() => {
         const fetchEngageProposals = async () => {
@@ -115,7 +40,31 @@ function Market() {
                 setEngageProposals((arr) => [...arr, engageProposal]);
               });
         };
+
+        const fetchMarriageProposal = async () => {
+            const myAddress = await loadAccount();
+            const proposal = await getMarriageProposalByUser();
+            if (proposal === false) {
+                return;
+            }
+            if (proposal.proposer !== myAddress) {
+                return;
+            }
+            const user = await getUser(proposal.proposer);
+
+            const marriageProposal = {
+                name: user.name,
+                proposalId: proposal.id,
+                vows: proposal.proposerVows,
+                status: proposal.status,
+            }
+            setMarriageProposal(marriageProposal);
+            setHasSentMarriageProposal(true);
+            console.log(marriageProposal);
+        };
+
         fetchEngageProposals();
+        fetchMarriageProposal();
     },[])
     
 
@@ -145,26 +94,25 @@ function Market() {
         <h2>Marriage Proposals</h2>
 
         <div className='market'> 
-                {MarriageData.map((data) => (
-                            <div className='card' onClick={() => push('/sent-marriage-proposal/' + data.tokenID)}>
-                            {/* <img src={"https://ipfs.io/ipfs/" + src.slice(7)} alt="nft artwork" /> */}
-                            <img src='/assets/images/certificate.jpeg' alt="nft artwork" />
-                            <div className="card__info">
-                                <h2>{data.name}</h2>
-                                <h4>{data.vows.length >= 100 ? data.vows.substring(0, 100) + '...' : data.vows}</h4>
-                                <h4>{data.type}</h4>
-                            </div>
-                            <div className='card__infoValueParent'>
-                                    <div className="card__infoValue">
-                                        {data.status == "accepted" && <button type="button" className="btn btn-success">Accepted</button>}
-                                        {data.status == "rejected" && <button type="button" className="btn btn-danger">Rejected</button>}
-                                        {data.status == "waiting" && <button type="button" className="btn btn-warning">Waiting</button>}
-                                    
-                                    </div>
-                            </div>
-                        </div>
-                ))
-                }
+        {
+            hasSentMarriageProposal &&
+            (
+                <div className='card' onClick={() => push('/sent-marriage-proposal/' + marriageProposal.proposalId)}>
+                <img src='/assets/images/certificate.jpeg' alt="nft artwork" />
+                <div className="card__info">
+                    <h2>{marriageProposal.name}</h2>
+                    <h4>{marriageProposal.vows.length >= 100 ? marriageProposal.vows.substring(0, 100) + '...' : marriageProposal.vows}</h4>
+                </div>
+                <div className='card__infoValueParent'>
+                    <div className="card__infoValue">
+                        {marriageProposal.status === "0" && <button type="button" className="btn btn-warning">Waiting</button>}
+                        {marriageProposal.status === "1" && <button type="button" className="btn btn-success">Accepted</button>}
+                        {marriageProposal.status === "2" && <button type="button" className="btn btn-danger">Rejected</button>}
+                    </div>
+                </div>
+                </div>
+            )
+        }
         </div>
         </div>
     )

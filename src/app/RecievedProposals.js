@@ -41,7 +41,7 @@ function RecievedProposals() {
               });
         };
 
-        const fetchMarriageProposals = async () => {
+        const fetchMarriageProposal = async () => {
             const myAddress = await loadAccount();
             const proposal = await getMarriageProposalByUser();
             if (proposal === false) {
@@ -60,11 +60,10 @@ function RecievedProposals() {
             }
             setMarriageProposal(marriageProposal);
             setHasMarriageProposal(true);
-            console.log(marriageProposal);
         };
 
         fetchEngageProposals();
-        fetchMarriageProposals();
+        fetchMarriageProposal();
     },[])
     
 
