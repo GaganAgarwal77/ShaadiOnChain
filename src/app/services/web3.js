@@ -84,6 +84,9 @@ export const registerUser = async (name, gender) => {
   return result;
 };
 
+//#################################################################
+//# Ring NFT
+//#################################################################
 
 export const mintRingNFT = async (url) => {
   const accounts = await web3.eth.getAccounts();
@@ -98,6 +101,27 @@ export const mintRingNFT = async (url) => {
   const tokenId = result.events.Transfer.returnValues.tokenId;
   return tokenId;
 }
+
+export const tokenURI = async (tokenId) => {
+  const result = await RingNFT_contract.methods
+    .tokenURI(tokenId)
+    .call();
+  return result;
+}
+
+export const isRingNFTOwner = async (tokenId) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  const result = await RingNFT_contract.methods
+    .ownerOf(tokenId)
+    .call();
+  return result === account ? true : false
+}
+
+//#################################################################
+//# Ring Marketplace
+//#################################################################
+
 
 export const sellRingOnMarketplace = async (tokenId, price, ringType) => {
   const accounts = await web3.eth.getAccounts();
@@ -123,22 +147,6 @@ export const saleRingNFTs = async () => {
     }
   })
   return ringOnSale;
-}
-
-export const tokenURI = async (tokenId) => {
-  const result = await RingNFT_contract.methods
-    .tokenURI(tokenId)
-    .call();
-  return result;
-}
-
-export const isRingNFTOwner = async (tokenId) => {
-  const accounts = await web3.eth.getAccounts();
-  const account = accounts[0];
-  const result = await RingNFT_contract.methods
-    .ownerOf(tokenId)
-    .call();
-  return result === account ? true : false
 }
 
 
@@ -169,6 +177,10 @@ export const purchaseRing = async (itemId, price) => {
     return true;
 };
 
+//#################################################################
+//# Engagement Stage
+//#################################################################
+
 export const createEngagementProposal = async (loverAddr, ringTokenId, note) => {
   const accounts = await web3.eth.getAccounts();
   const account = accounts[0];
@@ -185,6 +197,7 @@ export const createEngagementProposal = async (loverAddr, ringTokenId, note) => 
     return true;
 }
 
+
 export const respondToEngagementProposal = async (proposalId, response, ringTokenId, note) => {
   const accounts = await web3.eth.getAccounts();
   const account = accounts[0];
@@ -200,6 +213,7 @@ export const respondToEngagementProposal = async (proposalId, response, ringToke
     });
     return true;
 }
+
 
 export const getAllEngagementProposals = async () => {
   const accounts = await web3.eth.getAccounts();
@@ -221,6 +235,7 @@ export const getAllEngagementProposals = async () => {
   return proposals;
 }
 
+
 export const getEngagementProposalById = async (proposalId) => {
   const proposal = await ShaadiOnChain_contract.methods
   .idToProposal(proposalId)
@@ -229,6 +244,9 @@ export const getEngagementProposalById = async (proposalId) => {
   return proposal;
 }
 
+//#################################################################
+//# Marriage Stage
+//#################################################################
 
 export const createMarriageProposal = async (vows) => {
   const accounts = await web3.eth.getAccounts();
@@ -244,8 +262,9 @@ export const createMarriageProposal = async (vows) => {
       return false;
     });
     return true;
-  }
-  
+}
+
+
 export const getMarriageProposalByUser = async () => {
   const accounts = await web3.eth.getAccounts();
   const account = accounts[0];
@@ -260,6 +279,7 @@ export const getMarriageProposalByUser = async () => {
   const proposal = await getMarriageProposalById(proposalId)
   return proposal;
 }
+
 
 export const getMarriageProposalById = async (proposalId) => {
   const proposal = await ShaadiOnChain_contract.methods
