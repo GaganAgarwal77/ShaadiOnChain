@@ -11,13 +11,6 @@ function AcceptMarriageProposal(props) {
     const { goBack, push } = useHistory()
     const proposalId = props.match.params.marriageProposalId;
 
-    const data =   {
-        id:"1",
-        imageURL:'/assets/images/wedding-img/marriage-certificate-image.png',
-        spouseName: "Kriti Sanon",
-        walletAddress: "0x1231231241",
-        type: "Female"
-    }
     const [proposalDetails, setProposalDetails] = useState({
         proposalId: "",
         proposerAddr: "",

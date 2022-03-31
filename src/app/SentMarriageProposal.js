@@ -1,26 +1,51 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
-import {Certificate, download} from './certificate.js';
+import { InputGroup, FormControl, Button } from 'react-bootstrap'
+import { Certificate, download } from './certificate.js';
+import { loadAccount, getUser, getMarriageProposalById, respondToMarriageProposal } from "./services/web3";
+import { GENDER } from './services/constants';
 
 function SendMarriageProposal
 (props) {
-    const { goBack } = useHistory()
-    const data =   {
-        id:"1",
-        imageURL:'/assets/images/wedding-img/marriage-certificate-image.png',
-        spouseName: "Kriti Sanon",
-        walletAddress: "0x1231231241",
-        type: "Female",
-        status:"rejected"
-    }
-    const[vows, setVows] = useState(""); 
-    const groom_vows = 'Your vows';
-    const bride_vows = data.status=="accepted"? "Their Vows" : ""
+    const { goBack, push } = useHistory()
+    const proposalId = props.match.params.marriageProposalId;
 
-    const handleVowsChange = (e) => {
-        setVows(e.target.value);
-    };
+    const [proposalDetails, setProposalDetails] = useState({
+        proposalId: "",
+        proposeeAddr: "",
+        proposeeUser: "",
+        proposeeVows: "",
+        proposalStatus: "0",
+    })
+    const [currUser, setCurrUser] = useState({});
+    const [yourVows, setYourVows] = useState("");
+    const [hasAccepted, setHasAccepted] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const currUser = await getUser(); // Current user
+            setCurrUser(currUser);
+
+            const proposal = await getMarriageProposalById(proposalId);
+            setYourVows(proposal.proposerVows)
+            const partner = await getUser(proposal.proposee);
+            setProposalDetails(prevData => ({
+                ...prevData,
+                proposalId: proposal.id,
+                proposeeAddr: proposal.proposee,
+                proposeeUser: partner,
+                proposeeVows: proposal.proposeeVows,
+                proposalStatus: proposal.status,
+            }));
+
+            if(proposal.status === "1") {
+                setHasAccepted(true);
+            }
+          };
+
+        fetchData();
+    },[proposalId]);
 
     return(
             <div className='purchase'>
@@ -29,30 +54,41 @@ function SendMarriageProposal
                 </div> 
                 <br/><br/><br/>
                 <div className="purchase__artwork">
-                    {/* <img style={{width:"30vw"}}src={data.imageURL} alt="couple photo" /> */}
-                    <Certificate style={{width:"35vw"}} width='700' height='500' groom_name='G Sri Harsha' bride_name='Sri Harsha G' groom_vows={groom_vows} bride_vows={bride_vows} is_proposal='false'/>
+                    <Certificate style={{width:"35vw"}} width='700' height='500' 
+                        groom_name={currUser.name} bride_name={proposalDetails.proposeeUser.name}
+                        groom_vows={yourVows} bride_vows={proposalDetails.proposeeVows} is_proposal='false'/>
                     <br/>
                     <button className="btn btn-primary" onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button>
                 </div>
 
                 <div className="purchase__details">
-                    {/* <h1>#{data.tokenID} {data.name}</h1> */}
-                    <h3 style={{height:"75px"}}>Name: {data.spouseName}</h3>
-                    <h4>Wallet Address: {data.walletAddress}</h4>
-                    <h4>Gender: {data.type}</h4>
-                    <label htmlFor="exampleTextarea1">Your Vows:</label>
-                    <textarea style={{color:"white"}} className="form-control" id="vows" rows="4" value={groom_vows}></textarea>
-                    <br/>  
-                    {data.status == "accepted" && 
-                    <div>
-                    <button type="button" className="btn btn-lg btn-success mt-4">Accepted</button>
-                    <br/>
-                    <label className="mt-4" htmlFor="exampleTextarea1">Their Vows:</label>
-                    <textarea style={{color:"white"}}className="form-control" id="exampleTextarea1" rows="4" value="Their vows"></textarea>
-                    </div>
+                    <label>Proposee's Wallet Address:</label>
+                    <InputGroup className="mb-3">
+                        <FormControl defaultValue={proposalDetails.proposeeAddr} />
+                    </InputGroup>
+                    <h4>Proposee Name: {proposalDetails.proposeeUser.name}</h4>
+                    <h4>Proposee Gender: {GENDER[proposalDetails.proposeeUser.gender]}</h4>
+                    <label className="mt-4">Your Vows:</label>
+                    <textarea style={{color:"white"}} value={yourVows} 
+                        className="form-control" id="note" rows="4" />
+                    {
+                        hasAccepted && (
+                            <div>
+                            <label>Partner's vows:</label>
+                            <textarea style={{color:"white",background:"#2A3038"}} className="form-control" 
+                                id="exampleTextarea1" rows="4" value={proposalDetails.proposeeVows} disabled></textarea>
+                            <br/>          
+                            </div>
+                        )
                     }
-                    {data.status == "rejected" && <button type="button" className="btn btn-lg btn-danger mt-4">Rejected</button>}
-                    {data.status == "waiting" && <button type="button" className="btn btn-lg btn-warning">Waiting</button>}
+
+                    <div style={{marginTop:"10px"}}className="purchase__detailsBuy">
+                        <div>
+                            {proposalDetails.proposalStatus === "0" && <button type="button" className="btn btn-warning">Waiting</button>}
+                            {proposalDetails.proposalStatus === "1" && <button type="button" className="btn btn-success">Accepted</button>}
+                            {proposalDetails.proposalStatus === "2" && <button type="button" className="btn btn-danger">Rejected</button>}
+                        </div>
+                    </div>
                     
                 </div>
             </div> 
