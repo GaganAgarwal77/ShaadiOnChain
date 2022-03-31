@@ -52,18 +52,18 @@ class AppRoutes extends Component {
           <Route path="/rings-marketplace" component={ RingsMarketplace } />
           <Route path="/purchase/:itemId" component={ Purchase } />
           <Route path="/send-engagement-proposal" component={ SendEngagementProposal } />
-          <Route path="/accept-engagement-proposal" component={ AcceptEngagementProposal } />
+          <Route path="/accept-engagement-proposal/:engagementProposalId" component={ AcceptEngagementProposal } />
           <Route path="/send-marriage-proposal" component={ SendMarriageProposal } />
-          <Route path="/accept-marriage-proposal" component={ AcceptMarriageProposal } />
+          <Route path="/accept-marriage-proposal/:marriageProposalId" component={ AcceptMarriageProposal } />
           <Route path="/recieved-proposals" component={ RecievedProposals } />
 
           <Route path="/sent-proposals" component={ SentProposals } />
-          <Route path="/sent-engagement-proposal" component={ SentEngagementProposal } />
-          <Route path="/sent-marriage-proposal" component={ SentMarriageProposal } />
+          <Route path="/sent-engagement-proposal/:engagementProposalId" component={ SentEngagementProposal } />
+          <Route path="/sent-marriage-proposal/:marriageProposalId" component={ SentMarriageProposal } />
 
           <Route path="/love-letters" component={ LoveLetters } />
-          <Route path="/love-letter" component={ LoveLetter } />
-          <Route path="/read-love-letter" component={ ReadLoveLetter } />
+          <Route path="/love-letter/:tokenId" component={ LoveLetter } />
+          <Route path="/read-love-letter/:tokenId" component={ ReadLoveLetter } />
 
           <Route path="/create-ring" component={ CreateRing } />
 

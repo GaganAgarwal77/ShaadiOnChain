@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
-import axios from 'axios';
-
-import { web3, tokenURI, getUser, getRingItem, purchaseRing } from "./services/web3";
+import { web3, getUser, getRingItem, purchaseRing } from "./services/web3";
+import { getImageFromTokenId, getMetadataFromTokenId } from "./services/utility";
 
 function Purchase(props) {
-    const { goBack } = useHistory()
+    const { goBack, push } = useHistory()
 
     const itemID = props.match.params.itemId;
 
@@ -23,41 +22,25 @@ function Purchase(props) {
         creatorName: "",
     });
 
-    const getURI = async (i) => {
-        var uri = await tokenURI(i);
-        uri = uri.slice(7); 
-        uri = uri.substring(0, uri.length - 14);
-        uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
-        return uri
-      }  
-  
-
     useEffect(() => {
         const fetchData = async () => {
             var RingDetails = await getRingItem(itemID);
 
-            var uri = await getURI(RingDetails.tokenId);
-
-            var result = await axios(uri);
-            result = result.data;    
-
-            var image = result.image.slice(7); 
-            image = image.substring(0, image.length - 5);
-            image = 'https://' + image + '.ipfs.dweb.link/blob';
-
+            const metadata = await getMetadataFromTokenId(RingDetails.tokenId);
+            const image = await getImageFromTokenId(RingDetails.tokenId);
             const user = await getUser(RingDetails.creator);
 
             setData(prevData => ({
                 ...prevData,
                 itemId: RingDetails.itemId,
                 tokenId: RingDetails.tokenId,
-                name: result.name,
-                description: result.description,
+                name: metadata.name,
+                description: metadata.description,
                 image: image,
                 creator: RingDetails.creator,
                 owner: RingDetails.owner,
                 price: RingDetails.price,
-                ringType: result.ringType,
+                ringType: metadata.ringType,
                 creatorName: user.name,
             }));
           };
@@ -65,6 +48,13 @@ function Purchase(props) {
         fetchData();
     },[itemID]);
 
+    const purchase = async (event) => {
+        const status = await purchaseRing(data.itemId, data.price);
+        if(status) {
+            window.alert("Purchase is successfully completed!");
+            push('/dashboard');
+        }
+    }
 
 
     return (
@@ -76,7 +66,6 @@ function Purchase(props) {
                 
                 </div> 
                 <div className="purchase__artwork">
-                    {/* <img src='/assets/images/wedding-img/ring-image.jpg' alt="nft artwork" /> */}
                     <img src={data.image} alt="Ring NFT" />
                 </div>
 
@@ -90,9 +79,8 @@ function Purchase(props) {
                         <div className="value">
                             <h2>{web3.utils.fromWei(data.price)}</h2> 
                             <img src="/assets/images/ethereum3.svg" alt="ETH" width="30" height="30" className='symbol' />
-                            
                         </div>
-                        <button onClick={() => {purchaseRing(data.itemId, data.price)}}> Buy now</button>
+                        <button onClick={purchase}> Buy now</button>
                     </div>
                     
                 </div>

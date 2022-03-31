@@ -2,6 +2,7 @@ import Web3 from "web3";
 import { ShaadiOnChain_ABI } from "./abi/ShaadiOnChainABI";
 import { RingMarketplace_ABI } from "./abi/RingMarketplaceABI";
 import { RingNFT_ABI } from "./abi/RingNFTABI";
+import { LoveLetter_ABI } from "./abi/LoveLetterABI";
 
 require('dotenv').config()
 
@@ -45,6 +46,11 @@ const RingNFT_contract = new web3.eth.Contract(
   process.env.REACT_APP_RINGNFT
 );
 
+const LoveLetter_contract = new web3.eth.Contract(
+  LoveLetter_ABI,
+  process.env.REACT_APP_LOVE_LETTER
+);
+
 //#################################################################
 //# Users
 //#################################################################
@@ -78,6 +84,9 @@ export const registerUser = async (name, gender) => {
   return result;
 };
 
+//#################################################################
+//# Ring NFT
+//#################################################################
 
 export const mintRingNFT = async (url) => {
   const accounts = await web3.eth.getAccounts();
@@ -92,6 +101,27 @@ export const mintRingNFT = async (url) => {
   const tokenId = result.events.Transfer.returnValues.tokenId;
   return tokenId;
 }
+
+export const tokenURI = async (tokenId) => {
+  const result = await RingNFT_contract.methods
+    .tokenURI(tokenId)
+    .call();
+  return result;
+}
+
+export const isRingNFTOwner = async (tokenId) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  const result = await RingNFT_contract.methods
+    .ownerOf(tokenId)
+    .call();
+  return result === account ? true : false
+}
+
+//#################################################################
+//# Ring Marketplace
+//#################################################################
+
 
 export const sellRingOnMarketplace = async (tokenId, price, ringType) => {
   const accounts = await web3.eth.getAccounts();
@@ -119,22 +149,6 @@ export const saleRingNFTs = async () => {
   return ringOnSale;
 }
 
-export const tokenURI = async (tokenId) => {
-  const result = await RingNFT_contract.methods
-    .tokenURI(tokenId)
-    .call();
-  return result;
-}
-
-export const isRingNFTOwner = async (tokenId) => {
-  const accounts = await web3.eth.getAccounts();
-  const account = accounts[0];
-  const result = await RingNFT_contract.methods
-    .ownerOf(tokenId)
-    .call();
-  return result === account ? true : false
-}
-
 
 export const getRingItem = async (itemId) => {
   const result = await RingMarketplace_contract.methods
@@ -155,13 +169,17 @@ export const purchaseRing = async (itemId, price) => {
     })
     .on("transactionHash", function (hash) {})
     .on("receipt", function (receipt) {})
-    .on("confirmation", function (confirmationNumber, receipt) {
-      window.alert("Purchase is successfully completed!");
-    })
+    .on("confirmation", function (confirmationNumber, receipt) {})
     .on("error", function (error, receipt) {
       window.alert("An error has occured!");
+      return false;
     });
+    return true;
 };
+
+//#################################################################
+//# Engagement Stage
+//#################################################################
 
 export const createEngagementProposal = async (loverAddr, ringTokenId, note) => {
   const accounts = await web3.eth.getAccounts();
@@ -179,6 +197,24 @@ export const createEngagementProposal = async (loverAddr, ringTokenId, note) => 
     return true;
 }
 
+
+export const respondToEngagementProposal = async (proposalId, response, ringTokenId, note) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await ShaadiOnChain_contract.methods
+    .respondToProposal(proposalId, response, ringTokenId, note)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}
+
+
 export const getAllEngagementProposals = async () => {
   const accounts = await web3.eth.getAccounts();
   const account = accounts[0];
@@ -193,11 +229,168 @@ export const getAllEngagementProposals = async () => {
     .userAddrToProposalIds(account, i)
     .call();
 
-    const proposal = await ShaadiOnChain_contract.methods
-    .idToProposal(proposalId)
-    .call();
-
+    const proposal = await getEngagementProposalById(proposalId)
     proposals.push(proposal);
   }
   return proposals;
+}
+
+
+export const getEngagementProposalById = async (proposalId) => {
+  const proposal = await ShaadiOnChain_contract.methods
+  .idToProposal(proposalId)
+  .call();
+
+  return proposal;
+}
+
+//#################################################################
+//# Marriage Stage
+//#################################################################
+
+export const createMarriageProposal = async (vows) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await ShaadiOnChain_contract.methods
+    .createMarriageProposal(vows)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}
+
+
+export const getMarriageProposalByUser = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  const proposalId = await ShaadiOnChain_contract.methods
+    .userAddrToMarriageProposalId(account)
+    .call();
+
+  if(proposalId === 0) {
+    return false;
+  }
+
+  const proposal = await getMarriageProposalById(proposalId)
+  return proposal;
+}
+
+
+export const getMarriageProposalById = async (proposalId) => {
+  const proposal = await ShaadiOnChain_contract.methods
+  .idToMarriageProposal(proposalId)
+  .call();
+
+  return proposal;
+}
+
+
+export const respondToMarriageProposal = async (proposalId, response, vows) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await ShaadiOnChain_contract.methods
+    .respondToMarriageProposal(proposalId, response, vows)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}
+
+
+//#################################################################
+//# Love Letters
+//#################################################################
+
+export const purchaseLoveLetter = async () => {
+  const price = await getLoveLetterPrice();
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  await LoveLetter_contract.methods
+    .claim()
+    .send({
+      from: account,
+      value: price,
+    })
+    .on("transactionHash", function (hash) {})
+    .on("receipt", function (receipt) {})
+    .on("confirmation", function (confirmationNumber, receipt) {})
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+};
+
+export const getLoveLettersForUser = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  const tokenIds = await LoveLetter_contract.methods
+    .walletOfOwner(account)
+    .call();
+
+  return tokenIds;
+}
+
+export const getLoveLetterById = async (tokenId) => {
+  const result = await LoveLetter_contract.methods
+    .idToletter(tokenId)
+    .call();  
+  return result;
+}
+
+export const getLoveLetterPrice = async () => {
+  const price = await LoveLetter_contract.methods
+    .claimPrice()
+    .call();  
+  return price;
+}
+
+
+export const tokenURILoveLetter = async (tokenId) => {
+  const result = await LoveLetter_contract.methods
+    .tokenURI(tokenId)
+    .call();
+  return result;
+}
+
+export const writeMessage = async (tokenId, message) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await LoveLetter_contract.methods
+    .setMessage(tokenId, message)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}
+
+export const sendLoveLetter = async (tokenId, loverAddr) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await LoveLetter_contract.methods
+    .safeTransferFrom(account, loverAddr, tokenId)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
 }

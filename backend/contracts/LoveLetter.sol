@@ -6,49 +6,44 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract LovePages is ERC721Enumerable, Ownable {
+contract LoveLetter is ERC721Enumerable, Ownable {
     using Strings for uint256;
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    string baseURI;
-    uint256 public requiredRingsAmount = 1;
+    string public baseLoveLetterCID;
+    string public writtenLoveLetterCID;
     uint256 public maxCharLimit = 200;
-    string public notRevealedUri;
-    address public ringAddress;
+    uint256 public claimPrice = 0.1 ether;
 
-    struct Page {
+    struct Letter {
         string message;
+        address creator;
     }
 
-    mapping(uint256 => Page) public pages;
+    mapping(uint256 => Letter) public idToletter;
 
     constructor(
-        string memory _initBaseURI,
-        string memory _initNotRevealedUri,
-        address _initringAddress
-    ) ERC721("Love Pages", "LP") {
-        setBaseURI(_initBaseURI);
-        setNotRevealedURI(_initNotRevealedUri);
-        setringAddress(_initringAddress);
+        string memory initBaseLoveLetterCID,
+        string memory initWrittenLoveLetterCID
+    ) ERC721("Love Letter", "LL") {
+        setBaseLoveLetterCID(initBaseLoveLetterCID);
+        setWrittenLoveLetterCID(initWrittenLoveLetterCID);
     }
 
-    function _baseURI() internal view virtual override returns (string memory) {
-        return baseURI;
-    }
-
-    function claim() public {
-        IERC721 token = IERC721(ringAddress);
-        uint256 ownedAmount = token.balanceOf(msg.sender);
+    function claim() public payable {
         require(
-            ownedAmount >= requiredRingsAmount,
-            "You don't own enough Ring NFTs"
+            msg.value == claimPrice,
+            "Please submit the asking price in order to complete the purchase"
         );
 
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
-        Page memory newPage = Page("");
-        pages[newItemId] = newPage;
+        Letter memory newLetter = Letter(
+            "",
+            msg.sender
+        );
+        idToletter[newItemId] = newLetter;
         _safeMint(msg.sender, newItemId);
     }
 
@@ -76,11 +71,11 @@ contract LovePages is ERC721Enumerable, Ownable {
             _exists(_tokenId),
             "ERC721Metadata: URI query for nonexistent token"
         );
-        Page memory currentPage = pages[_tokenId];
-        if (bytes(currentPage.message).length > 0) {
-            return _baseURI();
+        Letter memory currLetter = idToletter[_tokenId];
+        if (bytes(currLetter.message).length > 0) {
+            return writtenLoveLetterCID;
         } else {
-            return notRevealedUri;
+            return baseLoveLetterCID;
         }
     }
 
@@ -91,9 +86,9 @@ contract LovePages is ERC721Enumerable, Ownable {
         );
         bytes memory strBytes = bytes(_newMessage);
         require(strBytes.length <= maxCharLimit, "Message is too long.");
-        Page storage currentPage = pages[_tokenId];
-        require(bytes(currentPage.message).length == 0, "Message already set.");
-        currentPage.message = _newMessage;
+        Letter storage currLetter = idToletter[_tokenId];
+        require(bytes(currLetter.message).length == 0, "Message already set.");
+        currLetter.message = _newMessage;
     }
 
     function readMessage(uint256 _tokenId)
@@ -101,38 +96,28 @@ contract LovePages is ERC721Enumerable, Ownable {
         view
         returns (string memory message)
     {
-        Page memory currentPage = pages[_tokenId];
-        return currentPage.message;
+        Letter memory currLetter = idToletter[_tokenId];
+        return currLetter.message;
     }
 
     // Only owner
-    function setringAddress(address _newAddress) public onlyOwner {
-        ringAddress = _newAddress;
+    function setBaseLoveLetterCID(string memory _newBaseLoveLetterCID) public onlyOwner {
+        baseLoveLetterCID = _newBaseLoveLetterCID;
     }
 
-    function setNotRevealedURI(string memory _notRevealedURI) public onlyOwner {
-        notRevealedUri = _notRevealedURI;
-    }
-
-    function setRequiredRingsAmount(uint256 _newValue) public onlyOwner {
-        requiredRingsAmount = _newValue;
+    function setWrittenLoveLetterCID(string memory _newWrittenLoveLetterCID) public onlyOwner {
+        writtenLoveLetterCID = _newWrittenLoveLetterCID;
     }
 
     function setMaxCharLimit(uint256 _newValue) public onlyOwner {
         maxCharLimit = _newValue;
     }
 
-    function setBaseURI(string memory _newBaseURI) public onlyOwner {
-        baseURI = _newBaseURI;
-    }
-
     function withdraw() public payable onlyOwner {
         uint256 balance = address(this).balance;
         require(balance > 0, "No ether left to withdraw");
 
-        (bool success, ) = payable(owner()).call{value: address(this).balance}(
-            ""
-        );
+        (bool success, ) = payable(owner()).call{value: address(this).balance}("");
         require(success, "Amount Transfer failed");
     }
 }

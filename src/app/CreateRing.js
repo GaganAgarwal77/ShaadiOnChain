@@ -71,8 +71,8 @@ function CreateRing({wallet, isLoggedIn}) {
         // var storageUrl = "hello";
         const retTokenId = await mintRingNFT(storageUrl);
         setTokenId(retTokenId);
-        console.log(retTokenId);
         setIsLoadingMint(false);
+        window.alert('Minted ring successfully!');
       }
       catch (e) {
         console.log(e);
