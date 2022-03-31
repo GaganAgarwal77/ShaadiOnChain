@@ -2,48 +2,12 @@ import React , { useState, useEffect} from 'react'
 import Card from './card'
 import  '../assets/Market.css'
 import { useHistory } from 'react-router-dom'
-import { web3, loadAccount, getUser, getAllEngagementProposals, getMarriageProposalByUser } from "./services/web3";
+import { loadAccount, getUser, getAllEngagementProposals, getMarriageProposalByUser } from "./services/web3";
 import { getImageFromTokenId } from "./services/utility";
-
-  const MarriageData = [
-    {
-        tokenID:"1",
-        name: "Kriti",
-        vows: "Vows",
-        type:"Female"
-    },
-    {
-        tokenID:"2",
-        name: "Shraddha",
-        vows: "Vows",
-        type:"Female"
-    },
-    {
-        tokenID:"3",
-        name: "Alia",
-        vows: "Vows",
-        type:"Female"
-    },
-    {
-        tokenID:"4",
-        name: "Katrina",
-        vows: "Vows",
-        type:"Female"
-    },
-    {
-        tokenID:"5",
-        name: "Disha",
-        vows: "Vows",
-        type:"Female"
-    },
-  
-  ]
-
 
 function RecievedProposals() {
 
     const { push } = useHistory()
-
 
     const [engageProposals, setEngageProposals] = useState([]);
     const [hasMarriageProposal, setHasMarriageProposal] = useState(false);

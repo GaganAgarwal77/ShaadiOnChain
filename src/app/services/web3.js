@@ -270,6 +270,22 @@ export const getMarriageProposalById = async (proposalId) => {
 }
 
 
+export const respondToMarriageProposal = async (proposalId, response, vows) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  await ShaadiOnChain_contract.methods
+    .respondToMarriageProposal(proposalId, response, vows)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}
+
 
 //#################################################################
 //# Love Letters

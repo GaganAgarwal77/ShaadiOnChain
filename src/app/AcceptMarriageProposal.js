@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
-import {Certificate, download} from './certificate.js';
+import { InputGroup, FormControl, Button } from 'react-bootstrap'
+import { Certificate, download } from './certificate.js';
+import { loadAccount, getUser, getMarriageProposalById, respondToMarriageProposal } from "./services/web3";
+import { GENDER } from './services/constants';
 
-function SendMarriageProposal
-(props) {
-    const { goBack } = useHistory()
+function AcceptMarriageProposal(props) {
+    
+    const { goBack, push } = useHistory()
+    const proposalId = props.match.params.marriageProposalId;
+
     const data =   {
         id:"1",
         imageURL:'/assets/images/wedding-img/marriage-certificate-image.png',
@@ -13,12 +18,54 @@ function SendMarriageProposal
         walletAddress: "0x1231231241",
         type: "Female"
     }
-    const[vows, setVows] = useState(""); 
-    const groom_vows = 'Sometext will be fetched here!';
+    const [proposalDetails, setProposalDetails] = useState({
+        proposalId: "",
+        proposerAddr: "",
+        proposerUser: "",
+        proposerVows: "",
+        proposalStatus: "0",
+    })
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [currUser, setCurrUser] = useState({});
+    const [yourVows, setYourVows] = useState(""); 
 
-    const handleVowsChange = (e) => {
-        setVows(e.target.value);
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+            const currUser = await getUser(); // Current user
+            setCurrUser(currUser);
+
+            const proposal = await getMarriageProposalById(proposalId);
+
+            const user = await getUser(proposal.proposer);
+            setProposalDetails(prevData => ({
+                ...prevData,
+                proposalId: proposal.id,
+                proposerAddr: proposal.proposer,
+                proposerUser: user,
+                proposerVows: proposal.proposerVows,
+                proposalStatus: proposal.status,
+            }));
+
+            if(proposal.status === "1") {
+                setIsDisabled(true);
+                setYourVows(proposal.proposeeVows);
+            }
+            else if(proposal.status === "2") {
+                setIsDisabled(true);
+            }
+
+          };
+
+        fetchData();
+    },[proposalId]);
+
+    const respondToProposal = async (response) => {
+        const status = await respondToMarriageProposal(proposalId, response, yourVows);
+        if(status) {
+            window.alert("Your response is saved on blockchain successfully");
+            push('/dashboard');
+        }
+    }
 
     return(
             <div className='purchase'>
@@ -27,28 +74,43 @@ function SendMarriageProposal
                 </div> 
                 <br/><br/><br/>
                 <div className="purchase__artwork">
-                    {/* <img style={{width:"30vw"}}src={data.imageURL} alt="couple photo" /> */}
-                    <Certificate style={{width:"35vw"}} width='700' height='500' groom_name='G Sri Harsha' bride_name='Sri Harsha G' groom_vows={groom_vows} bride_vows={vows} is_proposal='false'/>
+                    <Certificate style={{width:"35vw"}} width='700' height='500' 
+                    groom_name={proposalDetails.proposerUser.name} bride_name={currUser.name}
+                    groom_vows={proposalDetails.proposerVows} bride_vows={yourVows} is_proposal='false'/>
                     <br/>
                     <button className="btn btn-primary" onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button>
                 </div>
 
                 <div className="purchase__details">
-                    {/* <h1>#{data.tokenID} {data.name}</h1> */}
-                    <h3 style={{height:"75px"}}>Name: {data.spouseName}</h3>
-                    <h4>Wallet Address: {data.walletAddress}</h4>
-                    <h4>Gender: {data.type}</h4>
-                    <label htmlFor="exampleTextarea1">Your Vows:</label>
-                    <textarea style={{color:"white"}} className="form-control" id="vows" rows="4" placeholder="Write Your Vows" onChange={handleVowsChange} value={vows}></textarea>
-                    <br/>   
+                    <label>Partner's Wallet Address:</label>
+                    <InputGroup className="mb-3">
+                        <FormControl defaultValue={proposalDetails.proposerAddr}/>
+                    </InputGroup>
+                    <h4>Partner's Name: {proposalDetails.proposerUser.name}</h4>
+                    <h4>Partner's Gender: {GENDER[proposalDetails.proposerUser.gender]}</h4>
+                    <label>Recieved Vows:</label>
+                    <textarea style={{color:"white",background:"#2A3038"}} className="form-control" id="exampleTextarea1" rows="4" 
+                        value={proposalDetails.proposerVows} disabled />
+                    <br/>  
+
+                    <label className="mt-4">Your Vows:</label>
+                    <textarea style={{color:"white"}} value={yourVows} onChange={(e) => {setYourVows(e.target.value)}}
+                        className="form-control" id="note" rows="4" placeholder="Write your vows"/>
+
                     <div style={{marginTop:"10px"}}className="purchase__detailsBuy">
-                        {/* <div className="value">
-                            <h2>{data.price}</h2> 
-                            <img src="/assets/images/ethereum3.svg" alt="ETH" width="30" height="30" className='symbol' />
-                            
-                        </div> */}
-                        <button onClick={() => {alert("Accepted Proposal"); goBack()} }>Accept Proposal!</button>
-                        <button style={{background:"linear-gradient(to right, #ee0979, #ff6a00)"}} onClick={ () => {alert("Rejected Proposal")}}>Reject Proposal</button>
+                        {
+                            isDisabled ? 
+                            <div>
+                                {proposalDetails.proposalStatus === "1" && <button type="button" className="btn btn-success">Accepted</button>}
+                                {proposalDetails.proposalStatus === "2" && <button type="button" className="btn btn-danger">Rejected</button>}
+                            </div>
+                            :
+                            <div>
+                                <button onClick={() => {respondToProposal(true)}} disabled={isDisabled}>Accept Proposal</button>
+                                <button onClick={() => {respondToProposal(false)}} disabled={isDisabled} 
+                                style={{background: isDisabled ? "" : "linear-gradient(to right, #ee0979, #ff6a00)"}} >Reject Proposal</button>
+                            </div>
+                        }
                     </div>
                     
                 </div>
@@ -56,5 +118,4 @@ function SendMarriageProposal
     )
 }
 
-export default SendMarriageProposal
-
+export default AcceptMarriageProposal;
