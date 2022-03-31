@@ -3,6 +3,7 @@ import { ShaadiOnChain_ABI } from "./abi/ShaadiOnChainABI";
 import { RingMarketplace_ABI } from "./abi/RingMarketplaceABI";
 import { RingNFT_ABI } from "./abi/RingNFTABI";
 import { LoveLetter_ABI } from "./abi/LoveLetterABI";
+import { MarriageCertificate_ABI } from "./abi/MarriageCertificateABI";
 
 require('dotenv').config()
 
@@ -49,6 +50,11 @@ const RingNFT_contract = new web3.eth.Contract(
 const LoveLetter_contract = new web3.eth.Contract(
   LoveLetter_ABI,
   process.env.REACT_APP_LOVE_LETTER
+);
+
+const MarriageCertificateNFT_contract = new web3.eth.Contract(
+  MarriageCertificate_ABI,
+  process.env.REACT_APP_MARRIAGE_CERTIFICATE
 );
 
 //#################################################################
@@ -393,4 +399,30 @@ export const sendLoveLetter = async (tokenId, loverAddr) => {
       return false;
     });
     return true;
+}
+
+//#################################################################
+//# Marriage Certificate 
+//#################################################################
+
+export const mintMarriageCertificate = async (tokenURI, partner) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await MarriageCertificateNFT_contract.methods
+    .createToken(tokenURI, partner)
+    .send({
+      from: account,
+    });
+
+  console.log(result);
+  // const tokenId = result.events.Transfer.returnValues.tokenId;
+  return result;
+}
+
+export const marriageCertificateTokenURI = async (tokenId) => {
+  const result = await MarriageCertificateNFT_contract.methods
+    .tokenURI(tokenId)
+    .call();
+  return result;
 }

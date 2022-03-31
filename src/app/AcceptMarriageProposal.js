@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
-import { InputGroup, FormControl, Button } from 'react-bootstrap'
-import { Certificate, download } from './certificate.js';
-import { loadAccount, getUser, getMarriageProposalById, respondToMarriageProposal } from "./services/web3";
+import { InputGroup, FormControl } from 'react-bootstrap'
+import { NFTStorage } from 'nft.storage'
+
+import { Certificate, download, certificateImage } from './certificate.js';
+import { getUser, getMarriageProposalById, respondToMarriageProposal, mintMarriageCertificate } from "./services/web3";
 import { GENDER } from './services/constants';
+import { dataURItoBlob } from './services/utility';
 
 function AcceptMarriageProposal(props) {
     
@@ -60,6 +63,29 @@ function AcceptMarriageProposal(props) {
         }
     }
 
+    const mint = async () => {
+        const imageb64png = certificateImage();
+        const image = dataURItoBlob(imageb64png)
+
+        const client = new NFTStorage({ token: process.env.REACT_APP_NFT_STORAGE })
+        const ipfs = { 
+            name: "Marriage certificate",
+            description: "This is a marriage certificate",
+            image: image,
+            proposer: proposalDetails.proposerUser.name , 
+            proposee: currUser.name,  
+        };
+        const metadata = await client.store(ipfs);
+        window.alert("Successfully stored on IPFS");
+
+        var storageUrl = metadata.url;
+        const status = await mintMarriageCertificate(storageUrl, proposalDetails.proposerAddr);
+        if(status) {
+            window.alert('Minted ring successfully for you and your partner!');
+            push('/dashboard');
+        }
+    }
+
     return(
             <div className='purchase'>
                 <div className="goback">    
@@ -96,12 +122,15 @@ function AcceptMarriageProposal(props) {
                             <div>
                                 {proposalDetails.proposalStatus === "1" && <button type="button" className="btn btn-success">Accepted</button>}
                                 {proposalDetails.proposalStatus === "2" && <button type="button" className="btn btn-danger">Rejected</button>}
+                                <div>
+                                <button onClick={mint}>Mint Marriage Certificate</button>
+                                </div>
                             </div>
                             :
                             <div>
-                                <button onClick={() => {respondToProposal(true)}} disabled={isDisabled}>Accept Proposal</button>
-                                <button onClick={() => {respondToProposal(false)}} disabled={isDisabled} 
-                                style={{background: isDisabled ? "" : "linear-gradient(to right, #ee0979, #ff6a00)"}} >Reject Proposal</button>
+                                <button onClick={() => {respondToProposal(true)}}>Accept Proposal</button>
+                                <button onClick={() => {respondToProposal(false)}} 
+                                style={{background: "linear-gradient(to right, #ee0979, #ff6a00)"}} >Reject Proposal</button>
                             </div>
                         }
                     </div>

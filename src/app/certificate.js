@@ -63,12 +63,12 @@ const download = () => {
     link.click();
 };
 
-const image = () => {
+const certificateImage = () => {
     return canvasRef.current.toDataURL();
 }
 
 export {
     Certificate,
     download, 
-    image
+    certificateImage
 }
