@@ -161,6 +161,25 @@ export const saleRingNFTs = async () => {
   return ringOnSale;
 }
 
+export const myRingNFTs = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await RingMarketplace_contract.methods
+    .fetchMyRingNFTs()
+    .call({
+      from: account,
+    });
+
+  let myRings = []
+  result.forEach(async nft => {
+    if (nft.tokenId !== "0") {
+      myRings.push(nft)
+    }
+  })
+  return myRings;
+}
+
 
 export const getRingItem = async (itemId) => {
   const result = await RingMarketplace_contract.methods
