@@ -59,7 +59,7 @@ function AcceptMarriageProposal(props) {
         const status = await respondToMarriageProposal(proposalId, response, yourVows);
         if(status) {
             window.alert("Your response is saved on blockchain successfully");
-            push('/dashboard');
+            window.location.href ="/dashboard"
         }
     }
 
@@ -82,7 +82,7 @@ function AcceptMarriageProposal(props) {
         const status = await mintMarriageCertificate(storageUrl, proposalDetails.proposerAddr);
         if(status) {
             window.alert('Minted ring successfully for you and your partner!');
-            push('/dashboard');
+            window.location.href ="/dashboard"
         }
     }
 

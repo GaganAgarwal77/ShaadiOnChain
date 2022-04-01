@@ -36,7 +36,7 @@ function SendEngagementProposal(props) {
         const status = await createEngagementProposal(loverAddr, ringID, note);
         if(status) {
             window.alert("Engagement Proposal created successfully");
-            push('/dashboard');
+            window.location.href ="/dashboard"
         }
     }
 
