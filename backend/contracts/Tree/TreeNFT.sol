@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Base64.sol";
 import "./Tree1.sol";
 import "./Tree2.sol";
+import "./Tree3.sol";
 
 contract TreeNFT is ERC721Enumerable, Ownable {
     using Strings for uint256;
@@ -42,10 +43,12 @@ contract TreeNFT is ERC721Enumerable, Ownable {
 
     function buildImage(uint256 maturity) public pure returns (string memory) {
         bytes memory image;
-        if (maturity == 0) {
+        if (maturity == 1) {
             image = Tree1.TreeSVGToString();
-        } else if (maturity == 1) {
+        } else if (maturity == 2) {
             image = Tree2.TreeSVGToString();
+        } else if (maturity == 3) {
+            image = Tree3.TreeSVGToString();
         }
         string memory svg = Base64.encode(image);
         return svg;
@@ -79,13 +82,11 @@ contract TreeNFT is ERC721Enumerable, Ownable {
             );
     }
 
-    uint[] public timestamps;
-
-    function newtokenURI(uint256 _tokenId)
+    function tokenURI(uint256 _tokenId)
         public
-        // view
-        // virtual
-        // override
+        view
+        virtual
+        override
         returns (string memory)
     {
         require(
@@ -93,17 +94,40 @@ contract TreeNFT is ERC721Enumerable, Ownable {
             "ERC721Metadata: URI query for nonexistent token"
         );
 
-        timestamps.push(block.timestamp);
-
         Tree memory tree = trees[_tokenId];
-        if (block.timestamp <= tree.timestamp + 10 seconds) {
-            return buildMetadata(_tokenId, 0);
-        } else if (
-            block.timestamp > tree.timestamp + 10 seconds &&
-            block.timestamp <= tree.timestamp + 1 minutes
-        ) {
+        uint timediff1 = 10 seconds;
+        uint timediff2 = 1 minutes;
+        uint timediff3 = 3 minutes;
+        uint timediff4 = 5 minutes;
+        uint timediff5 = 10 minutes;
+
+        if (block.timestamp <= (tree.timestamp + timediff1)) {
             return buildMetadata(_tokenId, 1);
+        } 
+        else if (
+            (block.timestamp > (tree.timestamp + timediff1)) &&
+            (block.timestamp <= (tree.timestamp + timediff2))
+        ) {
+            return buildMetadata(_tokenId, 2);
         }
-        return buildMetadata(_tokenId, 1);
+        else if (
+            (block.timestamp > (tree.timestamp + timediff2)) &&
+            (block.timestamp <= (tree.timestamp + timediff3))
+        ) {
+            return buildMetadata(_tokenId, 3);
+        }
+        else if (
+            (block.timestamp > (tree.timestamp + timediff3)) &&
+            (block.timestamp <= (tree.timestamp + timediff4))
+        ) {
+            return buildMetadata(_tokenId, 2);
+        }
+        else if (
+            (block.timestamp > (tree.timestamp + timediff4)) &&
+            (block.timestamp <= (tree.timestamp + timediff5))
+        ) {
+            return buildMetadata(_tokenId, 2);
+        }
+        return buildMetadata(_tokenId, 3);
     }
 }
