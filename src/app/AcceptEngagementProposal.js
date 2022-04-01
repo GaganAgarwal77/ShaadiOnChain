@@ -87,7 +87,7 @@ function SendEngagementProposal(props) {
         const status = await respondToEngagementProposal(proposalId, response, yourRingID, yourNote);
         if(status) {
             window.alert("Your response is saved on blockchain successfully");
-            push('/dashboard');
+            window.location.href ="/dashboard"
         }
     }
 

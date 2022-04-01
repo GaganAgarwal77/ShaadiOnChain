@@ -35,7 +35,7 @@ function SendEngagementProposal(props) {
         const status = await createMarriageProposal(vows);
         if(status) {
             window.alert("Marriage Proposal created successfully");
-            push('/dashboard');
+            window.location.href ="/dashboard"
         }
     }
 
