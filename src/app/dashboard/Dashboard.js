@@ -3,15 +3,18 @@ import { Doughnut } from 'react-chartjs-2';
 import Slider from "react-slick";
 import { TodoListComponent } from '../apps/TodoList'
 import { VectorMap } from "react-jvectormap"
+import {Container, Row, Col, Card } from 'react-bootstrap';
+import { Certificate, download } from '../certificate.js';
 
 const mapData = {
-  "BZ": 75.00,
-  "US": 56.25,
-  "AU": 15.45,
-  "GB": 25.00,
-  "RO": 10.25,
-  "GE": 33.25
+  "IN": 10,
+  "BZ": 50,
+  "US": 20,
+  "AU": 30,
+  "GB": 40,
+  "GE": 60
 }
+
 
 export class Dashboard extends Component {
 
@@ -53,261 +56,26 @@ export class Dashboard extends Component {
   toggleProBanner() {
     document.querySelector('.proBanner').classList.toggle("hide");
   }
+
   render () {
+    let isMarried = true
     return (
       <div>
         <div className="row">
-          <div className="col-12 grid-margin stretch-card">
-            <div className="card corona-gradient-card">
-              <div className="card-body py-0 px-0 px-sm-3">
-                <div className="row align-items-center">
-                  <div className="col-4 col-sm-3 col-xl-2">
-                    <img src={require('../../assets/images/dashboard/Group126@2x.png')} className="gradient-corona-img img-fluid" alt="banner" />
-                  </div>
-                  <div className="col-5 col-sm-7 col-xl-8 p-0">
-                    <h4 className="mb-1 mb-sm-0">New refreshing look</h4>
-                    <p className="mb-0 font-weight-normal d-none d-sm-block">Corona admin template now with a new facelift for enhanced legibility and aesthetics!</p>
-                  </div>
-                  <div className="col-3 col-sm-2 col-xl-2 pl-0 text-center">
-                    <button className="btn btn-outline-light btn-rounded get-started-btn">Get Started</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xl-3 col-sm-6 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-9">
-                    <div className="d-flex align-items-center align-self-start">
-                      <h3 className="mb-0">$12.34</h3>
-                      <p className="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="icon icon-box-success ">
-                      <span className="mdi mdi-arrow-top-right icon-item"></span>
-                    </div>
-                  </div>
-                </div>
-                <h6 className="text-muted font-weight-normal">Potential growth</h6>
-              </div>
-            </div>
-          </div>
-          <div className="col-xl-3 col-sm-6 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-9">
-                    <div className="d-flex align-items-center align-self-start">
-                      <h3 className="mb-0">$17.34</h3>
-                      <p className="text-success ml-2 mb-0 font-weight-medium">+11%</p>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="icon icon-box-success">
-                      <span className="mdi mdi-arrow-top-right icon-item"></span>
-                    </div>
-                  </div>
-                </div>
-                <h6 className="text-muted font-weight-normal">Revenue current</h6>
-              </div>
-            </div>
-          </div>
-          <div className="col-xl-3 col-sm-6 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-9">
-                    <div className="d-flex align-items-center align-self-start">
-                      <h3 className="mb-0">$12.34</h3>
-                      <p className="text-danger ml-2 mb-0 font-weight-medium">-2.4%</p>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="icon icon-box-danger">
-                      <span className="mdi mdi-arrow-bottom-left icon-item"></span>
-                    </div>
-                  </div>
-                </div>
-                <h6 className="text-muted font-weight-normal">Daily Income</h6>
-              </div>
-            </div>
-          </div>
-          <div className="col-xl-3 col-sm-6 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-9">
-                    <div className="d-flex align-items-center align-self-start">
-                      <h3 className="mb-0">$31.53</h3>
-                      <p className="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="icon icon-box-success ">
-                      <span className="mdi mdi-arrow-top-right icon-item"></span>
-                    </div>
-                  </div>
-                </div>
-                <h6 className="text-muted font-weight-normal">Expense current</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-4 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-title">Transaction History</h4>
-                <div className="aligner-wrapper">
-                  <Doughnut data={this.transactionHistoryData} options={this.transactionHistoryOptions} />
-                  <div className="absolute center-content">
-                    <h5 className="font-weight-normal text-whiite text-center mb-2 text-white">1200</h5>
-                    <p className="text-small text-muted text-center mb-0">Total</p>
-                  </div>
-                </div>  
-                <div className="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-                  <div className="text-md-center text-xl-left">
-                    <h6 className="mb-1">Transfer to Paypal</h6>
-                    <p className="text-muted mb-0">07 Jan 2019, 09:12AM</p>
-                  </div>
-                  <div className="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                    <h6 className="font-weight-bold mb-0">$236</h6>
-                  </div>
-                </div>
-                <div className="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-                  <div className="text-md-center text-xl-left">
-                    <h6 className="mb-1">Tranfer to Stripe</h6>
-                    <p className="text-muted mb-0">07 Jan 2019, 09:12AM</p>
-                  </div>
-                  <div className="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                    <h6 className="font-weight-bold mb-0">$593</h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-8 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">
-                <div className="d-flex flex-row justify-content-between">
-                  <h4 className="card-title mb-1">Open Projects</h4>
-                  <p className="text-muted mb-1">Your data status</p>
-                </div>
-                <div className="row">
-                  <div className="col-12">
-                    <div className="preview-list">
-                      <div className="preview-item border-bottom">
-                        <div className="preview-thumbnail">
-                          <div className="preview-icon bg-primary">
-                            <i className="mdi mdi-file-document"></i>
-                          </div>
-                        </div>
-                        <div className="preview-item-content d-sm-flex flex-grow">
-                          <div className="flex-grow">
-                            <h6 className="preview-subject">Admin dashboard design</h6>
-                            <p className="text-muted mb-0">Broadcast web app mockup</p>
-                          </div>
-                          <div className="mr-auto text-sm-right pt-2 pt-sm-0">
-                            <p className="text-muted">15 minutes ago</p>
-                            <p className="text-muted mb-0">30 tasks, 5 issues </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="preview-item border-bottom">
-                        <div className="preview-thumbnail">
-                          <div className="preview-icon bg-success">
-                            <i className="mdi mdi-cloud-download"></i>
-                          </div>
-                        </div>
-                        <div className="preview-item-content d-sm-flex flex-grow">
-                          <div className="flex-grow">
-                            <h6 className="preview-subject">Wordpress Development</h6>
-                            <p className="text-muted mb-0">Upload new design</p>
-                          </div>
-                          <div className="mr-auto text-sm-right pt-2 pt-sm-0">
-                            <p className="text-muted">1 hour ago</p>
-                            <p className="text-muted mb-0">23 tasks, 5 issues </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="preview-item border-bottom">
-                        <div className="preview-thumbnail">
-                          <div className="preview-icon bg-info">
-                            <i className="mdi mdi-clock"></i>
-                          </div>
-                        </div>
-                        <div className="preview-item-content d-sm-flex flex-grow">
-                          <div className="flex-grow">
-                            <h6 className="preview-subject">Project meeting</h6>
-                            <p className="text-muted mb-0">New project discussion</p>
-                          </div>
-                          <div className="mr-auto text-sm-right pt-2 pt-sm-0">
-                            <p className="text-muted">35 minutes ago</p>
-                            <p className="text-muted mb-0">15 tasks, 2 issues</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="preview-item border-bottom">
-                        <div className="preview-thumbnail">
-                          <div className="preview-icon bg-danger">
-                            <i className="mdi mdi-email-open"></i>
-                          </div>
-                        </div>
-                        <div className="preview-item-content d-sm-flex flex-grow">
-                          <div className="flex-grow">
-                            <h6 className="preview-subject">Broadcast Mail</h6>
-                            <p className="text-muted mb-0">Sent release details to team</p>
-                          </div>
-                          <div className="mr-auto text-sm-right pt-2 pt-sm-0">
-                            <p className="text-muted">55 minutes ago</p>
-                            <p className="text-muted mb-0">35 tasks, 7 issues </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="preview-item">
-                        <div className="preview-thumbnail">
-                          <div className="preview-icon bg-warning">
-                            <i className="mdi mdi-chart-pie"></i>
-                          </div>
-                        </div>
-                        <div className="preview-item-content d-sm-flex flex-grow">
-                          <div className="flex-grow">
-                            <h6 className="preview-subject">UI Design</h6>
-                            <p className="text-muted mb-0">New application planning</p>
-                          </div>
-                          <div className="mr-auto text-sm-right pt-2 pt-sm-0">
-                            <p className="text-muted">50 minutes ago</p>
-                            <p className="text-muted mb-0">27 tasks, 4 issues </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
           <div className="col-sm-4 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h5>Revenue</h5>
+                <h5>Love Letters Sent</h5>
                 <div className="row">
                   <div className="col-8 col-sm-12 col-xl-8 my-auto">
                     <div className="d-flex d-sm-block d-md-flex align-items-center">
-                      <h2 className="mb-0">$32123</h2>
-                      <p className="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+                      <h2 className="mb-0">12</h2>
+                      {/* <p className="text-success ml-2 mb-0 font-weight-medium">+3.5%</p> */}
                     </div>
-                    <h6 className="text-muted font-weight-normal">11.38% Since last month</h6>
+                    <h6 className="text-muted font-weight-normal">+10% Since last month</h6>
                   </div>
                   <div className="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                    <i className="icon-lg mdi mdi-codepen text-primary ml-auto"></i>
+                    <img src="/assets/images/wedding-img/icon/love-letter.png" alt="Rings" width="50" className='mb-4'/>
                   </div>
                 </div>
               </div>
@@ -316,17 +84,17 @@ export class Dashboard extends Component {
           <div className="col-sm-4 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h5>Sales</h5>
+                <h5>Love Letters Recieved</h5>
                 <div className="row">
                   <div className="col-8 col-sm-12 col-xl-8 my-auto">
                     <div className="d-flex d-sm-block d-md-flex align-items-center">
-                      <h2 className="mb-0">$45850</h2>
-                      <p className="text-success ml-2 mb-0 font-weight-medium">+8.3%</p>
+                      <h2 className="mb-0">15</h2>
+                      <p className="text-success ml-2 mb-0 font-weight-medium"></p>
                     </div>
-                    <h6 className="text-muted font-weight-normal"> 9.61% Since last month</h6>
+                    <h6 className="text-muted font-weight-normal"> +20% Since last month</h6>
                   </div>
                   <div className="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                    <i className="icon-lg mdi mdi-wallet-travel text-danger ml-auto"></i>
+                  <img src="/assets/images/wedding-img/icon/love-letter2.png" alt="Rings" width="50" className='mb-4'/>
                   </div>
                 </div>
               </div>
@@ -335,28 +103,68 @@ export class Dashboard extends Component {
           <div className="col-sm-4 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h5>Purchase</h5>
+                <h5>Ring NFTs Owned</h5>
                 <div className="row">
                   <div className="col-8 col-sm-12 col-xl-8 my-auto">
                     <div className="d-flex d-sm-block d-md-flex align-items-center">
-                      <h2 className="mb-0">$2039</h2>
-                      <p className="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+                      <h2 className="mb-0">4</h2>
+                      <p className="text-danger ml-2 mb-0 font-weight-medium"></p>
                     </div>
-                    <h6 className="text-muted font-weight-normal">2.27% Since last month</h6>
+                    <h6 className="text-muted font-weight-normal">+50% Since last month</h6>
                   </div>
                   <div className="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                    <i className="icon-lg mdi mdi-monitor text-success ml-auto"></i>
+                  <img src="/assets/images/wedding-img/icon/rings.png" alt="Rings" width="50" className='mb-4'/>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="row ">
+        
+        <div className='row'>
+        <div className="col-12 grid-margin">
+            <div className='card'>
+              <div className='card-body'>
+              <h4 className="card-title">YOUR NFTs</h4>
+              {isMarried && 
+              <div>
+                    <h4 className="card-title">Your Marriage Certificate</h4>
+              <Container style={{marginLeft:"15%"}}>
+                          <Certificate style={{width:"50vw"}} width='700' height='500' 
+                          groom_name= "Vicky Kaushal" bride_name="Katrina Kaif"
+                          groom_vows= "Vicky Kaushal loves Katrina Kaif" bride_vows="Katrina Kaif loves Vicky Kaushal" is_proposal='false'/>
+                          <br/>
+                          <button className="btn btn-primary" style={{marginLeft:"30%"}} onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button>
+              </Container>
+              </div>
+        }
+        <h4 className="card-title">Your Ring NFTs</h4>
+<Row xs={1} md={2} className="g-4">
+  {Array.from({ length: 3 }).map((_, idx) => (
+    <Col style={{marginLeft:"0vw"}}>
+      <Card style={{minWidth:"20vw",maxWidth:"20vw", margin:"10px", borderRadius:"5%", borderColor:"gray", borderStyle:"dashed"}}>
+        <Card.Img variant="top" src={require("../../assets/rings/male/"+(idx+1)+  ".png")} style={{width:"90%", marginLeft:"5%", marginTop:"5%", borderRadius:"5%"}}/>
+        <Card.Body>
+          <Card.Title>Ring {idx}</Card.Title>
+          <Card.Text>
+              Ring Description
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+        {/* <div className="row ">
           <div className="col-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Order Status</h4>
+                <h4 className="card-title">Proposals Status</h4>
                 <div className="table-responsive">
                   <table className="table">
                     <thead>
@@ -369,7 +177,7 @@ export class Dashboard extends Component {
                             </label>
                           </div>
                         </th>
-                        <th> Client Name </th>
+                        <th> Proposed's Name </th>
                         <th> Order No </th>
                         <th> Product Cost </th>
                         <th> Project </th>
@@ -505,8 +313,8 @@ export class Dashboard extends Component {
               </div>
             </div>
           </div>
-        </div>
-        <div className="row">
+        </div> */}
+        {/* <div className="row">
           <div className="col-md-6 col-xl-4 grid-margin stretch-card">
             <div className="card">
               <div className="card-body">
@@ -623,12 +431,12 @@ export class Dashboard extends Component {
               </div>
             </div>
           </div>
-        </div>
-        <div className="row">
+        </div> */}
+        {/* <div className="row">
           <div className="col-12">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Visitors by Countries</h4>
+                <h4 className="card-title">Users by Countries</h4>
                 <div className="row">
                   <div className="col-md-5">
                     <div className="table-responsive">
@@ -638,9 +446,9 @@ export class Dashboard extends Component {
                             <td>
                               <i className="flag-icon flag-icon-us"></i>
                             </td>
-                            <td>USA</td>
+                            <td>India</td>
                             <td className="text-right"> 1500 </td>
-                            <td className="text-right font-weight-medium"> 56.35% </td>
+                            <td className="text-right font-weight-medium"> 75% </td>
                           </tr>
                           <tr>
                             <td>
@@ -670,7 +478,7 @@ export class Dashboard extends Component {
                             <td>
                               <i className="flag-icon flag-icon-ro"></i>
                             </td>
-                            <td>Romania</td>
+                            <td>USA</td>
                             <td className="text-right"> 620 </td>
                             <td className="text-right font-weight-medium"> 10.25% </td>
                           </tr>
@@ -678,7 +486,7 @@ export class Dashboard extends Component {
                             <td>
                               <i className="flag-icon flag-icon-br"></i>
                             </td>
-                            <td>Brasil</td>
+                            <td>South Africa</td>
                             <td className="text-right"> 230 </td>
                             <td className="text-right font-weight-medium"> 75.00% </td>
                           </tr>
@@ -712,7 +520,7 @@ export class Dashboard extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div> 
     );
   }

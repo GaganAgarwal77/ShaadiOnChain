@@ -92,4 +92,4 @@ function LoveLetters() {
     )
 }
 
-export default LoveLetters
+export default LoveLetters;
