@@ -4,6 +4,7 @@ import { RingMarketplace_ABI } from "./abi/RingMarketplaceABI";
 import { RingNFT_ABI } from "./abi/RingNFTABI";
 import { LoveLetter_ABI } from "./abi/LoveLetterABI";
 import { MarriageCertificate_ABI } from "./abi/MarriageCertificateABI";
+import { TREENFT_ABI } from "./abi/TreeNFTABI";
 
 require('dotenv').config()
 
@@ -55,6 +56,11 @@ const LoveLetter_contract = new web3.eth.Contract(
 const MarriageCertificateNFT_contract = new web3.eth.Contract(
   MarriageCertificate_ABI,
   process.env.REACT_APP_MARRIAGE_CERTIFICATE
+);
+
+const TreeNFT_contract = new web3.eth.Contract(
+  TREENFT_ABI,
+  process.env.REACT_APP_TREE_NFT
 );
 
 //#################################################################
@@ -153,6 +159,25 @@ export const saleRingNFTs = async () => {
     }
   })
   return ringOnSale;
+}
+
+export const myRingNFTs = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await RingMarketplace_contract.methods
+    .fetchMyRingNFTs()
+    .call({
+      from: account,
+    });
+
+  let myRings = []
+  result.forEach(async nft => {
+    if (nft.tokenId !== "0") {
+      myRings.push(nft)
+    }
+  })
+  return myRings;
 }
 
 
@@ -415,13 +440,35 @@ export const mintMarriageCertificate = async (tokenURI, partner) => {
       from: account,
     });
 
-  console.log(result);
-  // const tokenId = result.events.Transfer.returnValues.tokenId;
   return result;
 }
 
 export const marriageCertificateTokenURI = async (tokenId) => {
   const result = await MarriageCertificateNFT_contract.methods
+    .tokenURI(tokenId)
+    .call();
+  return result;
+}
+
+//#################################################################
+//# Marriage Tree
+//#################################################################
+
+export const mintTree = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await TreeNFT_contract.methods
+    .createToken()
+    .send({
+      from: account,
+    });
+
+  return result;
+}
+
+export const treeTokenURI = async (tokenId) => {
+  const result = await TreeNFT_contract.methods
     .tokenURI(tokenId)
     .call();
   return result;
