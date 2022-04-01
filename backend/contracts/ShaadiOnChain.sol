@@ -177,6 +177,7 @@ contract ShaadiOnChain is Owner {
         address proposee;
         string proposeeVows;
         ProposalStatus status;
+        uint marriageAcceptTime;
     }
 
     mapping(address => uint256) public userAddrToMarriageProposalId;
@@ -202,7 +203,8 @@ contract ShaadiOnChain is Owner {
             vows,
             proposer.partner,
             "",
-            ProposalStatus.PENDING
+            ProposalStatus.PENDING,
+            0
         );
 
         userAddrToMarriageProposalId[proposer.wallet] = proposalId;
@@ -231,6 +233,7 @@ contract ShaadiOnChain is Owner {
             proposee.married = true;
 
             proposal.proposeeVows = vows;
+            proposal.marriageAcceptTime = block.timestamp;
         } else {
             proposal.status = ProposalStatus.REJECTED;
         }

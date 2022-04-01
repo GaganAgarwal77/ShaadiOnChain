@@ -1,55 +1,6 @@
 export const ShaadiOnChain_ABI = 
 [
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "changeOwner",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "vows",
-				"type": "string"
-			}
-		],
-		"name": "createMarriageProposal",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_proposee",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "ringTokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "note",
-				"type": "string"
-			}
-		],
-		"name": "createProposal",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -67,88 +18,6 @@ export const ShaadiOnChain_ABI =
 		],
 		"name": "OwnerSet",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "enum ShaadiOnChain.Gender",
-				"name": "_gender",
-				"type": "uint8"
-			}
-		],
-		"name": "registerUser",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "proposalId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bool",
-				"name": "acceptProposal",
-				"type": "bool"
-			},
-			{
-				"internalType": "string",
-				"name": "vows",
-				"type": "string"
-			}
-		],
-		"name": "respondToMarriageProposal",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "proposalId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bool",
-				"name": "acceptProposal",
-				"type": "bool"
-			},
-			{
-				"internalType": "uint256",
-				"name": "ringTokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "note",
-				"type": "string"
-			}
-		],
-		"name": "respondToProposal",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newRingNFTContract",
-				"type": "address"
-			}
-		],
-		"name": "setRingNFTContract",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"inputs": [
@@ -197,6 +66,55 @@ export const ShaadiOnChain_ABI =
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "changeOwner",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "vows",
+				"type": "string"
+			}
+		],
+		"name": "createMarriageProposal",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_proposee",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "ringTokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "note",
+				"type": "string"
+			}
+		],
+		"name": "createProposal",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -309,6 +227,11 @@ export const ShaadiOnChain_ABI =
 				"internalType": "enum ShaadiOnChain.ProposalStatus",
 				"name": "status",
 				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "marriageAcceptTime",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -366,6 +289,88 @@ export const ShaadiOnChain_ABI =
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "enum ShaadiOnChain.Gender",
+				"name": "_gender",
+				"type": "uint8"
+			}
+		],
+		"name": "registerUser",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "proposalId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "acceptProposal",
+				"type": "bool"
+			},
+			{
+				"internalType": "string",
+				"name": "vows",
+				"type": "string"
+			}
+		],
+		"name": "respondToMarriageProposal",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "proposalId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "acceptProposal",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "ringTokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "note",
+				"type": "string"
+			}
+		],
+		"name": "respondToProposal",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newRingNFTContract",
+				"type": "address"
+			}
+		],
+		"name": "setRingNFTContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
