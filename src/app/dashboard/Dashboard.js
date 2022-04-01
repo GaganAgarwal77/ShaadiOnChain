@@ -120,8 +120,8 @@ export function Dashboard () {
                       {isMarried && treeMinted &&
               <div>
                     <h4 className="card-title">Your Tree NFT</h4>
-              <Container style={{marginLeft:"35%"}}>
-                          <img src="/assets/images/tree_of_life.png" alt="TREE" style={{height:"50vh"}} className='mb-4'/>
+                        <Container style={{marginLeft:"35%"}}>
+                          <img src="/assets/images/trees/svgs/3.svg" alt="TREE" style={{height:"50vh"}} className='mb-4'/>
 {/* 
                           <Certificate style={{width:"50vw"}} width='700' height='500' 
                           groom_name= "Vicky Kaushal" bride_name="Katrina Kaif"
