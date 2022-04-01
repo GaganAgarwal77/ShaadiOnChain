@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Canvas from 'react-responsive-canvas';
-
+import '../assets/styles/_fonts.scss'
 var canvasRef;
 
 const getLines = (text, limit=20) => {
@@ -25,9 +25,11 @@ const Certificate = (props) => {
     let canvas, ctx, certificate;
     const drawCertificate = () => {
         ctx.drawImage(certificate, 0, 0, ctx.canvas.width, ctx.canvas.height)
-        ctx.font = 'italic small-caps 25px/2 cursive'
+        ctx.font = '27px Alex Brush, cursive'
         ctx.fillStyle = '#000'
         ctx.fillText(`${props.groom_name} & ${props.bride_name}`, 200, 230);
+        
+        ctx.font = 'italic 20px Poppins, serif'
         
         var groomText = props.groom_vows;
         var groomLines = getLines(groomText, 20);

@@ -1,0 +1,16 @@
+.purchase__detailsBuy > button{
+    background: linear-gradient(90deg, #b06aec 0%, #7839d5 100%);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 6px;
+    margin-left: calc(50% - 146.8px);
+}
+.purchase__detailsBuy > button:disabled{
+    background: none;
+    border: 1px solid gray;
+    cursor: not-allowed;
+}
