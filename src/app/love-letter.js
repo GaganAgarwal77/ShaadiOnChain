@@ -64,7 +64,7 @@ function LoveLetter(props) {
                 
                 </div> 
                 <div className="purchase__artwork">
-                    <img src={loveLetter.image} alt="Love Letter" />
+                    <img style={{width:"20vw"}} src={loveLetter.image} alt="Love Letter" />
                 </div>
 
                 <div className="purchase__details">

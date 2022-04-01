@@ -22,6 +22,7 @@ const SentEngagementProposal = lazy(() => import('./SentEngagementProposal'));
 const SentMarriageProposal = lazy(() => import('./SentMarriageProposal'));
 
 const CreateRing = lazy(() => import('./CreateRing'));
+const Dating = lazy(() => import('./Dating'));
 
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
 const Dropdowns = lazy(() => import('./basic-ui/Dropdowns'));
@@ -66,6 +67,7 @@ class AppRoutes extends Component {
           <Route path="/read-love-letter/:tokenId" component={ ReadLoveLetter } />
 
           <Route path="/create-ring" component={ CreateRing } />
+          <Route path="/dating" component={ Dating } />
 
           <Route path="/basic-ui/buttons" component={ Buttons } />
           <Route path="/basic-ui/dropdowns" component={ Dropdowns } />
