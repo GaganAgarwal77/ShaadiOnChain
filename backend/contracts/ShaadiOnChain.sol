@@ -31,6 +31,7 @@ contract ShaadiOnChain is Owner {
     }
 
     mapping(address => User) public addrToUser;
+    mapping(uint => address) public idToUserAddr;
 
     function registerUser(string memory _name, Gender _gender) public ValidSender {
         require(
@@ -50,6 +51,8 @@ contract ShaadiOnChain is Owner {
             false,
             address(0)
         );
+
+        idToUserAddr[userId] = msg.sender;
     }
 
     function getUserCount() public view returns (uint256) {
