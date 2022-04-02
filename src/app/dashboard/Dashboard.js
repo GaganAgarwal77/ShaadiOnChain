@@ -8,19 +8,19 @@ import { getMetadataFromTokenId, uriToImageConverter, getImageFromMarriageCertTo
 export function Dashboard () {
   
   const [rings, setRings] = useState([]);
-  const [isMarried, setIsMarried] = useState(false);
+  const [hasMarriageCert, setHasMarriageCert] = useState(false);
   const [marriageCertImage, setMarriageCertImage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       const user = await getUser();
-
+      
       if(user.married) {
         const tokenId = await marriageCertificateTokenId();
         if(!tokenId) { return; }
         const image = await getImageFromMarriageCertTokenId(tokenId);
         setMarriageCertImage(image);
-        setIsMarried(true);
+        setHasMarriageCert(true);
       }
     }
 
@@ -41,7 +41,6 @@ export function Dashboard () {
 
 
     let treeMinted = true
-    let marriageMinted = true
     return (
       <div>
         <div className="row">
@@ -109,16 +108,8 @@ export function Dashboard () {
             <div className='card'>
               <div className='card-body'>
               <h4 className="card-title">YOUR NFTs</h4>
-              {!marriageMinted &&
-                          <div className="purchase__detailsBuy">
-                            <h4 className="card-title">Your Marriage Certificate</h4>
-                          <button onClick={() => {alert("Minted!")}}>
-                              Claim Your Marriage Certificate
-                          </button>
-                      </div>
-              }
               
-              {isMarried && marriageMinted &&
+              {hasMarriageCert &&
               <div>
                     <h4 className="card-title">Your Marriage Certificate</h4>
               <Container style={{marginLeft:"15%"}}>
@@ -134,7 +125,7 @@ export function Dashboard () {
                           </button>
                       </div>
               }
-                      {isMarried && treeMinted &&
+                      {hasMarriageCert && treeMinted &&
               <div>
                 <h4 className="card-title">Your Tree NFT</h4>
                   <Container style={{marginLeft:"35%"}}>
