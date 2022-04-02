@@ -96,6 +96,29 @@ export const registerUser = async (name, gender) => {
   return result;
 };
 
+
+export const fetchNumUser = async (tokenId) => {
+  const result = await ShaadiOnChain_contract.methods
+    .getUserCount()
+    .call();
+  return result;
+}
+
+export const fetchAllUsers = async (tokenId) => {
+  const numUsers = await fetchNumUser();
+
+  let usersList = []
+  for(var i = 1; i <= numUsers; i++) {
+    const user = await ShaadiOnChain_contract.methods
+      .idToUserAddr(i)
+      .call();
+    usersList.push(user);
+  }
+
+  return usersList;
+}
+
+
 //#################################################################
 //# Ring NFT
 //#################################################################
@@ -303,7 +326,7 @@ export const getMarriageProposalByUser = async () => {
     .userAddrToMarriageProposalId(account)
     .call();
 
-  if(proposalId === 0) {
+  if(proposalId === "0") {
     return false;
   }
 
@@ -446,6 +469,16 @@ export const mintMarriageCertificate = async (tokenURI, partner) => {
 export const marriageCertificateTokenURI = async (tokenId) => {
   const result = await MarriageCertificateNFT_contract.methods
     .tokenURI(tokenId)
+    .call();
+  return result;
+}
+
+export const marriageCertificateTokenId = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await MarriageCertificateNFT_contract.methods
+    .addrToTokenId(account)
     .call();
   return result;
 }
