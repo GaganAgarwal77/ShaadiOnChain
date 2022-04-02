@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import './Dashboard.css'
-import { getUser, myRingNFTs, marriageCertificateTokenId, mintTree, fetchTreeTokenId } from "../services/web3";
-import { getMetadataFromTokenId, uriToImageConverter, getImageFromMarriageCertTokenId, getTreeImageFromTokenId } from "../services/utility";
+import { loadAccount, getUser, myRingNFTs, marriageCertificateTokenId, mintTree, fetchTreeTokenId } from "../services/web3";
+import { getMetadataFromTokenId, uriToImageConverter, getImageFromMarriageCertTokenId, getTreeImageFromTokenId, getMetadataFromGeneralContractTokenUri } 
+  from "../services/utility";
+import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 export function Dashboard () {
+
+  const alchemyWeb3 = createAlchemyWeb3(`https://polygon-mumbai.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`);
   
   const [currUser, setCurrUser] = useState({});
   const [rings, setRings] = useState([]);
@@ -35,15 +39,48 @@ export function Dashboard () {
     }
 
     const fetchNFTs = async () => {
-        const ringNFTArray = await myRingNFTs();
-        ringNFTArray.forEach(async nft => {
-            var myNFT = await getMetadataFromTokenId(nft.tokenId);
-            myNFT.image = uriToImageConverter(myNFT.image);
-            myNFT.tokenId = nft.tokenId;
-            setRings((arr) => [...arr, myNFT]);
+        // const ringNFTArray = await myRingNFTs();
+        // ringNFTArray.forEach(async nft => {
+        //     var myNFT = await getMetadataFromTokenId(nft.tokenId);
+        //     myNFT.image = uriToImageConverter(myNFT.image);
+        //     myNFT.tokenId = nft.tokenId;
+        //     setRings((arr) => [...arr, myNFT]);
+        //   }
+        // );
+        const wallet = await loadAccount();
+
+        const alchemyNFTs = await alchemyWeb3.alchemy.getNfts({
+          owner: wallet,
+          contractAddresses: [process.env.REACT_APP_RINGNFT]
+        });
+        
+        const length = alchemyNFTs.totalCount;
+        const alchemyNFTsList = alchemyNFTs.ownedNfts;
+        
+        setRings([]);
+        for(var i = 0; i < length; i++) {
+          const nftObject = alchemyNFTsList[i];
+          let metadata, image;
+          try{
+            metadata = await getMetadataFromGeneralContractTokenUri(nftObject.tokenUri.raw);
+            image = uriToImageConverter(metadata.image);
           }
-        );
-    };
+          catch (e) {
+            continue;
+          }
+          var myNftObject = {
+            "contract": nftObject.contract.address,
+            "tokenId": nftObject.id.tokenId,
+            "tokenUri": nftObject.tokenUri.raw,
+            "name": metadata.name,
+            "description": metadata.description,
+            "image": image
+          }
+          setRings((prev) => [...prev, myNftObject]);
+        }
+    
+
+      };
 
     fetchData();
     fetchNFTs();
@@ -157,7 +194,7 @@ export function Dashboard () {
                 <Card style={{minWidth:"20vw",maxWidth:"20vw", margin:"10px", borderRadius:"5%", borderColor:"gray", borderStyle:"dashed"}}>
                   <Card.Img variant="top" src={ring.image} style={{width:"90%", marginLeft:"5%", marginTop:"5%", borderRadius:"5%"}}/>
                   <Card.Body>
-                    <Card.Title>#{ring.tokenId} {ring.name}</Card.Title>
+                    <Card.Title>#{parseInt(ring.tokenId, 16)} {ring.name}</Card.Title>
                     <Card.Text>
                         {ring.description}
                     </Card.Text>
