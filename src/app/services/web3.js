@@ -153,6 +153,21 @@ export const isRingNFTOwner = async (tokenId) => {
   return result === account ? true : false
 }
 
+export const approveRingtoShaadiContract = async (tokenId) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  await RingNFT_contract.methods
+    .approveTokenToMainContract(tokenId)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}
+
 //#################################################################
 //# Ring Marketplace
 //#################################################################

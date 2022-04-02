@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
 import {InputGroup, FormControl, Button} from 'react-bootstrap'
-import { getUser, isRingNFTOwner, createEngagementProposal } from './services/web3';
+import { getUser, isRingNFTOwner, approveRingtoShaadiContract, createEngagementProposal } from './services/web3';
 import { getImageFromTokenId } from "./services/utility";
 import { GENDER } from './services/constants';
 
@@ -28,6 +28,10 @@ function SendEngagementProposal(props) {
             return;
         }
 
+        const state = await approveRingtoShaadiContract(ringID);
+        if(!state) {
+            return;
+        }
         const image = await getImageFromTokenId(ringID);
         setRingImageUri(image);
     }

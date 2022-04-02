@@ -1,4 +1,4 @@
-export const ShaadiOnChain_ABI = 
+export const ShaadiOnChain_ABI =
 [
 	{
 		"anonymous": false,
@@ -18,6 +18,19 @@ export const ShaadiOnChain_ABI =
 		],
 		"name": "OwnerSet",
 		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "RingNFTContract",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"inputs": [

@@ -12,7 +12,7 @@ contract ShaadiOnChain is Owner {
     Counters.Counter private _proposalIds;
     Counters.Counter private _marriageProposalIds;
 
-    address RingNFTContract;
+    address public RingNFTContract;
 
     //#################################################################
     //# User
