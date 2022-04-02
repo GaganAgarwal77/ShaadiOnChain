@@ -2,15 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Certificate, download } from '../certificate.js';
 import './Dashboard.css'
-import { myRingNFTs } from "../services/web3";
+import { getUser, myRingNFTs } from "../services/web3";
 import { getMetadataFromTokenId, uriToImageConverter } from "../services/utility";
 
 
 export function Dashboard () {
 
   const [rings, setRings] = useState([]);
+  const [isMarried, setIsMarried] = useState(false);
 
   useEffect(() => {
+
+    const fetchData = async () => {
+      const user = await getUser();
+      setIsMarried(user.married);
+    }
+
     const fetchNFTs = async () => {
         const ringNFTArray = await myRingNFTs();
         ringNFTArray.forEach(async nft => {
@@ -21,11 +28,12 @@ export function Dashboard () {
           }
         );
     };
+
+    fetchData();
     fetchNFTs();
 }, []);
 
 
-    let isMarried = true
     let treeMinted = true
     let marriageMinted = true
     return (
