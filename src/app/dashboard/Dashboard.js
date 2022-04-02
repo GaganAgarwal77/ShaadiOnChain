@@ -2,20 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Certificate, download } from '../certificate.js';
 import './Dashboard.css'
-import { getUser, myRingNFTs } from "../services/web3";
-import { getMetadataFromTokenId, uriToImageConverter } from "../services/utility";
-
+import { getUser, myRingNFTs, marriageCertificateTokenId } from "../services/web3";
+import { getMetadataFromTokenId, uriToImageConverter, getImageFromMarriageCertTokenId } from "../services/utility";
 
 export function Dashboard () {
-
+  
   const [rings, setRings] = useState([]);
   const [isMarried, setIsMarried] = useState(false);
+  const [marriageCertImage, setMarriageCertImage] = useState("");
 
   useEffect(() => {
-
     const fetchData = async () => {
       const user = await getUser();
-      setIsMarried(user.married);
+
+      if(user.married) {
+        const tokenId = await marriageCertificateTokenId();
+        if(!tokenId) { return; }
+        const image = await getImageFromMarriageCertTokenId(tokenId);
+        setMarriageCertImage(image);
+        setIsMarried(true);
+      }
     }
 
     const fetchNFTs = async () => {
@@ -116,11 +122,7 @@ export function Dashboard () {
               <div>
                     <h4 className="card-title">Your Marriage Certificate</h4>
               <Container style={{marginLeft:"15%"}}>
-                          <Certificate style={{width:"50vw"}} width='700' height='500' 
-                          groom_name= "Vicky Kaushal" bride_name="Katrina Kaif"
-                          groom_vows= "Vicky Kaushal loves Katrina Kaif" bride_vows="Katrina Kaif loves Vicky Kaushal" is_proposal='false'/>
-                          <br/>
-                          <button className="btn btn-primary mb-5" style={{marginLeft:"30%"}} onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button>
+                          <img src={marriageCertImage}></img>
               </Container>
               </div>
         }

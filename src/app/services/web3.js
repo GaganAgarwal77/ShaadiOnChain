@@ -495,6 +495,10 @@ export const marriageCertificateTokenId = async () => {
   const result = await MarriageCertificateNFT_contract.methods
     .addrToTokenId(account)
     .call();
+
+  if(result === "0") {
+    return false;
+  }
   return result;
 }
 

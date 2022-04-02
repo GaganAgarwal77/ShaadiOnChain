@@ -1,4 +1,4 @@
-import { tokenURI, tokenURILoveLetter } from "./web3";
+import { tokenURI, tokenURILoveLetter, marriageCertificateTokenURI } from "./web3";
 import axios from 'axios';
 
 export const getURI = async (tokenId) => {
@@ -32,6 +32,21 @@ export const getMetadataFromTokenId = async (tokenId) => {
 export const getLoveLetterImageFromTokenId = async (tokenId) => {
     var cid = await tokenURILoveLetter(tokenId);
     const image = 'https://' + cid + '.ipfs.dweb.link';
+    return image;
+}
+
+export const getMarriageCertURI = async (tokenId) => {
+    var uri = await marriageCertificateTokenURI(tokenId);
+    uri = uri.slice(7); 
+    uri = uri.substring(0, uri.length - 14);
+    uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
+    return uri
+}  
+
+export const getImageFromMarriageCertTokenId = async (tokenId) => {
+    const uri = await getMarriageCertURI(tokenId);
+    const result = await axios(uri);
+    const image = uriToImageConverter(result.data.image);
     return image;
 }
 
