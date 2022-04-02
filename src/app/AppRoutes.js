@@ -21,6 +21,7 @@ const SentProposals = lazy(() => import('./SentProposals'));
 const SentEngagementProposal = lazy(() => import('./SentEngagementProposal'));
 const SentMarriageProposal = lazy(() => import('./SentMarriageProposal'));
 
+const ViewNfts = lazy(() => import('./ViewNfts'));
 const CreateRing = lazy(() => import('./CreateRing'));
 
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
@@ -64,6 +65,8 @@ class AppRoutes extends Component {
           <Route path="/love-letters" component={ LoveLetters } />
           <Route path="/love-letter/:tokenId" component={ LoveLetter } />
           <Route path="/read-love-letter/:tokenId" component={ ReadLoveLetter } />
+
+          <Route path="/view-nfts" component={ ViewNfts } />
 
           <Route path="/create-ring" component={ CreateRing } />
 
