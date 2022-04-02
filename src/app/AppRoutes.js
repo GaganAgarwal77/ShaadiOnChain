@@ -51,6 +51,9 @@ class AppRoutes extends Component {
           <Route exact path="/" component={ Wedding } />
           <Route exact path="/dashboard" component={ Dashboard } />
           <Route path="/login-register" component={ LoginRegister } />
+          <Route path="/create-ring" component={ CreateRing } />
+
+          <div style={{width:"80vw", marginLeft:"5vw",marginTop:"4vh"}}>
           <Route path="/rings-marketplace" component={ RingsMarketplace } />
           <Route path="/purchase/:itemId" component={ Purchase } />
           <Route path="/send-engagement-proposal" component={ SendEngagementProposal } />
@@ -69,8 +72,8 @@ class AppRoutes extends Component {
 
           <Route path="/view-nfts" component={ ViewNfts } />
 
-          <Route path="/create-ring" component={ CreateRing } />
           <Route path="/dating" component={ Dating } />
+          </div>
 
           <Route path="/basic-ui/buttons" component={ Buttons } />
           <Route path="/basic-ui/dropdowns" component={ Dropdowns } />

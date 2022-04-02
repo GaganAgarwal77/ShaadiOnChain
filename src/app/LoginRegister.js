@@ -44,6 +44,7 @@ const LoginRegister = () => {
               pathname: '/dashboard',
               state: { user: userData, wallet: wallet }
           })
+          window.location.reload();
       }
       else {
           window.alert('Account does not exist. Please register!');

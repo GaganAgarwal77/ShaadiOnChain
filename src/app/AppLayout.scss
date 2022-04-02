@@ -1,0 +1,65 @@
+.new-side-decore {
+    img {
+      position: absolute;
+      &:nth-child(1) {
+        margin-left: 70px;
+        margin-top:70px;
+        top: 6vw;
+        left:-6vw;
+        width: 15vw;
+        transform: rotate(-90deg);
+      }
+      &:nth-child(2) {
+        margin-left: 70px;
+        margin-top:70px;
+        top: 0;
+        left:0;
+        width: 15vw;
+      }
+      &:nth-child(3) {
+        margin-top:70px;
+        top: 0;
+        right:0;
+        width: 15vw;
+      }
+      &:nth-child(4) {
+        margin-top:70px;
+        top: 6vw;
+        right:-6vw;
+        width: 15vw;
+        transform: rotate(90deg);
+      }
+      &:nth-child(5) {
+        bottom: 0;
+        right:0;
+        width: 15vw;
+        transform: rotate(180deg);
+      }
+      &:nth-child(6) {
+        bottom: 6vw;
+        right:-6vw;
+        width: 15vw;
+        transform: rotate(90deg);
+      }
+      &:nth-child(7) {
+        margin-left: 70px;
+        bottom: 0;
+        left:0;
+        width: 15vw;
+        transform: rotate(180deg);
+      }
+      &:nth-child(8) {
+        margin-left: 70px;
+        bottom: 6vw;
+        left:-6vw;
+        width: 15vw;
+        transform: rotate(-90deg);
+      }      
+      &:nth-child(9) {
+        bottom: 7vh;
+        left: 42%;
+        width: 15vw;
+        cursor:pointer;
+      } 
+    }
+}

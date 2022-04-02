@@ -89,7 +89,7 @@ function AcceptMarriageProposal(props) {
     return(
             <div className='purchase'>
                 <div className="goback">    
-                   <img src="/assets/images/wedding-img/icon/next.png" onClick={goBack} alt="Go back" className='gobackButton'/>
+                   <img style={{width:"48px"}} src="/assets/images/wedding-img/icon/left-arrow3.png" onClick={goBack} alt="Go back" className='gobackButton'/>   
                 </div> 
                 <br/><br/><br/>
                 <div className="purchase__artwork">
@@ -128,7 +128,7 @@ function AcceptMarriageProposal(props) {
                             </div>
                             :
                             <div>
-                                <button onClick={() => {respondToProposal(true)}}>Accept Proposal</button>
+                                <button style={{background: "radial-gradient( circle 542px at 16.6% 38.6%,  rgba(66,164,14,1) 0%, rgba(86,230,99,1) 100.2% )"}} onClick={() => {respondToProposal(true)}}>Accept Proposal</button>
                                 <button onClick={() => {respondToProposal(false)}} 
                                 style={{background: "linear-gradient(to right, #ee0979, #ff6a00)"}} >Reject Proposal</button>
                             </div>
