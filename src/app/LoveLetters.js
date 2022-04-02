@@ -65,7 +65,7 @@ function LoveLetters() {
         <h2 className='mt-3'>Your Love Letters</h2>
         <div className='market'> 
                 {myLetters.map((letter) => (
-                     <div className="card" style={{margin:"10px",cursor:"pointer"}} onClick={() => push('/love-letter/' + letter.tokenId)}>
+                     <div className="card" style={{width:"20vw",margin:"10px",cursor:"pointer"}} onClick={() => push('/love-letter/' + letter.tokenId)}>
                         <div className="card-body">
                             <div className="item">
                                 <img style={{width:"100%"}} src={letter.image} alt="letter" />
@@ -78,7 +78,7 @@ function LoveLetters() {
         <h2 className='mt-3'>Recieved Love Letters</h2>
         <div className='market'> 
                 {rcvdLetters.map((letter) => (
-                     <div className="card" style={{margin:"10px",cursor:"pointer"}} onClick={() => push('/read-love-letter/' + letter.tokenId)}>
+                     <div className="card" style={{width:"20vw",margin:"10px",cursor:"pointer"}} onClick={() => push('/read-love-letter/' + letter.tokenId)}>
                         <div className="card-body">
                             <div className="item">
                                 <img style={{width:"100%"}} src={letter.image} alt="letter" />

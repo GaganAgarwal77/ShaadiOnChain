@@ -1,24 +1,39 @@
-import React, { Component } from 'react';
-import { Doughnut } from 'react-chartjs-2';
-import Slider from "react-slick";
-import { TodoListComponent } from '../apps/TodoList'
-import { VectorMap } from "react-jvectormap"
-import {Container, Row, Col, Card } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react'
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Certificate, download } from '../certificate.js';
 import './Dashboard.css'
-const mapData = {
-  "IN": 10,
-  "BZ": 50,
-  "US": 20,
-  "AU": 30,
-  "GB": 40,
-  "GE": 60
-}
+import { getUser, myRingNFTs } from "../services/web3";
+import { getMetadataFromTokenId, uriToImageConverter } from "../services/utility";
 
 
 export function Dashboard () {
 
-    let isMarried = true
+  const [rings, setRings] = useState([]);
+  const [isMarried, setIsMarried] = useState(false);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const user = await getUser();
+      setIsMarried(user.married);
+    }
+
+    const fetchNFTs = async () => {
+        const ringNFTArray = await myRingNFTs();
+        ringNFTArray.forEach(async nft => {
+            var myNFT = await getMetadataFromTokenId(nft.tokenId);
+            myNFT.image = uriToImageConverter(myNFT.image);
+            myNFT.tokenId = nft.tokenId;
+            setRings((arr) => [...arr, myNFT]);
+          }
+        );
+    };
+
+    fetchData();
+    fetchNFTs();
+}, []);
+
+
     let treeMinted = true
     let marriageMinted = true
     return (
@@ -119,34 +134,28 @@ export function Dashboard () {
               }
                       {isMarried && treeMinted &&
               <div>
-                    <h4 className="card-title">Your Tree NFT</h4>
-                        <Container style={{marginLeft:"35%"}}>
-                          <img src="/assets/images/trees/svgs/3.svg" alt="TREE" style={{height:"50vh"}} className='mb-4'/>
-{/* 
-                          <Certificate style={{width:"50vw"}} width='700' height='500' 
-                          groom_name= "Vicky Kaushal" bride_name="Katrina Kaif"
-                          groom_vows= "Vicky Kaushal loves Katrina Kaif" bride_vows="Katrina Kaif loves Vicky Kaushal" is_proposal='false'/>
-                          <br/>
-                          <button className="btn btn-primary" style={{marginLeft:"30%"}} onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button> */}
-              </Container>
+                <h4 className="card-title">Your Tree NFT</h4>
+                  <Container style={{marginLeft:"35%"}}>
+                    <img src="/assets/images/trees/svgs/3.svg" alt="TREE" style={{height:"50vh"}} className='mb-4'/>
+                  </Container>
               </div>
         }
         <h4 className="card-title">Your Ring NFTs</h4>
-<Row xs={1} md={2} className="g-4">
-  {Array.from({ length: 3 }).map((_, idx) => (
-    <Col style={{marginLeft:"0vw"}}>
-      <Card style={{minWidth:"20vw",maxWidth:"20vw", margin:"10px", borderRadius:"5%", borderColor:"gray", borderStyle:"dashed"}}>
-        <Card.Img variant="top" src={require("../../assets/rings/male/"+(idx+1)+  ".png")} style={{width:"90%", marginLeft:"5%", marginTop:"5%", borderRadius:"5%"}}/>
-        <Card.Body>
-          <Card.Title>Ring {idx}</Card.Title>
-          <Card.Text>
-              Ring Description
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </Col>
-  ))}
-</Row>
+          <Row xs={1} md={2} className="g-4">
+            {rings.map((ring) => (
+              <Col style={{marginLeft:"0vw"}}>
+                <Card style={{minWidth:"20vw",maxWidth:"20vw", margin:"10px", borderRadius:"5%", borderColor:"gray", borderStyle:"dashed"}}>
+                  <Card.Img variant="top" src={ring.image} style={{width:"90%", marginLeft:"5%", marginTop:"5%", borderRadius:"5%"}}/>
+                  <Card.Body>
+                    <Card.Title>#{ring.tokenId} {ring.name}</Card.Title>
+                    <Card.Text>
+                        {ring.description}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
               </div>
             </div>
           </div>

@@ -96,6 +96,29 @@ export const registerUser = async (name, gender) => {
   return result;
 };
 
+
+export const fetchNumUser = async (tokenId) => {
+  const result = await ShaadiOnChain_contract.methods
+    .getUserCount()
+    .call();
+  return result;
+}
+
+export const fetchAllUsers = async (tokenId) => {
+  const numUsers = await fetchNumUser();
+
+  let usersList = []
+  for(var i = 1; i <= numUsers; i++) {
+    const user = await ShaadiOnChain_contract.methods
+      .idToUserAddr(i)
+      .call();
+    usersList.push(user);
+  }
+
+  return usersList;
+}
+
+
 //#################################################################
 //# Ring NFT
 //#################################################################
@@ -159,6 +182,25 @@ export const saleRingNFTs = async () => {
     }
   })
   return ringOnSale;
+}
+
+export const myRingNFTs = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await RingMarketplace_contract.methods
+    .fetchMyRingNFTs()
+    .call({
+      from: account,
+    });
+
+  let myRings = []
+  result.forEach(async nft => {
+    if (nft.tokenId !== "0") {
+      myRings.push(nft)
+    }
+  })
+  return myRings;
 }
 
 
@@ -284,7 +326,7 @@ export const getMarriageProposalByUser = async () => {
     .userAddrToMarriageProposalId(account)
     .call();
 
-  if(proposalId === 0) {
+  if(proposalId === "0") {
     return false;
   }
 
@@ -431,21 +473,35 @@ export const marriageCertificateTokenURI = async (tokenId) => {
   return result;
 }
 
+export const marriageCertificateTokenId = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const result = await MarriageCertificateNFT_contract.methods
+    .addrToTokenId(account)
+    .call();
+  return result;
+}
+
 //#################################################################
 //# Marriage Tree
 //#################################################################
 
-export const mintTree = async () => {
+export const mintTree = async (partnerAddr) => {
   const accounts = await web3.eth.getAccounts();
   const account = accounts[0];
 
-  const result = await TreeNFT_contract.methods
-    .createToken()
+  await TreeNFT_contract.methods
+    .createToken(partnerAddr)
     .send({
       from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
     });
-
-  return result;
+    
+    return true;
 }
 
 export const treeTokenURI = async (tokenId) => {

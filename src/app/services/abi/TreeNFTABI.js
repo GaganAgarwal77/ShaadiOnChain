@@ -1,7 +1,38 @@
 export const TREENFT_ABI = 
 [
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "initTree1",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "initTree2",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "initTree3",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "initTree4",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "initTree5",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "initTree6",
+				"type": "string"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
@@ -74,15 +105,15 @@ export const TREENFT_ABI =
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "createToken",
-		"outputs": [
+		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "partner",
+				"type": "address"
 			}
 		],
+		"name": "createToken",
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -182,6 +213,24 @@ export const TREENFT_ABI =
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_newTreeCID",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "treeNum",
+				"type": "uint256"
+			}
+		],
+		"name": "setTreeCID",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -246,11 +295,11 @@ export const TREENFT_ABI =
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "owner",
+				"name": "",
 				"type": "address"
 			}
 		],
-		"name": "balanceOf",
+		"name": "addrToTokenId",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -264,41 +313,17 @@ export const TREENFT_ABI =
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "maturity",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
 			}
 		],
-		"name": "buildImage",
+		"name": "balanceOf",
 		"outputs": [
 			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "pure",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "maturity",
-				"type": "uint256"
-			}
-		],
-		"name": "buildMetadata",
-		"outputs": [
-			{
-				"internalType": "string",
 				"name": "",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -494,6 +519,84 @@ export const TREENFT_ABI =
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tree1",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tree2",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tree3",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tree4",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tree5",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tree6",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",

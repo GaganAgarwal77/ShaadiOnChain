@@ -162,7 +162,12 @@ class Sidebar extends Component {
               <span className="menu-title"><Trans>Sent Proposals</Trans></span>
             </a>
           </li> 
-
+          <li className={ this.isPathActive('/dating') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
+            <a  className="nav-link" href="/dating"  >
+              <span className="menu-icon"><img src="/assets/images/wedding-img/icon/3.png" alt="Rings" width="20" height="20" className='symbol' /></span>
+              <span className="menu-title"><Trans>Dating</Trans></span>
+            </a>
+          </li>
           <li className={ this.isPathActive('/love-letters') ? 'nav-item menu-items active' : 'nav-item menu-items' }>
             <a  className="nav-link" href="/love-letters"  >
               <span className="menu-icon"><img src="/assets/images/wedding-img/icon/love-letter2.png" alt="Rings" width="20" height="20" className='symbol' /></span>
