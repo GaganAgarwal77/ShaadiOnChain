@@ -16,7 +16,7 @@ export function Dashboard () {
         ringNFTArray.forEach(async nft => {
             var myNFT = await getMetadataFromTokenId(nft.tokenId);
             myNFT.image = uriToImageConverter(myNFT.image);
-            console.log(myNFT)
+            myNFT.tokenId = nft.tokenId;
             setRings((arr) => [...arr, myNFT]);
           }
         );
@@ -126,16 +126,10 @@ export function Dashboard () {
               }
                       {isMarried && treeMinted &&
               <div>
-                    <h4 className="card-title">Your Tree NFT</h4>
-                        <Container style={{marginLeft:"35%"}}>
-                          <img src="/assets/images/trees/svgs/3.svg" alt="TREE" style={{height:"50vh"}} className='mb-4'/>
-{/* 
-                          <Certificate style={{width:"50vw"}} width='700' height='500' 
-                          groom_name= "Vicky Kaushal" bride_name="Katrina Kaif"
-                          groom_vows= "Vicky Kaushal loves Katrina Kaif" bride_vows="Katrina Kaif loves Vicky Kaushal" is_proposal='false'/>
-                          <br/>
-                          <button className="btn btn-primary" style={{marginLeft:"30%"}} onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button> */}
-              </Container>
+                <h4 className="card-title">Your Tree NFT</h4>
+                  <Container style={{marginLeft:"35%"}}>
+                    <img src="/assets/images/trees/svgs/3.svg" alt="TREE" style={{height:"50vh"}} className='mb-4'/>
+                  </Container>
               </div>
         }
         <h4 className="card-title">Your Ring NFTs</h4>
@@ -145,7 +139,7 @@ export function Dashboard () {
                 <Card style={{minWidth:"20vw",maxWidth:"20vw", margin:"10px", borderRadius:"5%", borderColor:"gray", borderStyle:"dashed"}}>
                   <Card.Img variant="top" src={ring.image} style={{width:"90%", marginLeft:"5%", marginTop:"5%", borderRadius:"5%"}}/>
                   <Card.Body>
-                    <Card.Title>{ring.name}</Card.Title>
+                    <Card.Title>#{ring.tokenId} {ring.name}</Card.Title>
                     <Card.Text>
                         {ring.description}
                     </Card.Text>
