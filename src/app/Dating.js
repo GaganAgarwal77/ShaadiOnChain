@@ -6,19 +6,12 @@ import { GENDER } from './services/constants';
 
 export function Dating () {
 
-  const [isUserFetched, setIsUserFetched] = useState(false)
-  const userData = {
-    walletAddres:"0xD6e2143D7CDcAfBe9B29073e429b4a251395369E",
-    name:"Kriti Sanon",
-    gender:"Female"
-  }
-
   const [usersList, setUsersList] = useState([]);
   const [fetchedUserAddr, setFetchedUserAddr] = useState("");
   const [fetchedUser, setFetchedUser] = useState({});
+  const [isUserFetched, setIsUserFetched] = useState(false)
 
   useEffect(() => {
-
     const fetchUsers = async () => {
       const users = await fetchAllUsers();
       setUsersList(users);
@@ -44,7 +37,6 @@ export function Dating () {
   const handleRandomUser = async () => {
     const max = usersList.length;
     const randomIdx = getRandomInt(max);
-    console.log(randomIdx);
     const randomUserAddr = usersList[randomIdx];
     const user = await getUser(randomUserAddr);
     setFetchedUserAddr(randomUserAddr);
