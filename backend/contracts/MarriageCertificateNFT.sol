@@ -13,17 +13,21 @@ contract MarriageCertificateNFT is ERC721URIStorage, Owner {
 
     constructor() ERC721("Marriage Certificate", "MC") {}
 
+    mapping(address => uint) public addrToTokenId;
+
     function createToken(string memory tokenURI, address partner) public {
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, tokenURI);
+        addrToTokenId[msg.sender] = newItemId;
 
         _tokenIds.increment();
         uint256 partnerItemId = _tokenIds.current();
         _mint(msg.sender, partnerItemId);
         _setTokenURI(partnerItemId, tokenURI);
-        safeTransferFrom(msg.sender, partner ,partnerItemId);
+        safeTransferFrom(msg.sender, partner, partnerItemId);
+        addrToTokenId[partner] = partnerItemId;
     }
 
     function getTotalNFTtokens() public view returns (uint256) {
