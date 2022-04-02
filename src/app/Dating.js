@@ -27,14 +27,29 @@ export function Dating () {
     fetchUsers();
   }, []);
 
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
   const changeUser = async () => {
     const user = await getUser(fetchedUserAddr);
     setFetchedUser(user);
     setIsUserFetched(true);
   } 
 
-  const handleChangeUserAddr = (e) => {
-    setFetchedUserAddr(usersList[e.target.value]);
+  const handleChangeUserAddr = (idx) => {
+    setFetchedUserAddr(usersList[idx]);
+  }
+
+  const handleRandomUser = async () => {
+    const max = usersList.length;
+    const randomIdx = getRandomInt(max);
+    console.log(randomIdx);
+    const randomUserAddr = usersList[randomIdx];
+    const user = await getUser(randomUserAddr);
+    setFetchedUserAddr(randomUserAddr);
+    setFetchedUser(user);
+    setIsUserFetched(true);
   }
 
     return (
@@ -42,7 +57,7 @@ export function Dating () {
           <h2 style={{color:"#f2c96a"}}>Start Dating Now!</h2>
           <Form.Group className="d-flex" style={{width:"40vw", marginLeft:"calc(50% - 20vw)"}}>
             <Form.Control as="select" size="lg" placeholder="User Wallet Address" 
-            onChange={handleChangeUserAddr} style={{backgroundColor:"#191c24", color:"white"}}>
+            onChange={(e) => {handleChangeUserAddr(e.target.value)}} style={{backgroundColor:"#191c24", color:"white"}}>
               <option value="Select a user"> Select a user </option>
               {usersList.map((userAddr, index) => <option value={index}>{userAddr}</option>)}
             </Form.Control>
@@ -51,7 +66,7 @@ export function Dating () {
             </Button>
           </Form.Group>
           <div className="purchase__detailsBuy">
-                          <button style={{marginLeft:"calc(50% - 106.4px)", marginBottom:"20px"}}onClick={() => {setIsUserFetched(true)}}>
+                          <button style={{marginLeft:"calc(50% - 106.4px)", marginBottom:"20px"}} onClick={handleRandomUser}>
                               Fetch Random User
                           </button>
           </div>
