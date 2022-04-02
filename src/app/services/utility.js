@@ -1,4 +1,4 @@
-import { tokenURI, tokenURILoveLetter } from "./web3";
+import { tokenURI, tokenURILoveLetter, marriageCertificateTokenURI, tokenURITree } from "./web3";
 import axios from 'axios';
 
 export const getURI = async (tokenId) => {
@@ -35,6 +35,27 @@ export const getLoveLetterImageFromTokenId = async (tokenId) => {
     return image;
 }
 
+export const getMarriageCertURI = async (tokenId) => {
+    var uri = await marriageCertificateTokenURI(tokenId);
+    uri = uri.slice(7); 
+    uri = uri.substring(0, uri.length - 14);
+    uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
+    return uri
+}  
+
+export const getImageFromMarriageCertTokenId = async (tokenId) => {
+    const uri = await getMarriageCertURI(tokenId);
+    const result = await axios(uri);
+    const image = uriToImageConverter(result.data.image);
+    return image;
+}
+
+export const getTreeImageFromTokenId = async (tokenId) => {
+    const cid = await tokenURITree(tokenId);
+    const image = getImageFromCID(cid);
+    return image;
+}
+
 export const dataURItoBlob = (dataURI) => {
     var byteString = atob(dataURI.split(',')[1]);
     var ab = new ArrayBuffer(byteString.length);
@@ -45,3 +66,21 @@ export const dataURItoBlob = (dataURI) => {
     var bb = new Blob([ab], {type:'image/*'});
     return bb;
 }
+
+export const getGeneralContractURI = async (tokenUri) => {
+    var uri = tokenUri;
+    uri = uri.slice(7); 
+    uri = uri.substring(0, uri.length - 14);
+    uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
+    return uri
+  }  
+    
+export const getMetadataFromGeneralContractTokenUri = async (tokenUri) => {
+    const uri = await getGeneralContractURI(tokenUri);
+    const result = await axios(uri);
+    return result.data;
+}
+  
+export const getImageFromCID = (tokenUriCID) => {
+    return 'https://' + tokenUriCID + '.ipfs.dweb.link';
+}  

@@ -32,6 +32,10 @@ contract RingNFT is ERC721URIStorage, Owner {
         return newItemId;
     }
 
+    function approveTokenToMainContract(uint tokenId) public {
+        approve(mainContractAddress, tokenId);
+    }
+
     function getTotalNFTtokens() public view returns (uint256) {
         return _tokenIds.current();
     }

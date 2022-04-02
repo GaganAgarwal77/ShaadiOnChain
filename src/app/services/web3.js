@@ -153,6 +153,21 @@ export const isRingNFTOwner = async (tokenId) => {
   return result === account ? true : false
 }
 
+export const approveRingtoShaadiContract = async (tokenId) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+  await RingNFT_contract.methods
+    .approveTokenToMainContract(tokenId)
+    .send({
+      from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
+    });
+    return true;
+}
+
 //#################################################################
 //# Ring Marketplace
 //#################################################################
@@ -480,6 +495,10 @@ export const marriageCertificateTokenId = async () => {
   const result = await MarriageCertificateNFT_contract.methods
     .addrToTokenId(account)
     .call();
+
+  if(result === "0") {
+    return false;
+  }
   return result;
 }
 
@@ -504,9 +523,24 @@ export const mintTree = async (partnerAddr) => {
     return true;
 }
 
-export const treeTokenURI = async (tokenId) => {
+export const tokenURITree = async (tokenId) => {
   const result = await TreeNFT_contract.methods
     .tokenURI(tokenId)
     .call();
   return result;
+}
+
+export const fetchTreeTokenId = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const tokenId = await TreeNFT_contract.methods
+    .addrToTokenId(account)
+    .call();
+
+  if(tokenId === "0") {
+    return false;
+  }
+
+  return tokenId;
 }

@@ -1,21 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { Certificate, download } from '../certificate.js';
 import './Dashboard.css'
-import { getUser, myRingNFTs } from "../services/web3";
-import { getMetadataFromTokenId, uriToImageConverter } from "../services/utility";
-
+import { getUser, myRingNFTs, marriageCertificateTokenId, mintTree, fetchTreeTokenId } from "../services/web3";
+import { getMetadataFromTokenId, uriToImageConverter, getImageFromMarriageCertTokenId, getTreeImageFromTokenId } from "../services/utility";
 
 export function Dashboard () {
-
+  
+  const [currUser, setCurrUser] = useState({});
   const [rings, setRings] = useState([]);
-  const [isMarried, setIsMarried] = useState(false);
+  const [hasMarriageCert, setHasMarriageCert] = useState(false);
+  const [hasTree, setHasTree] = useState(false);
+  const [marriageCertImage, setMarriageCertImage] = useState("");
+  const [treeImage, setTreeImage] = useState("");
 
   useEffect(() => {
-
     const fetchData = async () => {
       const user = await getUser();
-      setIsMarried(user.married);
+      setCurrUser(user);
+      
+      if(user.married) {
+        const tokenId = await marriageCertificateTokenId();
+        if(!tokenId) { return; }
+        const image = await getImageFromMarriageCertTokenId(tokenId);
+        setMarriageCertImage(image);
+        setHasMarriageCert(true);
+
+
+        const treeTokenId = await fetchTreeTokenId();
+        if(!treeTokenId) { return; }
+        const treeimg = await getTreeImageFromTokenId(treeTokenId);
+        setTreeImage(treeimg);
+        setHasTree(true);
+      }
     }
 
     const fetchNFTs = async () => {
@@ -31,11 +47,17 @@ export function Dashboard () {
 
     fetchData();
     fetchNFTs();
-}, []);
+  }, []);
+
+  const mintTreeNFT = async () => {
+    const status = await mintTree(currUser.partner);
+    if(status) {
+      window.alert("Tree NFT minted successfully");
+      window.location.reload();
+    }
+  }
 
 
-    let treeMinted = true
-    let marriageMinted = true
     return (
       <div>
         <div className="row">
@@ -103,43 +125,31 @@ export function Dashboard () {
             <div className='card'>
               <div className='card-body'>
               <h4 className="card-title">YOUR NFTs</h4>
-              {!marriageMinted &&
-                          <div className="purchase__detailsBuy">
-                            <h4 className="card-title">Your Marriage Certificate</h4>
-                          <button onClick={() => {alert("Minted!")}}>
-                              Claim Your Marriage Certificate
-                          </button>
-                      </div>
-              }
               
-              {isMarried && marriageMinted &&
+              {hasMarriageCert &&
               <div>
-                    <h4 className="card-title">Your Marriage Certificate</h4>
-              <Container style={{marginLeft:"15%"}}>
-                          <Certificate style={{width:"50vw"}} width='700' height='500' 
-                          groom_name= "Vicky Kaushal" bride_name="Katrina Kaif"
-                          groom_vows= "Vicky Kaushal loves Katrina Kaif" bride_vows="Katrina Kaif loves Vicky Kaushal" is_proposal='false'/>
-                          <br/>
-                          <button className="btn btn-primary mb-5" style={{marginLeft:"30%"}} onClick={() => {download();} }><i className="mdi mdi-file-check btn-icon-prepend"></i>Download</button>
-              </Container>
+                <h4 className="card-title">Your Marriage Certificate</h4>
+                <Container style={{marginLeft:"15%"}}>
+                  <img src={marriageCertImage}></img>
+                </Container>
               </div>
-        }
-                      {!treeMinted &&
-                          <div className="purchase__detailsBuy">
-                             <h4 className="card-title">Your Tree NFT</h4>
-                          <button style={{marginLeft:"calc(50% - 106.4px)"}}onClick={() => {alert("Minted!")}}>
-                              Claim Your Tree NFT
-                          </button>
-                      </div>
               }
-                      {isMarried && treeMinted &&
+              {hasMarriageCert && !hasTree &&
+              <div className="purchase__detailsBuy">
+                <h4 className="card-title">Your Tree NFT</h4>
+                <button style={{marginLeft:"calc(50% - 106.4px)"}} onClick={mintTreeNFT}>
+                  Claim Your Tree NFT
+                </button>
+              </div>
+              }
+              {hasMarriageCert && hasTree &&
               <div>
                 <h4 className="card-title">Your Tree NFT</h4>
                   <Container style={{marginLeft:"35%"}}>
-                    <img src="/assets/images/trees/svgs/3.svg" alt="TREE" style={{height:"50vh"}} className='mb-4'/>
+                    <img src={treeImage} alt="TREE" style={{height:"50vh"}} className='mb-4'/>
                   </Container>
               </div>
-        }
+              }
         <h4 className="card-title">Your Ring NFTs</h4>
           <Row xs={1} md={2} className="g-4">
             {rings.map((ring) => (

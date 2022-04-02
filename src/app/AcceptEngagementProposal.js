@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
 import {InputGroup, FormControl, Button} from 'react-bootstrap'
-import { getEngagementProposalById, getUser, isRingNFTOwner, respondToEngagementProposal } from "./services/web3";
+import { getEngagementProposalById, getUser, isRingNFTOwner, respondToEngagementProposal, approveRingtoShaadiContract } from "./services/web3";
 import { getImageFromTokenId, getMetadataFromTokenId } from "./services/utility";
 import { GENDER } from './services/constants';
 
@@ -75,6 +75,11 @@ function SendEngagementProposal(props) {
 
         if(!isOwner) {
             alert('Given Ring Token Id is not owned by this wallet address');
+            return;
+        }
+
+        const state = await approveRingtoShaadiContract(yourRingID);
+        if(!state) {
             return;
         }
 
