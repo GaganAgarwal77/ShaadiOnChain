@@ -454,17 +454,21 @@ export const marriageCertificateTokenURI = async (tokenId) => {
 //# Marriage Tree
 //#################################################################
 
-export const mintTree = async () => {
+export const mintTree = async (partnerAddr) => {
   const accounts = await web3.eth.getAccounts();
   const account = accounts[0];
 
-  const result = await TreeNFT_contract.methods
-    .createToken()
+  await TreeNFT_contract.methods
+    .createToken(partnerAddr)
     .send({
       from: account,
+    })
+    .on("error", function (error, receipt) {
+      window.alert("An error has occured!");
+      return false;
     });
-
-  return result;
+    
+    return true;
 }
 
 export const treeTokenURI = async (tokenId) => {
