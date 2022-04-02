@@ -523,9 +523,24 @@ export const mintTree = async (partnerAddr) => {
     return true;
 }
 
-export const treeTokenURI = async (tokenId) => {
+export const tokenURITree = async (tokenId) => {
   const result = await TreeNFT_contract.methods
     .tokenURI(tokenId)
     .call();
   return result;
+}
+
+export const fetchTreeTokenId = async () => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
+
+  const tokenId = await TreeNFT_contract.methods
+    .addrToTokenId(account)
+    .call();
+
+  if(tokenId === "0") {
+    return false;
+  }
+
+  return tokenId;
 }

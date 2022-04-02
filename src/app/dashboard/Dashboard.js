@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { Certificate, download } from '../certificate.js';
 import './Dashboard.css'
-import { getUser, myRingNFTs, marriageCertificateTokenId } from "../services/web3";
-import { getMetadataFromTokenId, uriToImageConverter, getImageFromMarriageCertTokenId } from "../services/utility";
+import { getUser, myRingNFTs, marriageCertificateTokenId, mintTree, fetchTreeTokenId } from "../services/web3";
+import { getMetadataFromTokenId, uriToImageConverter, getImageFromMarriageCertTokenId, getTreeImageFromTokenId } from "../services/utility";
 
 export function Dashboard () {
   
+  const [currUser, setCurrUser] = useState({});
   const [rings, setRings] = useState([]);
   const [hasMarriageCert, setHasMarriageCert] = useState(false);
+  const [hasTree, setHasTree] = useState(false);
   const [marriageCertImage, setMarriageCertImage] = useState("");
+  const [treeImage, setTreeImage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       const user = await getUser();
+      setCurrUser(user);
       
       if(user.married) {
         const tokenId = await marriageCertificateTokenId();
@@ -21,6 +24,13 @@ export function Dashboard () {
         const image = await getImageFromMarriageCertTokenId(tokenId);
         setMarriageCertImage(image);
         setHasMarriageCert(true);
+
+
+        const treeTokenId = await fetchTreeTokenId();
+        if(!treeTokenId) { return; }
+        const treeimg = await getTreeImageFromTokenId(treeTokenId);
+        setTreeImage(treeimg);
+        setHasTree(true);
       }
     }
 
@@ -37,10 +47,17 @@ export function Dashboard () {
 
     fetchData();
     fetchNFTs();
-}, []);
+  }, []);
+
+  const mintTreeNFT = async () => {
+    const status = await mintTree(currUser.partner);
+    if(status) {
+      window.alert("Tree NFT minted successfully");
+      window.location.reload();
+    }
+  }
 
 
-    let treeMinted = true
     return (
       <div>
         <div className="row">
@@ -111,28 +128,28 @@ export function Dashboard () {
               
               {hasMarriageCert &&
               <div>
-                    <h4 className="card-title">Your Marriage Certificate</h4>
-              <Container style={{marginLeft:"15%"}}>
-                          <img src={marriageCertImage}></img>
-              </Container>
+                <h4 className="card-title">Your Marriage Certificate</h4>
+                <Container style={{marginLeft:"15%"}}>
+                  <img src={marriageCertImage}></img>
+                </Container>
               </div>
-        }
-                      {!treeMinted &&
-                          <div className="purchase__detailsBuy">
-                             <h4 className="card-title">Your Tree NFT</h4>
-                          <button style={{marginLeft:"calc(50% - 106.4px)"}}onClick={() => {alert("Minted!")}}>
-                              Claim Your Tree NFT
-                          </button>
-                      </div>
               }
-                      {hasMarriageCert && treeMinted &&
+              {hasMarriageCert && !hasTree &&
+              <div className="purchase__detailsBuy">
+                <h4 className="card-title">Your Tree NFT</h4>
+                <button style={{marginLeft:"calc(50% - 106.4px)"}} onClick={mintTreeNFT}>
+                  Claim Your Tree NFT
+                </button>
+              </div>
+              }
+              {hasMarriageCert && hasTree &&
               <div>
                 <h4 className="card-title">Your Tree NFT</h4>
                   <Container style={{marginLeft:"35%"}}>
-                    <img src="/assets/images/trees/svgs/3.svg" alt="TREE" style={{height:"50vh"}} className='mb-4'/>
+                    <img src={treeImage} alt="TREE" style={{height:"50vh"}} className='mb-4'/>
                   </Container>
               </div>
-        }
+              }
         <h4 className="card-title">Your Ring NFTs</h4>
           <Row xs={1} md={2} className="g-4">
             {rings.map((ring) => (
