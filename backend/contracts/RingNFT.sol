@@ -11,8 +11,8 @@ contract RingNFT is ERC721URIStorage, Owner {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    address mainContractAddress;
-    address marketplaceAddress;
+    address public mainContractAddress;
+    address public marketplaceAddress;
 
     constructor(address mainContract, address market)
         ERC721("Shaadi Rings", "SR")
