@@ -51,8 +51,8 @@ export const getImageFromMarriageCertTokenId = async (tokenId) => {
 }
 
 export const getTreeImageFromTokenId = async (tokenId) => {
-    var cid = await tokenURITree(tokenId);
-    const image = 'https://' + cid + '.ipfs.dweb.link';
+    const cid = await tokenURITree(tokenId);
+    const image = getImageFromCID(cid);
     return image;
 }
 
@@ -66,3 +66,21 @@ export const dataURItoBlob = (dataURI) => {
     var bb = new Blob([ab], {type:'image/*'});
     return bb;
 }
+
+export const getGeneralContractURI = async (tokenUri) => {
+    var uri = tokenUri;
+    uri = uri.slice(7); 
+    uri = uri.substring(0, uri.length - 14);
+    uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
+    return uri
+  }  
+    
+export const getMetadataFromGeneralContractTokenUri = async (tokenUri) => {
+    const uri = await getGeneralContractURI(tokenUri);
+    const result = await axios(uri);
+    return result.data;
+}
+  
+export const getImageFromCID = (tokenUriCID) => {
+    return 'https://' + tokenUriCID + '.ipfs.dweb.link';
+}  

@@ -1,38 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { fetchAllUsers, getUser } from "./services/web3";
 import './dashboard/Dashboard.css'
 import { GENDER } from './services/constants';
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
-import axios from 'axios';
-
-
-export const getURI = async (tokenUri) => {
-  var uri = tokenUri;
-  uri = uri.slice(7); 
-  uri = uri.substring(0, uri.length - 14);
-  uri = 'https://' + uri + '.ipfs.dweb.link/metadata.json';
-  return uri
-}  
-
-export const uriToImageConverter = (uri) => {
-  var image = uri.slice(7); 
-  image = image.substring(0, image.length - 5);
-  image = 'https://' + image + '.ipfs.dweb.link/blob';
-  return image;
-}
-
-export const getMetadataFromTokenUri = async (tokenUri) => {
-  const uri = await getURI(tokenUri);
-  const result = await axios(uri);
-  return result.data;
-}
-
-export const getImageFromCID = (tokenUriCID) => {
-  const image = 'https://' + tokenUriCID + '.ipfs.dweb.link';
-  return image;
-}
-
+import { getMetadataFromGeneralContractTokenUri, uriToImageConverter, getImageFromCID } from "./services/utility";
 
 export function Dating () {
 
@@ -91,14 +63,12 @@ export function Dating () {
     setUserAllNFTs([]);
     for(var i = 0; i < length; i++) {
       const nftObject = alchemyNFTsList[i];
-      console.log(nftObject);
       let metadata, image;
       try{
-        metadata = await getMetadataFromTokenUri(nftObject.tokenUri.raw);
+        metadata = await getMetadataFromGeneralContractTokenUri(nftObject.tokenUri.raw);
         image = uriToImageConverter(metadata.image);
       }
       catch (e) {
-        console.log(e);
         try {
           image = getImageFromCID(nftObject.tokenUri.raw);
           metadata = {
@@ -107,7 +77,6 @@ export function Dating () {
           }
         }
         catch (e) {
-          console.log(e);
           continue;
         }
       }
