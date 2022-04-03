@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Trans } from 'react-i18next';
-import { getUser } from "../services/web3";
+import { getUserOnNavbar } from "../services/web3";
 function Navbar () {
 
   const [currUser, setCurrUser] = useState({});
   
   useEffect(() => {
     const fetchData = async () => {
-        const currUser = await getUser(); // Current user
-        setCurrUser(currUser);
-      };
+      const currUser = await getUserOnNavbar(); // Current user
+      if(!currUser) { return false; }
+      setCurrUser(currUser);
+    };
     fetchData();
   });
 
