@@ -5,6 +5,7 @@ import { loadAccount, getUser, myRingNFTs, marriageCertificateTokenId, mintTree,
 import { getMetadataFromTokenId, uriToImageConverter, getImageFromMarriageCertTokenId, getTreeImageFromTokenId, getMetadataFromGeneralContractTokenUri } 
   from "../services/utility";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+import { getPriceFeed } from '../services/priceFeed';
 
 export function Dashboard () {
 
@@ -16,6 +17,8 @@ export function Dashboard () {
   const [hasTree, setHasTree] = useState(false);
   const [marriageCertImage, setMarriageCertImage] = useState("");
   const [treeImage, setTreeImage] = useState("");
+
+  const [latestPrice, setLatestPrice] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +38,10 @@ export function Dashboard () {
         const treeimg = await getTreeImageFromTokenId(treeTokenId);
         setTreeImage(treeimg);
         setHasTree(true);
+
+        const maticPrice = await getPriceFeed();
+        console.log(maticPrice);
+        setLatestPrice(maticPrice);
       }
     }
 

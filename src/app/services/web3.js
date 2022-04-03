@@ -84,6 +84,19 @@ export const getUser = async (address) => {
   };
 };
 
+export const getUserOnNavbar = async (address) => {
+  const accounts = await web3.eth.getAccounts();
+  address = accounts[0];
+  try {
+    const user = await ShaadiOnChain_contract.methods.addrToUser(address).call();
+    return user;
+  }
+  catch (e) {
+    return false;
+  }
+};
+
+
 export const registerUser = async (name, gender) => {
   const accounts = await web3.eth.getAccounts();
   const account = accounts[0];
