@@ -10,7 +10,7 @@ require('dotenv').config()
 
 function CreateRing({wallet, isLoggedIn}) {      
 
-  const { push, goBack } = useHistory()
+  const { goBack } = useHistory()
 
   const dataURItoBlob = (dataURI) => {
     var byteString = atob(dataURI.split(',')[1]);
@@ -109,7 +109,7 @@ function CreateRing({wallet, isLoggedIn}) {
     return (
         <div className="create">
             <div className="goback">
-              <img src="/assets/images/wedding-img/icon/next.png" onClick={goBack} alt="Go back" className='gobackButton'/>
+              <img style={{width:"48px"}} src="/assets/images/wedding-img/icon/left-arrow3.png" onClick={goBack} alt="Go back" className='gobackButton'/>   
             </div>
             <div className='poweredBy'>
                   <h3>Powered by NFT.Storage </h3>   

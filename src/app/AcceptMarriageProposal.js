@@ -11,7 +11,7 @@ import { dataURItoBlob } from './services/utility';
 
 function AcceptMarriageProposal(props) {
     
-    const { goBack, push } = useHistory()
+    const { goBack } = useHistory()
     const proposalId = props.match.params.marriageProposalId;
 
     const [proposalDetails, setProposalDetails] = useState({
@@ -89,7 +89,7 @@ function AcceptMarriageProposal(props) {
     return(
             <div className='purchase'>
                 <div className="goback">    
-                   <img src="/assets/images/wedding-img/icon/next.png" onClick={goBack} alt="Go back" className='gobackButton'/>
+                   <img style={{width:"48px"}} src="/assets/images/wedding-img/icon/left-arrow3.png" onClick={goBack} alt="Go back" className='gobackButton'/>   
                 </div> 
                 <br/><br/><br/>
                 <div className="purchase__artwork">
@@ -101,39 +101,40 @@ function AcceptMarriageProposal(props) {
                 </div>
 
                 <div className="purchase__details">
-                    <label>Partner's Wallet Address:</label>
-                    <InputGroup className="mb-3">
-                        <FormControl defaultValue={proposalDetails.proposerAddr}/>
-                    </InputGroup>
-                    <h4>Partner's Name: {proposalDetails.proposerUser.name}</h4>
-                    <h4>Partner's Gender: {GENDER[proposalDetails.proposerUser.gender]}</h4>
+                <h3 style={{fontFamily:"Poppins, serif", color:"#f2c96a"}}>Proposer's Details:</h3>
+                    <div className='d-flex' style={{fontWeight:"300"}}>
+                    <h4 style={{marginRight:"1rem",fontWeight:"300"}}>Name: <span style={{color:"#f2c96a"}}>{proposalDetails.proposerUser.name}</span></h4> 
+                    <h4 style={{fontWeight:"300"}}>Gender: <span style={{color:"#f2c96a"}}>{GENDER[proposalDetails.proposerUser.gender]}</span></h4> 
+
+                    </div>
+                    <h4 style={{width:"250px", overflow:"hidden", whiteSpace:"nowrap", cursor:"pointer", textOverflow:"ellipsis", fontWeight:"300"}} 
+                    onClick={(e) => {navigator.clipboard.writeText(proposalDetails.proposerAddr); alert("Copied wallet address to clipboard")}}>
+                        Wallet Address: <span style={{color:"#f2c96a"}}>{proposalDetails.proposerAddr}</span></h4>
                     <label>Recieved Vows:</label>
-                    <textarea style={{color:"white",background:"#2A3038"}} className="form-control" id="exampleTextarea1" rows="4" 
+                    <textarea style={{color:"#f2c96a",background:"#2A3038"}} className="form-control" id="exampleTextarea1" rows="4" 
                         value={proposalDetails.proposerVows} disabled />
                     <br/>  
 
                     <label className="mt-4">Your Vows:</label>
-                    <textarea style={{color:"white"}} value={yourVows} onChange={(e) => {setYourVows(e.target.value)}}
+                    <textarea style={{color:"#f2c96a"}} value={yourVows} onChange={(e) => {setYourVows(e.target.value)}}
                         className="form-control" id="note" rows="4" placeholder="Write your vows"/>
 
-                    <div style={{marginTop:"10px"}}className="purchase__detailsBuy">
                         {
                             isDisabled ? 
                             <div>
                                 {proposalDetails.proposalStatus === "1" && <button type="button" className="btn btn-success">Accepted</button>}
                                 {proposalDetails.proposalStatus === "2" && <button type="button" className="btn btn-danger">Rejected</button>}
-                                <div>
+                                <div  style={{marginTop:"10px"}} className="purchase__detailsBuy" >
                                 <button onClick={mint}>Mint Marriage Certificate</button>
                                 </div>
                             </div>
                             :
-                            <div>
-                                <button onClick={() => {respondToProposal(true)}}>Accept Proposal</button>
+                            <div style={{marginTop:"10px"}} className="purchase__detailsBuy">
+                                <button style={{background: "radial-gradient( circle 542px at 16.6% 38.6%,  rgba(66,164,14,1) 0%, rgba(86,230,99,1) 100.2% )"}} onClick={() => {respondToProposal(true)}}>Accept Proposal</button>
                                 <button onClick={() => {respondToProposal(false)}} 
                                 style={{background: "linear-gradient(to right, #ee0979, #ff6a00)"}} >Reject Proposal</button>
                             </div>
                         }
-                    </div>
                     
                 </div>
             </div> 

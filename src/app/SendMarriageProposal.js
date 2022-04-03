@@ -7,7 +7,7 @@ import { getUser, createMarriageProposal } from "./services/web3";
 import { GENDER } from './services/constants';
 
 function SendEngagementProposal(props) {
-    const { goBack, push } = useHistory()
+    const { goBack } = useHistory()
     
     const [currUser, setCurrUser] = useState({});
     const [partnerDetails, setPartnerDetails] = useState({});
@@ -45,7 +45,7 @@ function SendEngagementProposal(props) {
                 hasPartner ? 
                 <React.Fragment>
                 <div className="goback">    
-                    <img src="/assets/images/wedding-img/icon/next.png" onClick={goBack} alt="Go back" className='gobackButton'/>
+                    <img style={{width:"48px"}} src="/assets/images/wedding-img/icon/left-arrow3.png" onClick={goBack} alt="Go back" className='gobackButton'/>
                 </div>
                 <br/><br/><br/>
                 <div className="purchase__artwork">

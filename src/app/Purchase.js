@@ -5,7 +5,7 @@ import { web3, getUser, getRingItem, purchaseRing } from "./services/web3";
 import { getImageFromTokenId, getMetadataFromTokenId } from "./services/utility";
 
 function Purchase(props) {
-    const { goBack, push } = useHistory()
+    const { goBack } = useHistory()
 
     const itemID = props.match.params.itemId;
 
@@ -60,7 +60,7 @@ function Purchase(props) {
     return (
             <div className='purchase'>
                 <div className="goback">    
-                   <img src="/assets/images/wedding-img/icon/next.png" onClick={goBack} alt="Go back" className='gobackButton'/>
+                   <img style={{width:"48px"}} src="/assets/images/wedding-img/icon/left-arrow3.png" onClick={goBack} alt="Go back" className='gobackButton'/>   
                 </div> 
                 <div> 
                 

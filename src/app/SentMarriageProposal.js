@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
-import { InputGroup, FormControl, Button } from 'react-bootstrap'
+import { InputGroup, FormControl } from 'react-bootstrap'
 import { Certificate, download } from './certificate.js';
-import { loadAccount, getUser, getMarriageProposalById, respondToMarriageProposal } from "./services/web3";
+import { getUser, getMarriageProposalById } from "./services/web3";
 import { GENDER } from './services/constants';
 
 function SendMarriageProposal
 (props) {
-    const { goBack, push } = useHistory()
+    const { goBack } = useHistory()
     const proposalId = props.match.params.marriageProposalId;
-
+    
     const [proposalDetails, setProposalDetails] = useState({
         proposalId: "",
         proposeeAddr: "",
@@ -50,7 +50,7 @@ function SendMarriageProposal
     return(
             <div className='purchase'>
                 <div className="goback">    
-                   <img src="/assets/images/wedding-img/icon/next.png" onClick={goBack} alt="Go back" className='gobackButton'/>
+                   <img style={{width:"48px"}} src="/assets/images/wedding-img/icon/left-arrow3.png" onClick={goBack} alt="Go back" className='gobackButton'/>
                 </div> 
                 <br/><br/><br/>
                 <div className="purchase__artwork">
@@ -84,9 +84,9 @@ function SendMarriageProposal
 
                     <div style={{marginTop:"10px"}}className="purchase__detailsBuy">
                         <div>
-                            {proposalDetails.proposalStatus === "0" && <button type="button" className="btn btn-warning">Waiting</button>}
-                            {proposalDetails.proposalStatus === "1" && <button type="button" className="btn btn-success">Accepted</button>}
-                            {proposalDetails.proposalStatus === "2" && <button type="button" className="btn btn-danger">Rejected</button>}
+                            {proposalDetails.proposalStatus === "0" && <button type="button" className="btn btn-lg btn-warning">Waiting</button>}
+                            {proposalDetails.proposalStatus === "1" && <button type="button" className="btn btn-lg btn-success">Accepted</button>}
+                            {proposalDetails.proposalStatus === "2" && <button type="button" className="btn btn-lg btn-danger">Rejected</button>}
                         </div>
                     </div>
                     

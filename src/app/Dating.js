@@ -135,7 +135,7 @@ export function Dating () {
                       <Card style={{minWidth:"20vw",maxWidth:"20vw", margin:"10px", borderRadius:"5%", borderColor:"gray", borderStyle:"dashed"}}>
                         <Card.Img variant="top" src={nft.image} style={{width:"90%", marginLeft:"5%", marginTop:"5%", borderRadius:"5%"}}/>
                         <Card.Body>
-                          <Card.Title>{nft.metadata.name}</Card.Title>
+                          <Card.Title>#{parseInt(nft.tokenId, 16)} {nft.metadata.name}</Card.Title>
                           <Card.Text>
                               {nft.metadata.description}
                           </Card.Text>

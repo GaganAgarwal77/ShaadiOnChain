@@ -7,7 +7,7 @@ import { getImageFromTokenId, getMetadataFromTokenId } from "./services/utility"
 import { GENDER } from './services/constants';
 
 function SendEngagementProposal(props) {
-    const { goBack, push } = useHistory()
+    const { goBack} = useHistory()
 
     const proposalId = props.match.params.engagementProposalId;
 
@@ -97,9 +97,9 @@ function SendEngagementProposal(props) {
     }
 
     return (
-            <div className='purchase'>
+            <div className='purchase' >
                 <div className="goback">    
-                   <img src="/assets/images/wedding-img/icon/next.png" onClick={goBack} alt="Go back" className='gobackButton'/>
+                    <img style={{width:"48px"}} src="/assets/images/wedding-img/icon/left-arrow3.png" onClick={goBack} alt="Go back" className='gobackButton'/>
                 </div> 
                 <div> 
                 
@@ -107,75 +107,73 @@ function SendEngagementProposal(props) {
                 {yourRingImage === "" ? 
                         <div className="purchase__artwork">
                         <img style={{width:"25vw"}} src={ringDetails.image} alt="Ring NFT" />
-                        <h4 style={{textAlign:"center"}}> Ring for you</h4>
+                        <h4 style={{textAlign:"center",color:"#f2c96a"}}> Ring for you</h4>
+                        <h5>Ring Name: <span style={{color:"#f2c96a"}}>{ringDetails.name}</span></h5>
+                        <h5>Ring Description: <span style={{color:"#f2c96a"}}>{ringDetails.description}</span></h5>
                         </div>
                     :
                         <div style={{display:"flex",marginLeft:"10%"}}>
                             <div className="purchase__artwork">
                             <img style={{width:"15vw"}} src={ringDetails.image} alt="Ring NFT" />
-                            <h4 style={{textAlign:"center"}}> Ring for you</h4>
+                            <h4 style={{textAlign:"center", color:"#f2c96a"}}> Ring for you</h4>
                             </div>
                             
                             <div className="purchase__artwork">
                             <img style={{width:"15vw", marginLeft:"10px"}} src={yourRingImage} alt="Ring NFT" />
-                            <h4 style={{textAlign:"center"}} >Ring for your loved one</h4>
+                            <h4 style={{textAlign:"center", color:"#f2c96a"}}> Ring for your loved one</h4>
                             </div>
                         </div>
                 }
 
-                <div className="purchase__details">
-                    <h4>Proposer's Ring Name: {ringDetails.name}</h4>
-                    <label>Proposer's Ring Description:</label>
-                    <textarea style={{color:"white",background:"#2A3038"}} className="form-control" 
-                    id="ringdesc" rows="4" value={ringDetails.description} disabled />
-                    <label>Proposer's Wallet Address:</label>
-                    <InputGroup className="mb-3">
-                        <FormControl
-                        aria-label="Recipient's username"
-                        aria-describedby="basic-addon2"
-                        defaultValue={proposalDetails.proposerAddr}
-                        />
-                    </InputGroup>
-                    <h4>Proposer Name: {proposalDetails.proposerUser.name}</h4>
-                    <h4>Proposer Gender: {GENDER[proposalDetails.proposerUser.gender]}</h4>
-                    <label>Recieved Note of Love:</label>
-                    <textarea style={{color:"white",background:"#2A3038"}}className="form-control" id="exampleTextarea1" rows="4" value={proposalDetails.proposerNote} disabled></textarea>
+                <div className="purchase__details" >
+
+                <h3 style={{fontFamily:"Poppins, serif", color:"#f2c96a"}}>Proposer's Details:</h3>
+                    <div className='d-flex' style={{fontWeight:"300"}}>
+                    <h4 style={{marginRight:"1rem",fontWeight:"300"}}>Name: <span style={{color:"#f2c96a"}}>{proposalDetails.proposerUser.name}</span></h4> 
+                    <h4 style={{fontWeight:"300"}}>Gender: <span style={{color:"#f2c96a"}}>{GENDER[proposalDetails.proposerUser.gender]}</span></h4> 
+
+                    </div>
+                    <h4 style={{width:"250px", overflow:"hidden", whiteSpace:"nowrap", cursor:"pointer", textOverflow:"ellipsis", fontWeight:"300"}} 
+                    onClick={(e) => {navigator.clipboard.writeText(proposalDetails.proposerAddr); alert("Copied wallet address to clipboard")}}>
+                        Wallet Address: <span style={{color:"#f2c96a"}}>{proposalDetails.proposerAddr}</span></h4>
+
+                    <label >Recieved Note of Love:</label>
+                    <textarea style={{color:"#f2c96a",background:"#2A3038"}}className="form-control mb-2" id="exampleTextarea1" rows="2" value={proposalDetails.proposerNote} disabled></textarea>
                     <br/>  
 
-                    <label>Your Ring NFT's Token ID:</label>                    
-                    <InputGroup className="mb-3">
+                    <InputGroup className="mt-4 mb-2">
                         <FormControl
                         aria-label="Recipient's username"
                         aria-describedby="basic-addon2"
                         value={yourRingID}
+                        placeholder="Your Ring NFT's Token ID"
                         onChange={(e) => {setYourRingID(e.target.value)}}
+                        style={{color:"#f2c96a"}}
                         />
-                        <Button variant="primary" id="button-addon2" onClick={fetchRing}>
+                        <Button variant="primary" id="button-addon2" onClick={fetchRing} style={{background:"linear-gradient(to right, #f09819, #edde5d)", border:"none"}}>
                         Fetch Ring
                         </Button>
                     </InputGroup>
-                    <label className="mt-4">Your Note of Love:</label>
-                    <textarea style={{color:"white"}} value={yourNote} onChange={(e) => {setYourNote(e.target.value)}}
+                    <label className="mt-2">Your Note of Love:</label>
+                    <textarea style={{color:"#f2c96a"}} value={yourNote} onChange={(e) => {setYourNote(e.target.value)}}
                         className="form-control" id="note" rows="4" placeholder="Write a note of love"/>
 
-                    <div style={{marginTop:"10px"}}className="purchase__detailsBuy">
                         {
                             isDisabled ? 
-                            <div>
+                            <div style={{marginTop:"10px"}} className="purchase__detailsBuy">
                                 {proposalDetails.proposalStatus === "1" && <button type="button" className="btn btn-success">Accepted</button>}
                                 {proposalDetails.proposalStatus === "2" && <button type="button" className="btn btn-danger">Rejected</button>}
                             </div>
                             :
-                            <div>
-                                <button onClick={() => {respondToProposal(true)}} disabled={isDisabled}>Accept Proposal</button>
+                            <div style={{marginTop:"10px"}} className="purchase__detailsBuy">
+                                <button  style={{background: isDisabled ? "" : "radial-gradient( circle 542px at 16.6% 38.6%,  rgba(66,164,14,1) 0%, rgba(86,230,99,1) 100.2% )"}} onClick={() => {respondToProposal(true)}} disabled={isDisabled}>Accept Proposal</button>
                                 <button onClick={() => {respondToProposal(false)}} disabled={isDisabled} 
                                 style={{background: isDisabled ? "" : "linear-gradient(to right, #ee0979, #ff6a00)"}} >Reject Proposal</button>
                             </div>
                         }
-                    </div>
-                    
+                     
                 </div>
-            </div> 
+            </div>
     )
 }
 
