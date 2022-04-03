@@ -7,7 +7,7 @@ import { getLoveLetterImageFromTokenId } from "./services/utility";
 import { GENDER } from './services/constants';
 
 function LoveLetter(props) {
-    const { goBack, push } = useHistory()
+    const { goBack } = useHistory()
 
     const tokenId = props.match.params.tokenId;
 

@@ -1,5 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
-import Canvas from 'react-responsive-canvas';
+import React, { useRef, useEffect } from 'react';
 import '../assets/styles/_fonts.scss'
 var canvasRef;
 
@@ -33,13 +32,13 @@ const Certificate = (props) => {
         
         var groomText = props.groom_vows;
         var groomLines = getLines(groomText, 20);
-        for(var i=0;i<groomLines.length;i++)
+        for(let i=0;i<groomLines.length;i++)
             ctx.fillText(groomLines[i], 80, 320+(i*20));
         
-        if(props.is_proposal == 'false'){
+        if(props.is_proposal === 'false'){
             var brideText = props.bride_vows;
             var brideLines = getLines(brideText, 20);
-            for(var i=0;i<brideLines.length;i++)
+            for(let i=0;i<brideLines.length;i++)
                 ctx.fillText(brideLines[i], 400, 320+(i*20));
         }
     };

@@ -10,7 +10,7 @@ require('dotenv').config()
 
 function CreateRing({wallet, isLoggedIn}) {      
 
-  const { push, goBack } = useHistory()
+  const { goBack } = useHistory()
 
   const dataURItoBlob = (dataURI) => {
     var byteString = atob(dataURI.split(',')[1]);

@@ -19,9 +19,7 @@ function Navbar () {
   function toggleOffcanvas() {
     document.querySelector('.sidebar-offcanvas').classList.toggle('active');
   }
-  function toggleRightSidebar() {
-    document.querySelector('.right-sidebar').classList.toggle('open');
-  }
+
     return (
       <nav className="navbar p-0 fixed-top d-flex flex-row">
         <div className="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
@@ -40,7 +38,7 @@ function Navbar () {
                 <span className="count bg-success"></span>
               </Dropdown.Toggle>
               <Dropdown.Menu className="navbar-dropdown preview-list">
-                  <h6 className="p-3 mb-0"><Trans>Messages</Trans></h6>
+                  <h6 className="p-3 mb-0"><span>Messages</span></h6>
                   <Dropdown.Divider />
                   <Dropdown.Item href="!#" onClick={evt =>evt.preventDefault()} className="preview-item">
                     <div className="preview-thumbnail">
@@ -49,8 +47,8 @@ function Navbar () {
                       </div>
                     </div>
                     <div className="preview-item-content">
-                      <p className="preview-subject ellipsis mb-1"><Trans>Mark send you a message</Trans></p>
-                      <p className="text-muted mb-0"> 1 <Trans>Minutes ago</Trans> </p>
+                      <p className="preview-subject ellipsis mb-1"><span>Mark send you a message</span></p>
+                      <p className="text-muted mb-0"> 1 <span>Minutes ago</span> </p>
                     </div>
                   </Dropdown.Item>
                   <Dropdown.Divider />
@@ -61,8 +59,8 @@ function Navbar () {
                       </div>
                     </div>
                     <div className="preview-item-content">
-                      <p className="preview-subject ellipsis mb-1"><Trans>Cregh send you a message</Trans></p>
-                      <p className="text-muted mb-0"> 15 <Trans>Minutes ago</Trans> </p>
+                      <p className="preview-subject ellipsis mb-1"><span>Cregh send you a message</span></p>
+                      <p className="text-muted mb-0"> 15 <span>Minutes ago</span> </p>
                     </div>
                   </Dropdown.Item>
                   <Dropdown.Divider />
@@ -73,12 +71,12 @@ function Navbar () {
                       </div>
                     </div>
                     <div className="preview-item-content">
-                      <p className="preview-subject ellipsis mb-1"><Trans>Profile picture updated</Trans></p>
-                      <p className="text-muted mb-0"> 18 <Trans>Minutes ago</Trans> </p>
+                      <p className="preview-subject ellipsis mb-1"><span>Profile picture updated</span></p>
+                      <p className="text-muted mb-0"> 18 <span>Minutes ago</span> </p>
                     </div>
                   </Dropdown.Item>
                   <Dropdown.Divider />
-                  <p className="p-3 mb-0 text-center">4 <Trans>new messages</Trans></p>
+                  <p className="p-3 mb-0 text-center">4 <span>new messages</span></p>
                 </Dropdown.Menu>
             </Dropdown>
             <Dropdown alignRight as="li" className="nav-item border-left">
@@ -87,7 +85,7 @@ function Navbar () {
                 <span className="count bg-danger"></span>
               </Dropdown.Toggle>
               <Dropdown.Menu className="dropdown-menu navbar-dropdown preview-list">
-                <h6 className="p-3 mb-0"><Trans>Notifications</Trans></h6>
+                <h6 className="p-3 mb-0"><span>Notifications</span></h6>
                 <Dropdown.Divider />
                 <Dropdown.Item className="dropdown-item preview-item" onClick={evt =>evt.preventDefault()}>
                   <div className="preview-thumbnail">
@@ -96,9 +94,9 @@ function Navbar () {
                     </div>
                   </div>
                   <div className="preview-item-content">
-                    <p className="preview-subject mb-1"><Trans>Event today</Trans></p>
+                    <p className="preview-subject mb-1"><span>Event today</span></p>
                     <p className="text-muted ellipsis mb-0">
-                    <Trans>Just a reminder that you have an event today</Trans>
+                    <span>Just a reminder that you have an event today</span>
                     </p>
                   </div>
                 </Dropdown.Item>
@@ -110,9 +108,9 @@ function Navbar () {
                     </div>
                   </div>
                   <div className="preview-item-content">
-                    <h6 className="preview-subject mb-1"><Trans>Settings</Trans></h6>
+                    <h6 className="preview-subject mb-1"><span>Settings</span></h6>
                     <p className="text-muted ellipsis mb-0">
-                    <Trans>Update dashboard</Trans>
+                    <span>Update dashboard</span>
                     </p>
                   </div>
                 </Dropdown.Item>
@@ -124,28 +122,28 @@ function Navbar () {
                     </div>
                   </div>
                   <div className="preview-item-content">
-                    <h6 className="preview-subject mb-1"><Trans>Launch Admin</Trans></h6>
+                    <h6 className="preview-subject mb-1"><span>Launch Admin</span></h6>
                     <p className="text-muted ellipsis mb-0">
-                    <Trans>New admin wow</Trans>!
+                    <span>New admin wow</span>!
                     </p>
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <p className="p-3 mb-0 text-center"><Trans>See all notifications</Trans></p>
+                <p className="p-3 mb-0 text-center"><span>See all notifications</span></p>
               </Dropdown.Menu>
             </Dropdown>
             <Dropdown alignRight as="li" className="nav-item">
               <Dropdown.Toggle as="a" className="nav-link cursor-pointer no-caret"  style={{marginBottom:"0",paddingBottom:"0"}}>
                 <div className="navbar-profile">
                   <img className="img-xs rounded-circle" src={require('../../assets/images/faces/face15.jpg')} alt="profile" />
-                  <p className="mb-0 d-none d-sm-block navbar-profile-name"><Trans>{currUser.name}</Trans></p>
+                  <p className="mb-0 d-none d-sm-block navbar-profile-name"><span>{currUser.name}</span></p>
                   <i className="mdi mdi-menu-down d-none d-sm-block"></i>
                 </div>
               </Dropdown.Toggle>
-              <p className="mb-0 d-none d-sm-block navbar-profile-name"style={{width:"150px", marginLeft:"65px",marginTop:"0",padding:"0", overflow:"hidden", whiteSpace:"nowrap", textOverflow:"ellipsis"}} ><Trans>{currUser.wallet}</Trans></p>
+              <p className="mb-0 d-none d-sm-block navbar-profile-name"style={{width:"150px", marginLeft:"65px",marginTop:"0",padding:"0", overflow:"hidden", whiteSpace:"nowrap", textOverflow:"ellipsis"}} ><span>{currUser.wallet}</span></p>
 
               <Dropdown.Menu className="navbar-dropdown preview-list navbar-profile-dropdown-menu">
-                <h6 className="p-3 mb-0"><Trans>Profile</Trans></h6>
+                <h6 className="p-3 mb-0"><span>Profile</span></h6>
                 <Dropdown.Divider />
                 <Dropdown.Item href="!#" onClick={evt =>evt.preventDefault()} className="preview-item">
                   <div className="preview-thumbnail">
@@ -154,7 +152,7 @@ function Navbar () {
                     </div>
                   </div>
                   <div className="preview-item-content">
-                    <p className="preview-subject mb-1"><Trans>Settings</Trans></p>
+                    <p className="preview-subject mb-1"><span>Settings</span></p>
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Divider />
@@ -165,11 +163,11 @@ function Navbar () {
                     </div>
                   </div>
                   <div className="preview-item-content">
-                    <p className="preview-subject mb-1"><Trans>Log Out</Trans></p>
+                    <p className="preview-subject mb-1"><span>Log Out</span></p>
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <p className="p-3 mb-0 text-center"><Trans>Advanced settings</Trans></p>
+                <p className="p-3 mb-0 text-center"><span>Advanced settings</span></p>
               </Dropdown.Menu>
             </Dropdown>
           </ul>

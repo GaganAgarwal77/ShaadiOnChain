@@ -1,5 +1,4 @@
 import React from 'react';
-import {Container,Row,Col} from 'reactstrap'
 const HeaderSection = () => (
     <section className="wedding header " id="header">
         <div className="app2 header overflow-unset app2-animation animated-bg"  ><i></i><i></i><i></i></div>
@@ -23,7 +22,7 @@ const HeaderSection = () => (
                         
                          {/* <Col lg="6" className="offset-lg-6"> */}
                              <div className="shaadi">
-                             <img  src='/assets/images/wedding-img/circle-dark.png'></img>
+                             <img  alt="" src='/assets/images/wedding-img/circle-dark.png'></img>
                             <div  className="centered">
                                 <h1 className="logo" >ShaadiOnChain
                                 <br/>

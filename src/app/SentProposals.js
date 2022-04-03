@@ -1,6 +1,6 @@
 import React , { useState, useEffect } from 'react'
-import Card from './card'
 import  '../assets/Market.css'
+import  '../assets/Card.css'
 import { useHistory } from 'react-router-dom'
 import { loadAccount, getUser, getAllEngagementProposals, getMarriageProposalByUser } from "./services/web3";
 import { getImageFromTokenId } from "./services/utility";

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
-import { InputGroup, FormControl } from 'react-bootstrap'
 import { getEngagementProposalById, getUser } from "./services/web3";
 import { getImageFromTokenId, getMetadataFromTokenId } from "./services/utility";
 import { GENDER } from './services/constants';
 
 function SentEngagementProposal(props) {
-    const { goBack, push } = useHistory()
+    const { goBack } = useHistory()
 
     const proposalId = props.match.params.engagementProposalId;
 
@@ -105,7 +104,7 @@ function SentEngagementProposal(props) {
                     </div>
                     <h4 style={{width:"250px", overflow:"hidden", whiteSpace:"nowrap", cursor:"pointer", textOverflow:"ellipsis", fontWeight:"300"}} 
                     onClick={(e) => {navigator.clipboard.writeText(proposalDetails.proposeeAddr); alert("Copied wallet address to clipboard")}}>
-                        Wallet Address: <span style={{color:"#f2c96a"}}>{proposalDetails.proposeeAddr}></span></h4>
+                        Wallet Address: <span style={{color:"#f2c96a"}}> {proposalDetails.proposeeAddr} </span></h4>
 
                     <label className="mt-4">Your Note of Love:</label>
                     <textarea style={{color:"#f2c96a"}} value={yourNote}

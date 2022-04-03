@@ -9,22 +9,22 @@ const Footer = () => (
                         <div className="link-horizontal">
                             <ul>
                                 <li>
-                                    <a className="copyright-text" href="#">
+                                    <a className="copyright-text" href="/">
                                         <i aria-hidden="true" className="fa fa-facebook gradient-text"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="copyright-text" href="#">
+                                    <a className="copyright-text" href="/">
                                         <i aria-hidden="true" className="fa fa-twitter gradient-text"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="copyright-text" href="#">
+                                    <a className="copyright-text" href="/">
                                         <i aria-hidden="true" className="fa fa-google gradient-text"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="copyright-text " href="#">
+                                    <a className="copyright-text " href="/">
                                         <i aria-hidden="true" className="fa fa-instagram gradient-text"></i>
                                     </a>
                                 </li>
@@ -36,22 +36,22 @@ const Footer = () => (
                     <div className="link-horizontal">
                         <ul className="link justify-content-center footer-contants">
                             <li>
-                                <a className="copyright-text" href="#">home</a>
+                                <a className="copyright-text" href="/">home</a>
                             </li>
                             <li>
-                                <a className="copyright-text" href="#">couple</a>
+                                <a className="copyright-text" href="/">couple</a>
                             </li>
                             <li>
-                                <a className="copyright-text" href="#">invitation</a>
+                                <a className="copyright-text" href="/">invitation</a>
                             </li>
                             <li>
-                                <a className="copyright-text" href="#">album </a>
+                                <a className="copyright-text" href="/">album </a>
                             </li>
                             <li>
-                                <a className="copyright-text" href="#">friends say</a>
+                                <a className="copyright-text" href="/">friends say</a>
                             </li>
                             <li>
-                                <a className="copyright-text" href="#">gift</a>
+                                <a className="copyright-text" href="/">gift</a>
                             </li>
                         </ul>
                     </div>

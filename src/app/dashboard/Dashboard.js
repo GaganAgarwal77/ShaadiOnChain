@@ -173,7 +173,7 @@ export function Dashboard () {
               {hasMarriageCert &&
               <div>
                 <h4 className="card-title">Your Marriage Certificate</h4>
-                <Container style={{marginLeft:"15%"}}>
+                <Container style={{marginLeft:"calc(50% - 350px)"}}>
                   <img src={marriageCertImage}></img>
                 </Container>
               </div>
@@ -190,7 +190,7 @@ export function Dashboard () {
               <div>
                 <h4 className="card-title">Your Tree NFT</h4>
                   <Container style={{marginLeft:"35%"}}>
-                    <img src={treeImage} alt="TREE" style={{height:"50vh"}} className='mb-4'/>
+                    <img src={treeImage} alt="TREE" className='mb-4'/>
                   </Container>
               </div>
               }

@@ -5,7 +5,7 @@ import { web3, getUser, getRingItem, purchaseRing } from "./services/web3";
 import { getImageFromTokenId, getMetadataFromTokenId } from "./services/utility";
 
 function Purchase(props) {
-    const { goBack, push } = useHistory()
+    const { goBack } = useHistory()
 
     const itemID = props.match.params.itemId;
 

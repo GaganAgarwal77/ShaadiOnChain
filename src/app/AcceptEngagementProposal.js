@@ -7,7 +7,7 @@ import { getImageFromTokenId, getMetadataFromTokenId } from "./services/utility"
 import { GENDER } from './services/constants';
 
 function SendEngagementProposal(props) {
-    const { goBack, push } = useHistory()
+    const { goBack} = useHistory()
 
     const proposalId = props.match.params.engagementProposalId;
 
