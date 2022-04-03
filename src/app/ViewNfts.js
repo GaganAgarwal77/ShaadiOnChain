@@ -2,9 +2,6 @@ import React , { useState, useEffect } from 'react'
 import  '../assets/Market.css'
 import  '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
-import { web3, loadAccount, getLoveLetterPrice, purchaseLoveLetter, 
-    getLoveLettersForUser, getLoveLetterById } from "./services/web3";
-import { getLoveLetterImageFromTokenId } from "./services/utility";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 /*
@@ -14,9 +11,9 @@ https://docs.alchemy.com/alchemy/enhanced-apis/nft-api
 function ViewNfts() {
     const { push } = useHistory()
 
-    const [letterPrice, setLetterPrice] = useState('');
+    // const [letterPrice, setLetterPrice] = useState('');
     const [myLetters, setMyLetters] = useState([]);
-    const [rcvdLetters, setRcvdLetters] = useState([]);
+    // const [rcvdLetters, setRcvdLetters] = useState([]);
     const web3 = createAlchemyWeb3(`https://polygon-mumbai.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`);
 
     const getNFTs = async(ownerAddr) => {

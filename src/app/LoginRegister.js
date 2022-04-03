@@ -9,7 +9,7 @@ const LoginRegister = () => {
 
   const [wallet, setWallet] = useState("");
   const [name, setName] = useState("");
-  const [gender, setGender] = useState(0); 
+  const [gender, setGender] = useState(); 
 
   const register = async (event) => {
     event.preventDefault();
@@ -28,6 +28,7 @@ const LoginRegister = () => {
             pathname: '/dashboard',
             state: { user: userData, wallet: wallet }
         })
+        window.location.reload();
     }
   };
 
@@ -57,16 +58,8 @@ const LoginRegister = () => {
 
   const handleGenderChange = (event) => {
       // 0 -> Male, 1-> Female, 2-> Other
-      const genderStr = event.target.value
-      if(genderStr === "Male") {
-          setGender(0);
-      }
-      else if(genderStr === "Female") {
-          setGender(1);
-      }
-      else if(genderStr === "Other") {
-          setGender(2);
-      }
+      const option = event.target.value
+      setGender(option - 1);
   }
 
 

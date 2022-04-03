@@ -7,7 +7,7 @@ import { getUser, createMarriageProposal } from "./services/web3";
 import { GENDER } from './services/constants';
 
 function SendEngagementProposal(props) {
-    const { goBack, push } = useHistory()
+    const { goBack } = useHistory()
     
     const [currUser, setCurrUser] = useState({});
     const [partnerDetails, setPartnerDetails] = useState({});

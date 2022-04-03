@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
 import {InputGroup, FormControl, Button} from 'react-bootstrap'
@@ -7,7 +7,7 @@ import { getImageFromTokenId } from "./services/utility";
 import { GENDER } from './services/constants';
 
 function SendEngagementProposal(props) {
-    const { push, goBack } = useHistory()
+    const { goBack } = useHistory()
 
     const [loverDetails, setLoverDetails] = useState({})
     const [loverAddr, setLoverAddr] = useState(""); 

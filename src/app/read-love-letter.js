@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
-import {InputGroup, FormControl, Button} from 'react-bootstrap'
-import { getUser, getLoveLetterById, writeMessage, sendLoveLetter } from "./services/web3";
+import {InputGroup, FormControl} from 'react-bootstrap'
+import { getUser, getLoveLetterById} from "./services/web3";
 import { getLoveLetterImageFromTokenId } from "./services/utility";
 import { GENDER } from './services/constants';
 

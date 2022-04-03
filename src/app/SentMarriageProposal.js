@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/Purchase.css'
 import { useHistory } from 'react-router-dom'
-import { InputGroup, FormControl, Button } from 'react-bootstrap'
+import { InputGroup, FormControl } from 'react-bootstrap'
 import { Certificate, download } from './certificate.js';
-import { loadAccount, getUser, getMarriageProposalById, respondToMarriageProposal } from "./services/web3";
+import { getUser, getMarriageProposalById } from "./services/web3";
 import { GENDER } from './services/constants';
 
 function SendMarriageProposal
 (props) {
-    const { goBack, push } = useHistory()
+    const { goBack } = useHistory()
     const proposalId = props.match.params.marriageProposalId;
-
+    
     const [proposalDetails, setProposalDetails] = useState({
         proposalId: "",
         proposeeAddr: "",
