@@ -40,8 +40,8 @@ const ChartJs = lazy(() => import('./charts/ChartJs'));
 const Error404 = lazy(() => import('./error-pages/Error404'));
 const Error500 = lazy(() => import('./error-pages/Error500'));
 
-
-
+const TestLogin = lazy(() => import('./TestLogin'));
+const _Redirect = lazy(() => import('./Redirect.js'));
 
 class AppRoutes extends Component {
   render () {
@@ -87,6 +87,8 @@ class AppRoutes extends Component {
           <Route path="/error-pages/error-404" component={ Error404 } />
           <Route path="/error-pages/error-500" component={ Error500 } />
 
+          <Route path="/test-login" component={ TestLogin } />
+          <Route path="/auth/redirect" component={ _Redirect } />
 
           <Redirect to="/" />
         </Switch>
