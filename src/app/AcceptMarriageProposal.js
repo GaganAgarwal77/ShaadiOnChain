@@ -82,7 +82,7 @@ function AcceptMarriageProposal(props) {
         const status = await mintMarriageCertificate(storageUrl, proposalDetails.proposerAddr);
         if(status) {
             window.alert('Minted marriage certificate successfully for you and your partner!');
-            window.location.href ="/dashboard"
+            window.location.href ="/#/dashboard"
         }
     }
 

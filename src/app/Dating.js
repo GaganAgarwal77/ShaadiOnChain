@@ -124,7 +124,7 @@ export function Dating () {
 
                 </div>
                 <div className="purchase__detailsBuy mt-3">
-                          <button onClick={() => {window.location.href="/love-letters"}}>
+                          <button onClick={() => {window.location.href="/#/love-letters"}}>
                               Send Love Letter
                           </button>
                 </div>

@@ -52,7 +52,7 @@ function Purchase(props) {
         const status = await purchaseRing(data.itemId, data.price);
         if(status) {
             window.alert("Purchase is successfully completed!");
-            window.location.href ="/dashboard"
+            window.location.href ="/#/dashboard"
         }
     }
 

@@ -49,7 +49,7 @@ function LoveLetter(props) {
         const status = await sendLoveLetter(tokenId, loverAddr);
         if(status) {
             window.alert("Love letter sent successfully");
-            window.location.href ="/dashboard"
+            window.location.href ="/#/dashboard"
         }
     }
 

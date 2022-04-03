@@ -97,7 +97,7 @@ function CreateRing({wallet, isLoggedIn}) {
         );
 
         setIsLoadingSell(false);
-        window.location.href ="/rings-marketplace"
+        window.location.href ="/#/rings-marketplace"
       }
       catch (e) {
         console.log(e);

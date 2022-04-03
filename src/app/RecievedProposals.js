@@ -73,14 +73,14 @@ function RecievedProposals() {
         <h2>Engagement Proposals</h2>
         <div className='market'> 
                 {engageProposals.map((proposal) => (
-                    <div className='card' onClick={() => push('/accept-engagement-proposal/' + proposal.proposalId)} >
+                    <div className='newcard' onClick={() => push('/accept-engagement-proposal/' + proposal.proposalId)} >
                         <img src={proposal.image} alt="Ring NFT" />
-                        <div className="card__info">
+                        <div className="newcard__info">
                             <h2>{proposal.name}</h2>
                             <h4>{proposal.note.length >= 100 ? proposal.note.substring(0, 100) + '...' : proposal.note}</h4>
                         </div>
-                        <div className='card__infoValueParent'>
-                            <div className="card__infoValue">
+                        <div className='newcard__infoValueParent'>
+                            <div className="newcard__infoValue">
                                 {proposal.status === "0" && <button type="button" className="btn btn-warning">Waiting</button>}
                                 {proposal.status === "1" && <button type="button" className="btn btn-success">Accepted</button>}
                                 {proposal.status === "2" && <button type="button" className="btn btn-danger">Rejected</button>}
@@ -97,14 +97,14 @@ function RecievedProposals() {
         {
             hasMarriageProposal &&
             (
-                <div className='card' onClick={() => push('/accept-marriage-proposal/' + marriageProposal.proposalId)}>
+                <div className='newcard' onClick={() => push('/accept-marriage-proposal/' + marriageProposal.proposalId)}>
                 <img src='/assets/images/certificate.jpeg' alt="nft artwork" />
-                <div className="card__info">
+                <div className="newcard__info">
                     <h2>{marriageProposal.name}</h2>
                     <h4>{marriageProposal.vows.length >= 100 ? marriageProposal.vows.substring(0, 100) + '...' : marriageProposal.vows}</h4>
                 </div>
-                <div className='card__infoValueParent'>
-                    <div className="card__infoValue">
+                <div className='newcard__infoValueParent'>
+                    <div className="newcard__infoValue">
                         {marriageProposal.status === "0" && <button type="button" className="btn btn-warning">Waiting</button>}
                         {marriageProposal.status === "1" && <button type="button" className="btn btn-success">Accepted</button>}
                         {marriageProposal.status === "2" && <button type="button" className="btn btn-danger">Rejected</button>}

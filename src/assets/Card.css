@@ -1,4 +1,4 @@
-.card{
+.newcard{
     margin: 10px;
     border-radius: 10px;
     overflow: hidden;
@@ -8,8 +8,11 @@
     cursor: pointer;
     width: 240px;
     height: 300px;
-    
-    /* background-color: #272A34; */
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #191c24;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
     color: white;
     text-align: left;
 
@@ -20,7 +23,7 @@
     position: relative;
 }
 
-.card__infoValueParent{
+.newcard__infoValueParent{
     /* display: flex;
     flex: 1;
     flex-direction: column; */
@@ -29,11 +32,11 @@
     right: 10px;
 }
 
-.card:hover{
+.newcard:hover{
     transform: scale(1.07);
 }
 
-.card > img{
+.newcard > img{
     object-fit: cover;
     width: 100%;
     /* min-width: 300px; */
@@ -41,7 +44,7 @@
     height: 160px;
 }
 
-.card__info{
+.newcard__info{
     border-radius: 10px;
     /* padding: 20px; */
     /* padding-top: 20px; */
@@ -52,7 +55,7 @@
     flex-direction: column;
 }
 
-.card__info > h2 {
+.newcard__info > h2 {
     padding-left: 10px;
     padding-right: 10px;
     margin: 0px;
@@ -60,7 +63,7 @@
     font-weight: 600;
 }   
 
-.card__info > h4 {
+.newcard__info > h4 {
     font-size: 14px;
     font-weight: 300;
     margin: 0px;
@@ -71,7 +74,7 @@
 }
 
 
-.card__infoValue{
+.newcard__infoValue{
     display: flex;
     flex: 1;
     justify-content: flex-end;
@@ -86,15 +89,15 @@
     /* border: 1px solid rgba( 255, 255, 255, 0.18 ); */
 }
 
-.card__infoValue > .symbol{
+.newcard__infoValue > .symbol{
     font-size: x-large; 
 }
 
-.card__infoValue > h3{
+.newcard__infoValue > h3{
     margin: 0px;
 }
 
-.card__infoValue > h4{
+.newcard__infoValue > h4{
     margin: 0px 4px;
     font-size: 14px;
     font-weight: 600;

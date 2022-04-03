@@ -28,7 +28,7 @@ const HeaderSection = () => (
                                 <br/>
                                 <h3 style={{color: "#f2c96a",textAlign:"center",fontSize:"1rem"}}>The one-stop destination for all your blockchain wedding needs! </h3>
                                 </h1>
-                                <a href="/login-register">
+                                <a href="/#/login-register">
                                 <img  alt=""  className="img-fluid" src="/assets/images/wedding-img/golden-plaque.png" />
                                 <h1 className='start-button'>Get Started</h1>
                                 </a>
