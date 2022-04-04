@@ -23,7 +23,9 @@ const Wedding = () => {
         document.body.style.setProperty('--primary', '#c0882f')
         document.body.style.setProperty('--light', '#BF862D')
         document.body.style.setProperty('--dark', '#ECC878')
-    })
+        var myMusic= document.getElementById("my_audio");
+        myMusic.play();
+    },[])
 
     return (
         <div style={{backgroundColor:"#191f3c"}}>

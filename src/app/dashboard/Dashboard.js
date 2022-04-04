@@ -38,11 +38,11 @@ export function Dashboard () {
         const treeimg = await getTreeImageFromTokenId(treeTokenId);
         setTreeImage(treeimg);
         setHasTree(true);
-
-        const maticPrice = await getPriceFeed();
-        console.log(maticPrice);
-        setLatestPrice(maticPrice);
       }
+
+      const maticPrice = await getPriceFeed();
+      console.log(maticPrice);
+      setLatestPrice(maticPrice);
     }
 
     const fetchNFTs = async () => {
@@ -169,7 +169,9 @@ export function Dashboard () {
             <div className='card'>
               <div className='card-body'>
               <h4 className="card-title">YOUR NFTs</h4>
-              
+              {!hasMarriageCert && !hasTree && !(rings.length > 0) &&
+                <span>Start using our application to own some NFTS</span>
+              }
               {hasMarriageCert &&
               <div>
                 <h4 className="card-title">Your Marriage Certificate</h4>
@@ -194,6 +196,8 @@ export function Dashboard () {
                   </Container>
               </div>
               }
+              {rings.length> 0 && 
+              <div>
         <h4 className="card-title">Your Ring NFTs</h4>
           <Row xs={1} md={2} className="g-4">
             {rings.map((ring) => (
@@ -210,6 +214,8 @@ export function Dashboard () {
               </Col>
             ))}
           </Row>
+          </div>
+          }
               </div>
             </div>
           </div>

@@ -1,5 +1,19 @@
-import React from 'react';
-const HeaderSection = () => (
+import React, {useState} from 'react';
+
+const HeaderSection = () => {
+    const [isPlaying, setIsPlaying] = useState(true)
+    const handleMusicPlay = (event) => {
+        var myMusic= document.getElementById("my_audio");
+        if(isPlaying){
+            myMusic.pause();
+            setIsPlaying(false)
+        }
+        else{
+            myMusic.play();
+            setIsPlaying(true)
+        }
+    }
+    return(
     <section className="wedding header " id="header">
         <div className="app2 header overflow-unset app2-animation animated-bg"  ><i></i><i></i><i></i></div>
             <div className="decore">
@@ -13,6 +27,7 @@ const HeaderSection = () => (
                 <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
                 <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
                 <img alt=""  className="img-fluid" src="/assets/images/wedding-img/bottom.png" />
+                <img alt="sound" style={{width:"40px",postion:"absolute", top:"6vh", marginLeft:"51vw"}} id="music_button" onClick={handleMusicPlay} src={ isPlaying ? "/assets/images/sound.png" : "/assets/images/mute.png" } />
             </div>
         <div className="wedding-content">
             
@@ -69,6 +84,8 @@ const HeaderSection = () => (
             </div>
         </div>
     </section>
-)
+    
+    )
+}
 
 export default HeaderSection;

@@ -3,18 +3,24 @@ import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Trans } from 'react-i18next';
 import { getUserOnNavbar } from "../services/web3";
+import { getPriceFeed } from '../services/priceFeed';
+
 function Navbar () {
 
   const [currUser, setCurrUser] = useState({});
+  const [latestPrice, setLatestPrice] = useState(0);
   
   useEffect(() => {
     const fetchData = async () => {
       const currUser = await getUserOnNavbar(); // Current user
       if(!currUser) { return false; }
       setCurrUser(currUser);
+
+      const maticPrice = await getPriceFeed();
+      setLatestPrice(maticPrice);
     };
     fetchData();
-  });
+  },[]);
 
   function toggleOffcanvas() {
     document.querySelector('.sidebar-offcanvas').classList.toggle('active');
@@ -31,7 +37,11 @@ function Navbar () {
           </button>
 
           <ul className="navbar-nav navbar-nav-right">
-            
+            <div className='mr-2'>
+             Live Price Feed using <img alt="" width="20" src="https://cryptologos.cc/logos/chainlink-link-logo.svg?v=022" style={{padding:"0",margin:"0  "}} />
+             <br/> 
+             <span style={{marginLeft:"2rem"}}>1 <img alt="" width="20" src="https://cryptologos.cc/logos/polygon-matic-logo.svg?v=022" style={{padding:"0",margin:"0  "}} />  = {latestPrice} $</span>
+             </div>
             <Dropdown alignRight as="li" className="nav-item border-left" >
               <Dropdown.Toggle as="a" className="nav-link count-indicator cursor-pointer">
                 <i className="mdi mdi-email"></i>
@@ -135,7 +145,9 @@ function Navbar () {
             <Dropdown alignRight as="li" className="nav-item">
               <Dropdown.Toggle as="a" className="nav-link cursor-pointer no-caret"  style={{marginBottom:"0",paddingBottom:"0"}}>
                 <div className="navbar-profile">
-                  <img className="img-xs rounded-circle" src={require('../../assets/images/faces/face15.jpg')} alt="profile" />
+                  {currUser.gender == 0 && <img className="img-xs rounded-circle" src={require('../../assets/images/faces/face15.jpg')} alt="profile" />}
+                  {currUser.gender == 1 && <img className="img-xs rounded-circle" src={require('../../assets/images/faces/face10.jpg')} alt="profile" />}
+                  {currUser.gender == 2 && <img className="img-xs rounded-circle" src={require('../../assets/images/faces/face3.jpg')} alt="profile" />}
                   <p className="mb-0 d-none d-sm-block navbar-profile-name"><span>{currUser.name}</span></p>
                   <i className="mdi mdi-menu-down d-none d-sm-block"></i>
                 </div>
