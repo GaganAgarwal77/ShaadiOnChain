@@ -25,7 +25,7 @@ There are numerous options available on our platform that will assist you in you
 
 Our platform makes use of a variety of incredible technological advances to provide users with a friendly and great experience as they create their love life on blockchain:
 
-⚡Lightning fast transactions powered by Polygon network
+⚡Lightning fast transactions powered by Klaytn network
 
 📦Distributed storage powered by FileCoin (nft.storage)
 
@@ -51,5 +51,5 @@ Our platform makes use of a variety of incredible technological advances to prov
 - IPFS 
 - React 
 - Bootstrap ​
-- Polygon 
+- Klaytn 
 - Spheron
