@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "https://gaganagarwal77.github.io/ShaadiOnChain/precache-manifest.1eee200ccbbc0ac0afc40b8bb669f482.js"
+  "https://gaganagarwal.me/ShaadiOnChain/precache-manifest.a68dc0364c2fb8e75db7082bcbe60050.js"
 );
 
 self.addEventListener('message', (event) => {
@@ -33,7 +33,7 @@ workbox.core.clientsClaim();
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("https://gaganagarwal77.github.io/ShaadiOnChain/index.html"), {
+workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("https://gaganagarwal.me/ShaadiOnChain/index.html"), {
   
   blacklist: [/^\/_/,/\/[^/?]+\.[^/]+$/],
 });
