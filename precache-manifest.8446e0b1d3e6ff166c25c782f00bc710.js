@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "020a2a2b1f681bdb12692779d9adad6e",
+    "revision": "051bfdd6e932c42ac5ce2f4fc80ebece",
     "url": "https://gaganagarwal77.github.io/ShaadiOnChain/index.html"
   },
   {
@@ -80,7 +80,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://gaganagarwal77.github.io/ShaadiOnChain/static/css/9.0b5c6630.chunk.css"
   },
   {
-    "revision": "ec1abdbec795a59d78df",
+    "revision": "13ac4922efa33294d8f3",
     "url": "https://gaganagarwal77.github.io/ShaadiOnChain/static/css/main.4eef6278.chunk.css"
   },
   {
@@ -232,8 +232,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://gaganagarwal77.github.io/ShaadiOnChain/static/js/9.061ba125.chunk.js"
   },
   {
-    "revision": "ec1abdbec795a59d78df",
-    "url": "https://gaganagarwal77.github.io/ShaadiOnChain/static/js/main.8a0a20e2.chunk.js"
+    "revision": "13ac4922efa33294d8f3",
+    "url": "https://gaganagarwal77.github.io/ShaadiOnChain/static/js/main.b09aa940.chunk.js"
   },
   {
     "revision": "17b28d8f68bbd12dc00a",
